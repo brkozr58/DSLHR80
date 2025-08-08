@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>/DSL/HR80</ARBGB>
+    <MASTERLANG>T</MASTERLANG>
+    <STEXT>Bütçe süreci iletileri</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Bütçe grubu alanı zorunludur!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Daha önce bu grup oluşturuldu! Lütfen farklı bir grup oluşturun.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Bütçe versiyon numarası alanı zorunludur!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Listede değişiklikler mevcut.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Veri bulunamadı!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Satır seçmelisiniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Geçerli bütçe durumu seçiniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Bütçe başlangıcı tarihi  giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Bütçe bitiş tarihi giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Başlangıç tarihi bitiş tarihinden büyük olamaz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Bordro başlangıcı tarihi  giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Bordro bitiş tarihi giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Bordro başlangıcı tarihi bitiş tarihinden büyük olamaz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Ülke gruplaması tanımlı değil</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Şirket kodu tanımlı değil</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Personel alanı tanımlı değil</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Pers.alt alanı tanımlı değil</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Bordro alt brm. tanımlı değil</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Numara aralığı tanımlı değil!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Kayıt oluşturuldu.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>&amp; Numara aralığı oluşturulmalı!Sistem yöneticinize başvurunuz.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Kayıt silindi.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Tarihler bütçe yılı içerisinde olmalıdır.!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Şirket kodu zorunludur!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Başlangıç ve bitiş tarihi giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Değiştirimecek satır seçiniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Yıl zorunludur!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Daha önce tanımlama yapılmıştır!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Değişiklik bulunamadı.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Sadece tek satır seçiniz.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Referans personel bulunamadı!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Başlangıç tarihi giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Bitiş tarihi giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Girilen tarihler &amp; bütçe yılını kapsamalıdır!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Kopyalanacak personel sayısı giriniz!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>Kayıt değiştirildi.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Personel bulunamadı!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>Rapor &amp; mevcut değil!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Varyant &amp;1 (rapor &amp;2) mevcut değil!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>Simulasyon çalışmada tutarsız parametre girildi!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>Yanlış parametre-kombinasyonu var!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>Ülke gruplaması yanlış!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>&amp; Bütçe versiyon statüsünün &quot;Hesaplanıyor&quot; aşamasında olmalıdır!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>&amp; Bütçe versiyonu için oran tanımlamaları bulunamadı!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

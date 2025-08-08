@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHC" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SHORTTEXT>Bütçe Geliştirmeleri</SHORTTEXT>
+   <ENH_CHILDS>
+    <ENHNAME>/DSL/HR80_PCBURZ990</ENHNAME>
+   </ENH_CHILDS>
+   <SOTR>
+    <item>
+     <HEADER>
+      <CONCEPT>00155D0A78181FD097B7DF788ED15519</CONCEPT>
+      <CREA_LAN>T</CREA_LAN>
+      <TRALA_TYPE>1</TRALA_TYPE>
+      <OBJID_VEC>AACA</OBJID_VEC>
+     </HEADER>
+     <ENTRIES>
+      <SOTR_TEXT>
+       <CONCEPT>00155D0A78181FD097B7DF788ED15519</CONCEPT>
+       <LANGU>T</LANGU>
+       <LFD_NUM>0001</LFD_NUM>
+       <FLAG_CNTXT>X</FLAG_CNTXT>
+       <STATUS>R</STATUS>
+       <LENGTH>030</LENGTH>
+       <TEXT>Bütçe Geliştirmeleri</TEXT>
+      </SOTR_TEXT>
+     </ENTRIES>
+    </item>
+   </SOTR>
+   <SOTR_USE>
+    <SOTR_USE>
+     <PGMID>R3TR</PGMID>
+     <OBJECT>ENHC</OBJECT>
+     <OBJ_NAME>/DSL/HR80_C</OBJ_NAME>
+     <CONCEPT>00155D0A78181FD097B7DF788ED15519</CONCEPT>
+     <LFD_NUM>0001</LFD_NUM>
+    </SOTR_USE>
+   </SOTR_USE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

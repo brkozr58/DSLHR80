@@ -1,0 +1,215 @@
+*---------------------------------------------------------------------*
+*    view related data declarations
+*   generation date: 16.07.2025 at 14:40:08
+*   view maintenance generator version: #001407#
+*---------------------------------------------------------------------*
+*...processing: /DSL/HR80_V001..................................*
+TABLES: /DSL/HR80_V001, */DSL/HR80_V001. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V001
+TYPE TABLEVIEW USING SCREEN '0001'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V001. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V001.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V001_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V001.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V001_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V001_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V001.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V001_TOTAL.
+
+*...processing: /DSL/HR80_V002..................................*
+TABLES: /DSL/HR80_V002, */DSL/HR80_V002. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V002
+TYPE TABLEVIEW USING SCREEN '0002'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V002. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V002.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V002_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V002.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V002_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V002_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V002.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V002_TOTAL.
+
+*...processing: /DSL/HR80_V003..................................*
+TABLES: /DSL/HR80_V003, */DSL/HR80_V003. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V003
+TYPE TABLEVIEW USING SCREEN '0003'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V003. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V003.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V003_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V003.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V003_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V003_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V003.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V003_TOTAL.
+
+*...processing: /DSL/HR80_V004..................................*
+TABLES: /DSL/HR80_V004, */DSL/HR80_V004. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V004
+TYPE TABLEVIEW USING SCREEN '0004'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V004. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V004.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V004_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V004.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V004_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V004_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V004.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V004_TOTAL.
+
+*...processing: /DSL/HR80_V005..................................*
+TABLES: /DSL/HR80_V005, */DSL/HR80_V005. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V005
+TYPE TABLEVIEW USING SCREEN '0005'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V005. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V005.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V005_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V005.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V005_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V005_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V005.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V005_TOTAL.
+
+*...processing: /DSL/HR80_V007..................................*
+TABLES: /DSL/HR80_V007, */DSL/HR80_V007. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V007
+TYPE TABLEVIEW USING SCREEN '0007'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V007. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V007.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V007_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V007.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V007_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V007_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V007.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V007_TOTAL.
+
+*...processing: /DSL/HR80_VAGRP.................................*
+TABLES: /DSL/HR80_VAGRP, */DSL/HR80_VAGRP. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_VAGRP
+TYPE TABLEVIEW USING SCREEN '0100'.
+DATA: BEGIN OF STATUS_/DSL/HR80_VAGRP. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_VAGRP.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_VAGRP_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VAGRP.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VAGRP_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_VAGRP_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VAGRP.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VAGRP_TOTAL.
+
+*...processing: /DSL/HR80_VGRP..................................*
+TABLES: /DSL/HR80_VGRP, */DSL/HR80_VGRP. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_VGRP
+TYPE TABLEVIEW USING SCREEN '0101'.
+DATA: BEGIN OF STATUS_/DSL/HR80_VGRP. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_VGRP.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_VGRP_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VGRP.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VGRP_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_VGRP_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VGRP.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VGRP_TOTAL.
+
+*...processing: /DSL/HR80_VVERGD................................*
+TABLES: /DSL/HR80_VVERGD, */DSL/HR80_VVERGD. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_VVERGD
+TYPE TABLEVIEW USING SCREEN '0102'.
+DATA: BEGIN OF STATUS_/DSL/HR80_VVERGD. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_VVERGD.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_VVERGD_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VVERGD.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VVERGD_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_VVERGD_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VVERGD.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VVERGD_TOTAL.
+
+*...processing: /DSL/HR80_VVERGI................................*
+TABLES: /DSL/HR80_VVERGI, */DSL/HR80_VVERGI. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_VVERGI
+TYPE TABLEVIEW USING SCREEN '0103'.
+DATA: BEGIN OF STATUS_/DSL/HR80_VVERGI. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_VVERGI.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_VVERGI_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VVERGI.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VVERGI_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_VVERGI_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_VVERGI.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_VVERGI_TOTAL.
+
+*.........table declarations:.................................*
+TABLES: /DSL/HR80_T001                 .
+TABLES: /DSL/HR80_T002                 .
+TABLES: /DSL/HR80_T003                 .
+TABLES: /DSL/HR80_T004                 .
+TABLES: /DSL/HR80_T005                 .
+TABLES: /DSL/HR80_T007                 .
+TABLES: /DSL/HR80_TAGRP                .
+TABLES: /DSL/HR80_TGRP                 .
+TABLES: /DSL/HR80_TVERGD               .
+TABLES: /DSL/HR80_TVERGI               .
+TABLES: CSKS                           .
+TABLES: CSKT                           .
+TABLES: ICON                           .
+TABLES: T001                           .
+TABLES: T001P                          .
+TABLES: T500P                          .
+TABLES: T501                           .
+TABLES: T501T                          .
+TABLES: T503K                          .
+TABLES: T503T                          .
+TABLES: T510A                          .
+TABLES: T510G                          .
+TABLES: T512T                          .
+TABLES: T512W                          .
+TABLES: T542A                          .
+TABLES: T542T                          .
+TABLES: T549A                          .
+TABLES: T549T                          .
+TABLES: TCURC                          .
