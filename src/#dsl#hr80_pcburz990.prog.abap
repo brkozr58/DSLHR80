@@ -21,10 +21,19 @@ INCLUDE /dsl/hr80_calc.
 *&---------------------------------------------------------------------*
 FORM fuzbdgt.
 
+  CHECK p_grpid IS NOT INITIAL AND p_vrsid IS NOT INITIAL .
+  " Buraya geçerse Bütçe çalışıyor demektir.
+
   CASE as-parm1.
-    WHEN '01'. "Bütçe Pers. Verileri
+    WHEN '01'. "Bütçe Parametre
+      PERFORM refresh_tables .
+      PERFORM get_budget_datas.
+
+    WHEN '02'.
       "/dsl/hr80_t010 tablosundan personel için güncel verileri alınacak
       PERFORM change_person_data.
+
+
     WHEN OTHERS.
   ENDCASE.
 
@@ -40,11 +49,30 @@ ENDFORM.
 *& Form CHANGE_PERSON_DATA
 *&---------------------------------------------------------------------*
 FORM change_person_data .
-  PERFORM refresh_tables .
-  PERFORM get_budget_datas.
+  DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
+  DATA : lr_pernr TYPE RANGE OF /dsl/hr80_t010-pernr WITH HEADER LINE.
+
+" PA personelleri için pernr-pernr yi al. seçim ekranında ki zli eklenen
+" P_PERNR  parametresini boş göndermelisin
+  IF p_pernr IS NOT INITIAL .
+    lr_pernr = 'IEQ'.lr_pernr-low = p_pernr.APPEND lr_pernr.
+  ELSE.
+    lr_pernr = 'IEQ'.lr_pernr-low = pernr-pernr.APPEND lr_pernr.
+  ENDIF.
+
+" DUMMY personellerde PA daki sicil gönderilmeli
+  IF p_rfper IS NOT INITIAL .
+    lr_rfper = 'IEQ'.lr_rfper-low = p_rfper.APPEND lr_rfper.
+  ENDIF.
 
 
 
+  LOOP AT p0001 ASSIGNING FIELD-SYMBOL(<p0001>)
+    WHERE begda LE aper-endda.
+    LOOP AT gt_t010 INTO DATA(ls_t010) WHERE pernr IN lr_pernr[] .
+
+    ENDLOOP.
+  ENDLOOP.
 
 ENDFORM.
 *&---------------------------------------------------------------------*

@@ -330,6 +330,12 @@
     </item>
     <item>
      <ID>I</ID>
+     <KEY>GRE</KEY>
+     <ENTRY>C510</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>GRP</KEY>
      <ENTRY>Bütçe grubu</ENTRY>
      <LENGTH>100</LENGTH>
@@ -348,6 +354,12 @@
     </item>
     <item>
      <ID>I</ID>
+     <KEY>RED</KEY>
+     <ENTRY>C600</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>VRS</KEY>
      <ENTRY>Bütçe versiyonu</ENTRY>
      <LENGTH>100</LENGTH>
@@ -357,6 +369,12 @@
      <KEY>WAR</KEY>
      <ENTRY>Bordro sonucu alındı</ENTRY>
      <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>YEL</KEY>
+     <ENTRY>C310</ENTRY>
+     <LENGTH>14</LENGTH>
     </item>
     <item>
      <ID>R</ID>

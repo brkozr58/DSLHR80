@@ -290,7 +290,7 @@ FORM handle_data_changed
         WHEN OTHERS.
       ENDCASE.
 
-      <ls_main>-color      = 'C310'.
+      <ls_main>-color      = TEXT-yel.
 
     ENDIF.
   ENDLOOP.
@@ -534,11 +534,11 @@ FORM calc_simu .
             CASE ls_emp_num-retcd.
               WHEN 99 OR 0 .
                 IF ls_emp_num-retcd EQ 99.
-                  <fs_main>-color = 'C310'.
+                  <fs_main>-color = TEXT-yel.
                   <fs_main>-msg = TEXT-war.
                   <fs_main>-oprtn = 'N'.
                 ELSE.
-                  <fs_main>-color = 'C510'.
+                  <fs_main>-color = TEXT-gre.
                   <fs_main>-msg = TEXT-che.
                   <fs_main>-oprtn = 'N'.
                 ENDIF.
@@ -555,14 +555,14 @@ FORM calc_simu .
                   READ TABLE ls_msgtab-msg INTO DATA(ls_msg)
                         WITH KEY message = 'E'.
                   IF sy-subrc EQ 0 .
-                    <fs_main>-color = 'C600'.
+                    <fs_main>-color = TEXT-red.
                     <fs_main>-msg = ls_msg-text1.
                   ELSE.
-                    <fs_main>-color = 'C600'.
+                    <fs_main>-color = TEXT-red.
                     <fs_main>-msg = TEXT-inc.
                   ENDIF.
                 ELSE.
-                  <fs_main>-color = 'C600'.
+                  <fs_main>-color = TEXT-red.
                   <fs_main>-msg = TEXT-inc.
                 ENDIF.
 
@@ -664,11 +664,11 @@ FORM calc_simu .
             CASE ls_emp_num-retcd.
               WHEN 99 OR 0 .
                 IF ls_emp_num-retcd EQ 99.
-                  <fs_main>-color = 'C310'.
+                  <fs_main>-color = TEXT-yel  .
                   <fs_main>-msg = TEXT-war.
                   <fs_main>-oprtn = 'N'.
                 ELSE.
-                  <fs_main>-color = 'C510'.
+                  <fs_main>-color = TEXT-gre  .
                   <fs_main>-msg = TEXT-che.
                   <fs_main>-oprtn = 'N'.
                 ENDIF.
@@ -685,14 +685,14 @@ FORM calc_simu .
                   READ TABLE ls_msgtab-msg INTO ls_msg
                         WITH KEY message = 'E'.
                   IF sy-subrc EQ 0 .
-                    <fs_main>-color = 'C600'.
+                    <fs_main>-color = TEXT-red.
                     <fs_main>-msg = ls_msg-text1.
                   ELSE.
-                    <fs_main>-color = 'C600'.
+                    <fs_main>-color = TEXT-red .
                     <fs_main>-msg = TEXT-inc.
                   ENDIF.
                 ELSE.
-                  <fs_main>-color = 'C600'.
+                  <fs_main>-color = TEXT-red.
                   <fs_main>-msg = TEXT-inc.
                 ENDIF.
 
