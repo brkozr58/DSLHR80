@@ -692,6 +692,9 @@ CLASS lcl_alv IMPLEMENTATION.
       WHEN 'STATU'.
         PERFORM change_statu .
 
+      WHEN 'ADD_LGART'.
+        PERFORM add_lgart.
+
       WHEN OTHERS.
         cl_gui_cfw=>dispatch( ).
 
@@ -745,6 +748,15 @@ CLASS lcl_alv IMPLEMENTATION.
                       quickinfo = TEXT-t01
                       disabled  = space
                       text      = 'Kaydet'
+                      )
+              INTO TABLE e_object->mt_toolbar.
+
+      INSERT VALUE #( butn_type = 0
+                      function  = 'ADD_LGART'
+                      icon      = icon_payment
+                      quickinfo = TEXT-t01
+                      disabled  = space
+                      text      = TEXT-t01
                       )
               INTO TABLE e_object->mt_toolbar.
 

@@ -926,3 +926,106 @@ FORM get_rfper_values  USING pv_pernr
       .
 
 ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form ADD_LGART
+*&---------------------------------------------------------------------*
+FORM add_lgart .
+
+  DATA : ivals       TYPE TABLE OF sval.
+  DATA : xvals       TYPE sval.
+  DATA : returncode .
+  DATA : ls_t003     TYPE /dsl/hr80_t003.
+  DATA : ls_t005     TYPE /dsl/hr80_t005.
+  DATA : ls_t010     TYPE /dsl/hr80_t010.
+
+*      Normal koyuluk derecesi girişe hazır
+*01  açık renkli girişe hazır
+*02  Normal koyuluk derecesi girişe hazır değil
+*03  açık renkli girişe hazır değil
+*04  Görüntüleme!
+
+  DEFINE add_vals.
+    CLEAR xvals .
+    xvals-tabname       = &1.
+    xvals-fieldname     = &2.
+    xvals-field_attr    = &3.
+    xvals-value         = &4.
+    xvals-field_obl     = &5.
+    APPEND xvals TO ivals.
+  END-OF-DEFINITION.
+
+  CALL FUNCTION 'POPUP_GET_VALUES_SET_MAX_FIELD'
+    EXPORTING
+      number_of_fields = '40'
+    EXCEPTIONS
+      out_of_range     = 1
+    .
+
+  SELECT SINGLE * FROM /dsl/hr80_t003 INTO ls_t003
+      WHERE vrsid IN s_vrsid[]
+        AND grpid IN s_grpid[]
+        AND gjahr IN s_gjahr[]
+        AND molga EQ p_molga .
+
+  MOVE-CORRESPONDING ls_t003 TO ls_t005.
+
+   DATA answer  .
+   go_main->popup_to_confirm(
+     EXPORTING
+       titlebar       = 'Bilgi'
+       text_question  = TEXT-drm
+       text_button_1  = 'Toplu aktar'
+       text_button_2  = 'Giriş ekranı'
+     IMPORTING
+       answer         = answer
+     EXCEPTIONS
+       text_not_found = 1
+   ).
+   CASE answer.
+   	WHEN '1' . "'Toplu aktar'.
+   	WHEN '2' . "'Giriş ekranı
+      add_vals: '/DSL/HR80_T005' 'GRPID'   '02' ls_t005-grpid   abap_false .
+      add_vals: '/DSL/HR80_T005' 'VRSID'   '02' ls_t005-vrsid   abap_false .
+      add_vals: '/DSL/HR80_T005' 'PERNR'   '01' ls_t005-pernr   abap_false .
+      add_vals: '/DSL/HR80_T005' 'BEGDA'   '01' ls_t005-begda   abap_false .
+      add_vals: '/DSL/HR80_T005' 'ENDDA'   '01' ls_t005-endda   abap_false .
+      add_vals: '/DSL/HR80_T005' 'LGART'   '01' ls_t005-lgart   abap_false .
+      add_vals: '/DSL/HR80_T005' 'ANZHL'   '01' ls_t005-anzhl   abap_false .
+      add_vals: '/DSL/HR80_T005' 'BETRG'   '01' ls_t005-betrg   abap_false .
+      add_vals: '/DSL/HR80_T010' 'WAERS'   '02' 'TRY'           abap_false .
+      DO.
+        CLEAR returncode .
+        CALL FUNCTION 'POPUP_GET_VALUES'
+          EXPORTING
+             popup_title     = 'Bütçe versiyonu durum değişikliği'
+             start_column    = 15
+             start_row       = 10
+          IMPORTING
+             returncode      = returncode
+          TABLES
+             fields          = ivals
+          EXCEPTIONS
+             error_in_fields = 1
+             OTHERS          = 2.
+        IF returncode IS INITIAL.
+          LOOP AT ivals INTO xvals.
+            ASSIGN COMPONENT xvals-fieldname OF STRUCTURE ls_t003
+                TO FIELD-SYMBOL(<fs>).
+            CHECK <fs> IS ASSIGNED .
+            SHIFT xvals-value LEFT DELETING LEADING space.
+            <fs> = xvals-value.
+            UNASSIGN <fs>.
+          ENDLOOP.
+
+          MODIFY /dsl/hr80_t005 FROM ls_t005.
+          MESSAGE s020   .
+        ELSE.
+          EXIT.
+        ENDIF.
+
+      ENDDO.
+   ENDCASE.
+
+
+
+ENDFORM.

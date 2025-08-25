@@ -351,7 +351,8 @@ FORM template_file .
                  'ORGEH' '50000553',
                  'STELL' '50000828',
                  'ABKRS' '10',
-                 'PERNR' '' .
+                 'PERNR' '' ,
+                 'LGART' '1000' .
 *
     LOOP AT lt_fcat INTO DATA(ls_fcat) WHERE fieldname(3) EQ 'BET' OR
                                              fieldname(3) EQ 'ANZ' OR

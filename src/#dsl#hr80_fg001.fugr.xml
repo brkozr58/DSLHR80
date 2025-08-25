@@ -4171,7 +4171,7 @@
        <TYPE>TABLE_CTRL</TYPE>
        <NAME>TCTRL_/DSL/HR80_V004</NAME>
        <ELEMENT_OF>SCREEN</ELEMENT_OF>
-       <LINE>005</LINE>
+       <LINE>007</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>255</LENGTH>
        <HEIGHT>053</HEIGHT>
@@ -4188,7 +4188,7 @@
        <TC_SEL_LNS>MULTIPLE</TC_SEL_LNS>
        <TC_SEL_CLS>NONE</TC_SEL_CLS>
        <TC_LSEL_CL>X</TC_LSEL_CL>
-       <TC_FIXCOL>011</TC_FIXCOL>
+       <TC_FIXCOL>012</TC_FIXCOL>
       </RPY_DYCATT>
      </CONTAINERS>
      <FIELDS>
@@ -4215,11 +4215,10 @@
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_V004-MOLGA</NAME>
        <TEXT>__</TEXT>
-       <DROPDOWN>K</DROPDOWN>
        <LINE>001</LINE>
        <COLUMN>022</COLUMN>
        <LENGTH>002</LENGTH>
-       <VISLENGTH>031</VISLENGTH>
+       <VISLENGTH>002</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <FROM_DICT>X</FROM_DICT>
@@ -4268,24 +4267,6 @@
       <RPY_DYFATC>
        <CONT_TYPE>SCREEN</CONT_TYPE>
        <CONT_NAME>SCREEN</CONT_NAME>
-       <TYPE>TEMPLATE</TYPE>
-       <NAME>/DSL/HR80_V004-GRPID_T</NAME>
-       <TEXT>________________________________________________________________________________</TEXT>
-       <LINE>002</LINE>
-       <COLUMN>033</COLUMN>
-       <LENGTH>080</LENGTH>
-       <VISLENGTH>080</VISLENGTH>
-       <HEIGHT>001</HEIGHT>
-       <FORMAT>CHAR</FORMAT>
-       <FROM_DICT>X</FROM_DICT>
-       <MODIFIC>X</MODIFIC>
-       <UP_LOWER>X</UP_LOWER>
-       <OUTPUT_FLD>X</OUTPUT_FLD>
-       <REQU_ENTRY>N</REQU_ENTRY>
-      </RPY_DYFATC>
-      <RPY_DYFATC>
-       <CONT_TYPE>SCREEN</CONT_TYPE>
-       <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V004-VRSID</NAME>
        <TEXT>Versiyon_numarası</TEXT>
@@ -4321,11 +4302,63 @@
       <RPY_DYFATC>
        <CONT_TYPE>SCREEN</CONT_TYPE>
        <CONT_NAME>SCREEN</CONT_NAME>
+       <TYPE>TEXT</TYPE>
+       <NAME>/DSL/HR80_V004-GRPID_T</NAME>
+       <TEXT>Tanım_______________</TEXT>
+       <LINE>004</LINE>
+       <COLUMN>001</COLUMN>
+       <LENGTH>020</LENGTH>
+       <VISLENGTH>020</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <FORMAT>CHAR</FORMAT>
+       <FROM_DICT>X</FROM_DICT>
+       <MODIFIC>2</MODIFIC>
+       <REQU_ENTRY>N</REQU_ENTRY>
+       <LABELLEFT>X</LABELLEFT>
+      </RPY_DYFATC>
+      <RPY_DYFATC>
+       <CONT_TYPE>SCREEN</CONT_TYPE>
+       <CONT_NAME>SCREEN</CONT_NAME>
+       <TYPE>TEMPLATE</TYPE>
+       <NAME>/DSL/HR80_V004-GRPID_T</NAME>
+       <TEXT>________________________________________________________________________________</TEXT>
+       <LINE>004</LINE>
+       <COLUMN>022</COLUMN>
+       <LENGTH>080</LENGTH>
+       <VISLENGTH>080</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <FORMAT>CHAR</FORMAT>
+       <FROM_DICT>X</FROM_DICT>
+       <MODIFIC>X</MODIFIC>
+       <UP_LOWER>X</UP_LOWER>
+       <OUTPUT_FLD>X</OUTPUT_FLD>
+       <REQU_ENTRY>N</REQU_ENTRY>
+      </RPY_DYFATC>
+      <RPY_DYFATC>
+       <CONT_TYPE>SCREEN</CONT_TYPE>
+       <CONT_NAME>SCREEN</CONT_NAME>
+       <TYPE>TEXT</TYPE>
+       <NAME>/DSL/HR80_V004-VRSID_T</NAME>
+       <TEXT>Tanım_______________</TEXT>
+       <LINE>005</LINE>
+       <COLUMN>001</COLUMN>
+       <LENGTH>020</LENGTH>
+       <VISLENGTH>020</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <FORMAT>CHAR</FORMAT>
+       <FROM_DICT>X</FROM_DICT>
+       <MODIFIC>2</MODIFIC>
+       <REQU_ENTRY>N</REQU_ENTRY>
+       <LABELLEFT>X</LABELLEFT>
+      </RPY_DYFATC>
+      <RPY_DYFATC>
+       <CONT_TYPE>SCREEN</CONT_TYPE>
+       <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_V004-VRSID_T</NAME>
        <TEXT>________________________________________________________________________________</TEXT>
-       <LINE>003</LINE>
-       <COLUMN>033</COLUMN>
+       <LINE>005</LINE>
+       <COLUMN>022</COLUMN>
        <LENGTH>080</LENGTH>
        <VISLENGTH>080</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4708,10 +4741,27 @@
        <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
+       <NAME>*/DSL/HR80_V004-LGART</NAME>
+       <TEXT>Ücr.türü________________________________</TEXT>
+       <LINE>001</LINE>
+       <COLUMN>019</COLUMN>
+       <LENGTH>040</LENGTH>
+       <VISLENGTH>009</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <FORMAT>CHAR</FORMAT>
+       <FROM_DICT>X</FROM_DICT>
+       <MODIFIC>4</MODIFIC>
+       <REQU_ENTRY>N</REQU_ENTRY>
+       <TC_HEADING>X</TC_HEADING>
+      </RPY_DYFATC>
+      <RPY_DYFATC>
+       <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
+       <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
+       <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-RAT01</NAME>
        <TEXT>Ocak_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>019</COLUMN>
+       <COLUMN>020</COLUMN>
        <LENGTH>009</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4728,7 +4778,7 @@
        <NAME>*/DSL/HR80_V004-ANZ01</NAME>
        <TEXT>Ocak_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>020</COLUMN>
+       <COLUMN>021</COLUMN>
        <LENGTH>009</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4745,7 +4795,7 @@
        <NAME>*/DSL/HR80_V004-BET01</NAME>
        <TEXT>Ocak_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>021</COLUMN>
+       <COLUMN>022</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4762,7 +4812,7 @@
        <NAME>*/DSL/HR80_V004-RAT02</NAME>
        <TEXT>Şubat_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>022</COLUMN>
+       <COLUMN>023</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4779,7 +4829,7 @@
        <NAME>*/DSL/HR80_V004-ANZ02</NAME>
        <TEXT>Şubat_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>023</COLUMN>
+       <COLUMN>024</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4796,7 +4846,7 @@
        <NAME>*/DSL/HR80_V004-BET02</NAME>
        <TEXT>Şubat_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>024</COLUMN>
+       <COLUMN>025</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4813,7 +4863,7 @@
        <NAME>*/DSL/HR80_V004-RAT03</NAME>
        <TEXT>Mart_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>025</COLUMN>
+       <COLUMN>026</COLUMN>
        <LENGTH>009</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4830,7 +4880,7 @@
        <NAME>*/DSL/HR80_V004-ANZ03</NAME>
        <TEXT>Mart_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>026</COLUMN>
+       <COLUMN>027</COLUMN>
        <LENGTH>009</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4847,7 +4897,7 @@
        <NAME>*/DSL/HR80_V004-BET03</NAME>
        <TEXT>Mart_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>027</COLUMN>
+       <COLUMN>028</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4864,7 +4914,7 @@
        <NAME>*/DSL/HR80_V004-RAT04</NAME>
        <TEXT>Nisan_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>028</COLUMN>
+       <COLUMN>029</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4881,7 +4931,7 @@
        <NAME>*/DSL/HR80_V004-ANZ04</NAME>
        <TEXT>Nisan_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>029</COLUMN>
+       <COLUMN>030</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4898,7 +4948,7 @@
        <NAME>*/DSL/HR80_V004-BET04</NAME>
        <TEXT>Nisan_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>030</COLUMN>
+       <COLUMN>031</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4915,7 +4965,7 @@
        <NAME>*/DSL/HR80_V004-RAT05</NAME>
        <TEXT>Mayıs_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>031</COLUMN>
+       <COLUMN>032</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4932,7 +4982,7 @@
        <NAME>*/DSL/HR80_V004-ANZ05</NAME>
        <TEXT>Mayıs_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>032</COLUMN>
+       <COLUMN>033</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4949,7 +4999,7 @@
        <NAME>*/DSL/HR80_V004-BET05</NAME>
        <TEXT>Mayıs_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>033</COLUMN>
+       <COLUMN>034</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4966,7 +5016,7 @@
        <NAME>*/DSL/HR80_V004-RAT06</NAME>
        <TEXT>Haziran_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>034</COLUMN>
+       <COLUMN>035</COLUMN>
        <LENGTH>012</LENGTH>
        <VISLENGTH>012</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -4983,7 +5033,7 @@
        <NAME>*/DSL/HR80_V004-ANZ06</NAME>
        <TEXT>Haziran_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>035</COLUMN>
+       <COLUMN>036</COLUMN>
        <LENGTH>012</LENGTH>
        <VISLENGTH>012</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5000,7 +5050,7 @@
        <NAME>*/DSL/HR80_V004-BET06</NAME>
        <TEXT>Haziran_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>036</COLUMN>
+       <COLUMN>037</COLUMN>
        <LENGTH>013</LENGTH>
        <VISLENGTH>013</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5017,7 +5067,7 @@
        <NAME>*/DSL/HR80_V004-RAT07</NAME>
        <TEXT>Temmuz_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>037</COLUMN>
+       <COLUMN>038</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5034,7 +5084,7 @@
        <NAME>*/DSL/HR80_V004-ANZ07</NAME>
        <TEXT>Temmuz_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>038</COLUMN>
+       <COLUMN>039</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5051,7 +5101,7 @@
        <NAME>*/DSL/HR80_V004-BET07</NAME>
        <TEXT>Temmuz_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>039</COLUMN>
+       <COLUMN>040</COLUMN>
        <LENGTH>012</LENGTH>
        <VISLENGTH>012</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5068,7 +5118,7 @@
        <NAME>*/DSL/HR80_V004-RAT08</NAME>
        <TEXT>Ağustos_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>040</COLUMN>
+       <COLUMN>041</COLUMN>
        <LENGTH>012</LENGTH>
        <VISLENGTH>012</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5085,7 +5135,7 @@
        <NAME>*/DSL/HR80_V004-ANZ08</NAME>
        <TEXT>Ağustos_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>041</COLUMN>
+       <COLUMN>042</COLUMN>
        <LENGTH>012</LENGTH>
        <VISLENGTH>012</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5102,7 +5152,7 @@
        <NAME>*/DSL/HR80_V004-BET08</NAME>
        <TEXT>Ağustos_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>042</COLUMN>
+       <COLUMN>043</COLUMN>
        <LENGTH>013</LENGTH>
        <VISLENGTH>013</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5119,7 +5169,7 @@
        <NAME>*/DSL/HR80_V004-RAT09</NAME>
        <TEXT>Eylül_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>043</COLUMN>
+       <COLUMN>044</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5136,7 +5186,7 @@
        <NAME>*/DSL/HR80_V004-ANZ09</NAME>
        <TEXT>Eylül_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>044</COLUMN>
+       <COLUMN>045</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5153,7 +5203,7 @@
        <NAME>*/DSL/HR80_V004-BET09</NAME>
        <TEXT>Eylül_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>045</COLUMN>
+       <COLUMN>046</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5170,7 +5220,7 @@
        <NAME>*/DSL/HR80_V004-RAT10</NAME>
        <TEXT>Ekim_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>046</COLUMN>
+       <COLUMN>047</COLUMN>
        <LENGTH>009</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5187,7 +5237,7 @@
        <NAME>*/DSL/HR80_V004-ANZ10</NAME>
        <TEXT>Ekim_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>047</COLUMN>
+       <COLUMN>048</COLUMN>
        <LENGTH>009</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5204,7 +5254,7 @@
        <NAME>*/DSL/HR80_V004-BET10</NAME>
        <TEXT>Ekim_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>048</COLUMN>
+       <COLUMN>049</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5221,7 +5271,7 @@
        <NAME>*/DSL/HR80_V004-RAT11</NAME>
        <TEXT>Kasım_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>049</COLUMN>
+       <COLUMN>050</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5238,7 +5288,7 @@
        <NAME>*/DSL/HR80_V004-ANZ11</NAME>
        <TEXT>Kasım_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>050</COLUMN>
+       <COLUMN>051</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5255,7 +5305,7 @@
        <NAME>*/DSL/HR80_V004-BET11</NAME>
        <TEXT>Kasım_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>051</COLUMN>
+       <COLUMN>052</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5272,7 +5322,7 @@
        <NAME>*/DSL/HR80_V004-RAT12</NAME>
        <TEXT>Aralık_Oran</TEXT>
        <LINE>001</LINE>
-       <COLUMN>052</COLUMN>
+       <COLUMN>053</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5289,7 +5339,7 @@
        <NAME>*/DSL/HR80_V004-ANZ12</NAME>
        <TEXT>Aralık_Sayı</TEXT>
        <LINE>001</LINE>
-       <COLUMN>053</COLUMN>
+       <COLUMN>054</COLUMN>
        <LENGTH>011</LENGTH>
        <VISLENGTH>011</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5306,7 +5356,7 @@
        <NAME>*/DSL/HR80_V004-BET12</NAME>
        <TEXT>Aralık_Tutar</TEXT>
        <LINE>001</LINE>
-       <COLUMN>054</COLUMN>
+       <COLUMN>055</COLUMN>
        <LENGTH>012</LENGTH>
        <VISLENGTH>012</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5323,7 +5373,7 @@
        <NAME>*/DSL/HR80_V004-WAERS</NAME>
        <TEXT>PB______________________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>055</COLUMN>
+       <COLUMN>056</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>005</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5376,7 +5426,7 @@
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>010</LENGTH>
-       <VISLENGTH>007</VISLENGTH>
+       <VISLENGTH>003</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <GROUP1>KEY</GROUP1>
        <FORMAT>CHAR</FORMAT>
@@ -5702,10 +5752,29 @@
        <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
+       <NAME>/DSL/HR80_V004-LGART</NAME>
+       <TEXT>____</TEXT>
+       <ROLLING>X</ROLLING>
+       <LINE>001</LINE>
+       <COLUMN>019</COLUMN>
+       <LENGTH>004</LENGTH>
+       <VISLENGTH>004</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <GROUP1>KEY</GROUP1>
+       <FORMAT>CHAR</FORMAT>
+       <FROM_DICT>X</FROM_DICT>
+       <MODIFIC>X</MODIFIC>
+       <OUTPUT_FLD>X</OUTPUT_FLD>
+       <REQU_ENTRY>N</REQU_ENTRY>
+      </RPY_DYFATC>
+      <RPY_DYFATC>
+       <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
+       <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
+       <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_V004-RAT01</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>019</COLUMN>
+       <COLUMN>020</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5723,7 +5792,7 @@
        <NAME>/DSL/HR80_V004-ANZ01</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>020</COLUMN>
+       <COLUMN>021</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5741,7 +5810,7 @@
        <NAME>/DSL/HR80_V004-BET01</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>021</COLUMN>
+       <COLUMN>022</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5760,7 +5829,7 @@
        <NAME>/DSL/HR80_V004-RAT02</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>022</COLUMN>
+       <COLUMN>023</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5778,7 +5847,7 @@
        <NAME>/DSL/HR80_V004-ANZ02</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>023</COLUMN>
+       <COLUMN>024</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5796,7 +5865,7 @@
        <NAME>/DSL/HR80_V004-BET02</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>024</COLUMN>
+       <COLUMN>025</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5815,7 +5884,7 @@
        <NAME>/DSL/HR80_V004-RAT03</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>025</COLUMN>
+       <COLUMN>026</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5833,7 +5902,7 @@
        <NAME>/DSL/HR80_V004-ANZ03</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>026</COLUMN>
+       <COLUMN>027</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5851,7 +5920,7 @@
        <NAME>/DSL/HR80_V004-BET03</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>027</COLUMN>
+       <COLUMN>028</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5870,7 +5939,7 @@
        <NAME>/DSL/HR80_V004-RAT04</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>028</COLUMN>
+       <COLUMN>029</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5888,7 +5957,7 @@
        <NAME>/DSL/HR80_V004-ANZ04</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>029</COLUMN>
+       <COLUMN>030</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5906,7 +5975,7 @@
        <NAME>/DSL/HR80_V004-BET04</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>030</COLUMN>
+       <COLUMN>031</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5925,7 +5994,7 @@
        <NAME>/DSL/HR80_V004-RAT05</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>031</COLUMN>
+       <COLUMN>032</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5943,7 +6012,7 @@
        <NAME>/DSL/HR80_V004-ANZ05</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>032</COLUMN>
+       <COLUMN>033</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5961,7 +6030,7 @@
        <NAME>/DSL/HR80_V004-BET05</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>033</COLUMN>
+       <COLUMN>034</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5980,7 +6049,7 @@
        <NAME>/DSL/HR80_V004-RAT06</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>034</COLUMN>
+       <COLUMN>035</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -5998,7 +6067,7 @@
        <NAME>/DSL/HR80_V004-ANZ06</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>035</COLUMN>
+       <COLUMN>036</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6016,7 +6085,7 @@
        <NAME>/DSL/HR80_V004-BET06</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>036</COLUMN>
+       <COLUMN>037</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6035,7 +6104,7 @@
        <NAME>/DSL/HR80_V004-RAT07</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>037</COLUMN>
+       <COLUMN>038</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6053,7 +6122,7 @@
        <NAME>/DSL/HR80_V004-ANZ07</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>038</COLUMN>
+       <COLUMN>039</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6071,7 +6140,7 @@
        <NAME>/DSL/HR80_V004-BET07</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>039</COLUMN>
+       <COLUMN>040</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6090,7 +6159,7 @@
        <NAME>/DSL/HR80_V004-RAT08</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>040</COLUMN>
+       <COLUMN>041</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6108,7 +6177,7 @@
        <NAME>/DSL/HR80_V004-ANZ08</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>041</COLUMN>
+       <COLUMN>042</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6126,7 +6195,7 @@
        <NAME>/DSL/HR80_V004-BET08</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>042</COLUMN>
+       <COLUMN>043</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6145,7 +6214,7 @@
        <NAME>/DSL/HR80_V004-RAT09</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>043</COLUMN>
+       <COLUMN>044</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6163,7 +6232,7 @@
        <NAME>/DSL/HR80_V004-ANZ09</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>044</COLUMN>
+       <COLUMN>045</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6181,7 +6250,7 @@
        <NAME>/DSL/HR80_V004-BET09</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>045</COLUMN>
+       <COLUMN>046</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6200,7 +6269,7 @@
        <NAME>/DSL/HR80_V004-RAT10</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>046</COLUMN>
+       <COLUMN>047</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6218,7 +6287,7 @@
        <NAME>/DSL/HR80_V004-ANZ10</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>047</COLUMN>
+       <COLUMN>048</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6236,7 +6305,7 @@
        <NAME>/DSL/HR80_V004-BET10</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>048</COLUMN>
+       <COLUMN>049</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6255,7 +6324,7 @@
        <NAME>/DSL/HR80_V004-RAT11</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>049</COLUMN>
+       <COLUMN>050</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6273,7 +6342,7 @@
        <NAME>/DSL/HR80_V004-ANZ11</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>050</COLUMN>
+       <COLUMN>051</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6291,7 +6360,7 @@
        <NAME>/DSL/HR80_V004-BET11</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>051</COLUMN>
+       <COLUMN>052</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6310,7 +6379,7 @@
        <NAME>/DSL/HR80_V004-RAT12</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>052</COLUMN>
+       <COLUMN>053</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>020</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6328,7 +6397,7 @@
        <NAME>/DSL/HR80_V004-ANZ12</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>053</COLUMN>
+       <COLUMN>054</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6346,7 +6415,7 @@
        <NAME>/DSL/HR80_V004-BET12</NAME>
        <TEXT>_____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>054</COLUMN>
+       <COLUMN>055</COLUMN>
        <LENGTH>021</LENGTH>
        <VISLENGTH>021</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6365,7 +6434,7 @@
        <NAME>/DSL/HR80_V004-WAERS</NAME>
        <TEXT>_____</TEXT>
        <LINE>001</LINE>
-       <COLUMN>055</COLUMN>
+       <COLUMN>056</COLUMN>
        <LENGTH>005</LENGTH>
        <VISLENGTH>005</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -6475,6 +6544,9 @@
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>    FIELD /DSL/HR80_V004-PERNR .</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>    FIELD /DSL/HR80_V004-LGART .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>    FIELD /DSL/HR80_V004-RAT01 .</LINE>
@@ -6634,6 +6706,9 @@
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>    FIELD /DSL/HR80_V004-PERNR .</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>    FIELD /DSL/HR80_V004-LGART .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
