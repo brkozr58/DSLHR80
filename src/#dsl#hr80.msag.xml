@@ -278,6 +278,18 @@
      <MSGNR>044</MSGNR>
      <TEXT>&amp; Bütçe versiyonu için oran tanımlamaları bulunamadı!</TEXT>
     </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Ücret türü giriniz.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>&amp; Bütçe versiyon statüsünün &quot;Planlanıyor&quot; aşamasında olmalıdır!</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

@@ -22,7 +22,7 @@ INCLUDE /dsl/hr80_calc.
 FORM fuzbdgt.
 
   CHECK p_grpid IS NOT INITIAL AND p_vrsid IS NOT INITIAL .
-
+  " buraya girerse bütçe çalışıyor demektir.
 
   CASE as-parm1.
     WHEN '01'. "Bütçe Pers. Verileri
@@ -225,9 +225,11 @@ FORM change_ratio .
 " PA personelleri için pernr-pernr yi al. seçim ekranında ki zli eklenen
 " P_PERNR  parametresini boş göndermelisin
   IF p_pernr IS NOT INITIAL ." DUMMY
-    lr_pernr = VALUE #( ( sign = 'I' option = 'EQ' low = p_pernr  ) ).
+    lr_pernr = VALUE #( ( sign = 'I' option = 'EQ' low = p_pernr  )
+                        ( sign = 'I' option = 'EQ' low = space  ) ).
   ELSE.
-    lr_pernr = VALUE #( ( sign = 'I' option = 'EQ' low = pernr-pernr  ) ).
+    lr_pernr = VALUE #( ( sign = 'I' option = 'EQ' low = pernr-pernr  )
+                        ( sign = 'I' option = 'EQ' low = space  ) ).
   ENDIF.
 
 " DUMMY personellerde PA daki sicil gönderilmeli

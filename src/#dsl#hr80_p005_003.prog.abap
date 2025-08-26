@@ -24,6 +24,10 @@ FORM check_paramaters  CHANGING cv_check.
   IF sy-subrc NE 0 .
     MESSAGE i005 DISPLAY LIKE 'E'.
     cv_check = 'X'.
+*  ELSEIF sy-subrc EQ 0 AND go_alv->gs_t003 NE '0'
+*                       AND go_alv->gs_t003 NE '1'.
+*    MESSAGE i046 DISPLAY LIKE 'E' WITH go_alv->gs_t003-vrsid_t.
+*    cv_check = 'X'.
   ENDIF.
 
   IF s_gjahr[] IS INITIAL .
@@ -984,15 +988,16 @@ FORM add_lgart .
    CASE answer.
    	WHEN '1' . "'Toplu aktar'.
    	WHEN '2' . "'Giriş ekranı
-      add_vals: '/DSL/HR80_T005' 'GRPID'   '02' ls_t005-grpid   abap_false .
-      add_vals: '/DSL/HR80_T005' 'VRSID'   '02' ls_t005-vrsid   abap_false .
-      add_vals: '/DSL/HR80_T005' 'PERNR'   '01' ls_t005-pernr   abap_false .
-      add_vals: '/DSL/HR80_T005' 'BEGDA'   '01' ls_t005-begda   abap_false .
-      add_vals: '/DSL/HR80_T005' 'ENDDA'   '01' ls_t005-endda   abap_false .
-      add_vals: '/DSL/HR80_T005' 'LGART'   '01' ls_t005-lgart   abap_false .
-      add_vals: '/DSL/HR80_T005' 'ANZHL'   '01' ls_t005-anzhl   abap_false .
-      add_vals: '/DSL/HR80_T005' 'BETRG'   '01' ls_t005-betrg   abap_false .
-      add_vals: '/DSL/HR80_T010' 'WAERS'   '02' 'TRY'           abap_false .
+      add_vals: '/DSL/HR80_T005' 'MOLGA' '02' ls_t005-molga abap_false.
+      add_vals: '/DSL/HR80_T005' 'GRPID' '02' ls_t005-grpid abap_false.
+      add_vals: '/DSL/HR80_T005' 'VRSID' '02' ls_t005-vrsid abap_false.
+      add_vals: '/DSL/HR80_T005' 'PERNR' '01' ls_t005-pernr abap_false.
+      add_vals: '/DSL/HR80_T005' 'BEGDA' '01' ls_t005-begda abap_false.
+      add_vals: '/DSL/HR80_T005' 'ENDDA' '01' ls_t005-endda abap_false.
+      add_vals: '/DSL/HR80_T005' 'LGART' '01' ls_t005-lgart abap_false.
+      add_vals: '/DSL/HR80_T005' 'ANZHL' '01' ls_t005-anzhl abap_false.
+      add_vals: '/DSL/HR80_T005' 'BETRG' '01' ls_t005-betrg abap_false.
+      add_vals: '/DSL/HR80_T010' 'WAERS' '02' 'TRY'         abap_false.
       DO.
         CLEAR returncode .
         CALL FUNCTION 'POPUP_GET_VALUES'

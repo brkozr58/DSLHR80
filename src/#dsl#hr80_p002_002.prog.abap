@@ -90,11 +90,11 @@ CLASS lcl_report IMPLEMENTATION.
           t3~datum
           t3~uzeit
             FROM /dsl/hr80_t003 AS t3
-      INNER JOIN /dsl/hr80_t002 AS t2
-                    ON    t2~grpid  EQ t3~grpid
+*      INNER JOIN /dsl/hr80_t002 AS t2
+*                    ON    t2~grpid  EQ t3~grpid
       INNER JOIN /dsl/hr80_t001 AS t1
-                    ON    t1~grpid  EQ t2~grpid
-                      AND t1~molga  EQ t2~molga
+                    ON    t1~grpid  EQ t3~grpid
+                      AND t1~molga  EQ t3~molga
       INTO CORRESPONDING
               FIELDS OF TABLE go_alv->gt_main
       WHERE t3~grpid   IN s_grpid[]
@@ -102,6 +102,8 @@ CLASS lcl_report IMPLEMENTATION.
         AND t3~gjahr   IN s_gjahr[]
         AND t1~molga   EQ p_molga
         AND t3~statu   IN s_statu[]  .
+
+
 *0
 *1  Planlanıyor
 *2  Hesaplama yapılıyor
@@ -206,6 +208,10 @@ CLASS lcl_report IMPLEMENTATION.
       REFRESH go_alv->gt_delete.
       COMMIT WORK AND WAIT .
     ENDIF.
+
+
+    go_alv->refresh_alv( ).
+    cl_gui_cfw=>flush( ).
 
   ENDMETHOD.
 

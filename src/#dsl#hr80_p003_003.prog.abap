@@ -24,6 +24,10 @@ FORM check_paramaters  CHANGING cv_check.
   IF sy-subrc NE 0 .
     MESSAGE i005 DISPLAY LIKE 'E'.
     cv_check = 'X'.
+  ELSEIF sy-subrc EQ 0 AND ls_t003-statu NE '0'
+                       AND ls_t003-statu NE '1'.
+    MESSAGE i046 DISPLAY LIKE 'E' WITH ls_t003-vrsid_t.
+    cv_check = 'X'.
   ENDIF.
 
   IF s_gjahr[] IS INITIAL .
@@ -77,6 +81,7 @@ FORM at_selection_screen .
   CASE sscrfields-ucomm.
     WHEN 'FC01'.
       go_main->template_file( ).
+
     WHEN 'RD' OR space .
       LOOP AT SCREEN.
         CHECK screen-group1 EQ 'RD2'.
@@ -467,6 +472,7 @@ FORM row_record  USING mode TYPE char1
   add_vals: '/DSL/HR80_S003' 'STELL' lv_attr  ls_data-stell abap_false space.
   add_vals: '/DSL/HR80_S003' 'ABKRS' lv_attr  ls_data-abkrs abap_false space.
   add_vals: '/DSL/HR80_S003' 'PERNR' lv_attr  ls_data-pernr abap_false space.
+  add_vals: '/DSL/HR80_S003' 'LGART' lv_attr  ls_data-lgart abap_false space.
   add_vals: '/DSL/HR80_S003' 'BEGDA' space  ls_data-begda abap_false space.
   add_vals: '/DSL/HR80_S003' 'ENDDA' space  ls_data-endda abap_false space.
   add_vals: '/DSL/HR80_S003' 'RAT01' space  space         abap_false space.
@@ -530,6 +536,7 @@ FORM row_record  USING mode TYPE char1
             stell           = ls_data-stell
             abkrs           = ls_data-abkrs
             pernr           = ls_data-pernr
+            lgart           = ls_data-lgart
             begda           = ls_data-begda
             endda           = ls_data-endda
             ratxx           = ls_data-rat01
@@ -543,7 +550,8 @@ FORM row_record  USING mode TYPE char1
           ne_year           = 023
           no_bukrs          = 024
           no_date           = 025
-          record_available  = 1          ).
+          record_available  = 1
+          no_lgart          = 045   ).
 
       IF ls_s004 IS NOT INITIAL AND sy-subrc EQ 0.
 
@@ -573,6 +581,7 @@ FORM row_record  USING mode TYPE char1
           WHEN 023.MESSAGE i023 DISPLAY LIKE 'E'.
           WHEN 024.MESSAGE i024 DISPLAY LIKE 'E'.
           WHEN 025.MESSAGE i025 DISPLAY LIKE 'E'.
+          WHEN 045.MESSAGE i045 DISPLAY LIKE 'E'.
           WHEN OTHERS.
         ENDCASE.
       ENDIF.

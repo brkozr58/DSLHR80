@@ -163,6 +163,14 @@ FORM save_main .
 
   REFRESH lt_t011.
   REFRESH : lr_pernr.
+
+  IF go_alv->gt_t011 IS NOT INITIAL .
+    DELETE FROM /dsl/hr80_t011
+                          WHERE molga EQ p_molga
+                            AND grpid IN s_grpid[]
+                            AND vrsid IN s_vrsid[].
+  ENDIF.
+
   lr_pernr[] = VALUE #( FOR ls_main IN go_alv->gt_main
               WHERE ( oprtn = 'N' OR oprtn = 'C' )
                     ( option = 'EQ'
@@ -550,7 +558,8 @@ FORM calc_simu .
 
               WHEN OTHERS.
                 READ TABLE msgtab INTO DATA(ls_msgtab)
-                      WITH KEY pernr = <fs_main>-pernr.
+                      WITH KEY pernr = <fs_main>-pernr
+                               pos   = space.
                 IF sy-subrc EQ 0 .
                   READ TABLE ls_msgtab-msg INTO DATA(ls_msg)
                         WITH KEY message = 'E'.

@@ -219,6 +219,10 @@ CLASS lcl_report IMPLEMENTATION.
       RAISE ne_year.RETURN.
     ENDIF.
 
+    IF lgart IS INITIAL.
+      RAISE no_lgart.RETURN.
+    ENDIF.
+
 *    IF bukrs IS INITIAL .
 *      RAISE no_bukrs.RETURN.
 *    ENDIF.
@@ -254,7 +258,8 @@ CLASS lcl_report IMPLEMENTATION.
            orgeh TO ps_s004-orgeh,
            stell TO ps_s004-stell,
            abkrs TO ps_s004-abkrs,
-           pernr TO ps_s004-pernr.
+           pernr TO ps_s004-pernr,
+           lgart TO ps_s004-lgart.
 
     lv_year = begda+4(2).
 
@@ -375,6 +380,7 @@ CLASS lcl_alv IMPLEMENTATION.
             OR fieldname    EQ 'VRSID'
             OR fieldname    EQ 'GRPID'
             OR fieldname    EQ 'GJAHR'
+            OR fieldname    EQ 'LGART'
             OR fieldname    EQ 'MOLGA' .
       IF r_rd1 EQ 'X' .
         modify_target_value(  fname  = ls_fcat-fieldname

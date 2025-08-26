@@ -56,6 +56,7 @@ CLASS lcl_report DEFINITION   .
                                      stell TYPE /dsl/hr80_s004-stell
                                      abkrs TYPE /dsl/hr80_s004-abkrs
                                      pernr TYPE /dsl/hr80_s004-pernr
+                                     lgart TYPE /dsl/hr80_s004-lgart
                                      begda TYPE begda
                                      endda TYPE endda
                                      ratxx TYPE /dsl/hr80_s004-rat01
@@ -67,7 +68,8 @@ CLASS lcl_report DEFINITION   .
                                      ne_year
                                      no_bukrs
                                      no_date
-                                     record_available.
+                                     record_available
+                                     no_lgart.
 *
   PROTECTED SECTION.
 
