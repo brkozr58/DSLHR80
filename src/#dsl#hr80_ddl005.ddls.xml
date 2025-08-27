@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLS>
-    <DDLNAME>/DSL/HR80_DDL004</DDLNAME>
+    <DDLNAME>/DSL/HR80_DDL005</DDLNAME>
     <DDLANGUAGE>T</DDLANGUAGE>
-    <DDTEXT>Bütçe - Personel yıllık bordro sonuçları</DDTEXT>
+    <DDTEXT>Bütçe - Personel yıllık bordro sonuçları (son)</DDTEXT>
     <SOURCE_TYPE>V</SOURCE_TYPE>
    </DDLS>
   </asx:values>
