@@ -710,66 +710,28 @@ CLASS lcl_alv IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD handle_toolbar.
+    DEFINE insert_value .
+      INSERT VALUE #( butn_type = 0
+                      function  = &1
+                      icon      = &2
+                      disabled  = space
+                      text      = &3
+                      quickinfo = &3
+                      )
+              INTO TABLE e_object->mt_toolbar.
+    END-OF-DEFINITION.
+
+
     IF go_alv->gs_t003-statu EQ '0' OR go_alv->gs_t003-statu EQ '1'.
-      INSERT VALUE #( butn_type = 0
-                      function  = 'COPY'
-                      icon      = icon_new_employee
-                      disabled  = space
-                      text      = 'DUMMY Personel Oluştur'
-                      )
-              INTO TABLE e_object->mt_toolbar.
-
-      INSERT VALUE #( butn_type = 0
-                      function  = 'INSERT'
-                      icon      = icon_insert_row
-                      disabled  = space
-                      text      = 'Personel Ekle'
-                      )
-              INTO TABLE e_object->mt_toolbar.
-
-      INSERT VALUE #( butn_type = 0
-                      function  = 'CHANGE'
-                      icon      = icon_change
-                      disabled  = space
-                      text      = 'Personel Değiştir'
-                      )
-              INTO TABLE e_object->mt_toolbar.
-      INSERT VALUE #( butn_type = 0
-                      function  = 'DELETE'
-                      icon      = icon_delete_row
-                      disabled  = space
-                      text      = 'Personel Sil'
-                      )
-             INTO TABLE e_object->mt_toolbar.
-
-      INSERT VALUE #( butn_type = 0
-                      function  = 'MODFIY'
-                      icon      = icon_system_save
-                      quickinfo = TEXT-t01
-                      disabled  = space
-                      text      = 'Kaydet'
-                      )
-              INTO TABLE e_object->mt_toolbar.
-
-      INSERT VALUE #( butn_type = 0
-                      function  = 'ADD_LGART'
-                      icon      = icon_payment
-                      quickinfo = TEXT-t01
-                      disabled  = space
-                      text      = TEXT-t01
-                      )
-              INTO TABLE e_object->mt_toolbar.
-
+      insert_value :
+        'COPY'      icon_new_employee 'DUMMY Personel Oluştur',
+        'INSERT'    icon_insert_row   'Personel Ekle' ,
+        'CHANGE'    icon_change       'Personel Değiştir',
+        'DELETE'    icon_delete_row   'Personel Sil',
+        'ADD_LGART' icon_payment      TEXT-t01,
+        'MODFIY'    icon_system_save  'Kaydet'.
     ENDIF.
-
-
-    INSERT VALUE #( butn_type = 0
-                    function  = 'STATU'
-                    icon      = icon_set_state
-                    disabled  = space
-                    text      = 'Versiyon durumu değiştir'
-                    )
-            INTO TABLE e_object->mt_toolbar.
+    insert_value : 'STATU'  icon_set_state  'Versiyon durumu değiştir'.
 
   ENDMETHOD.
 
