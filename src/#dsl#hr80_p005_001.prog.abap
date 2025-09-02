@@ -23,14 +23,16 @@ SELECTION-SCREEN END OF BLOCK bl2.
 
 
   SELECTION-SCREEN BEGIN OF BLOCK bl3 WITH FRAME TITLE TEXT-002  .
+
+    SELECTION-SCREEN PUSHBUTTON 5(42) chlogvar
+                    USER-COMMAND chal VISIBLE LENGTH 60.
+
     PARAMETERS : r_rd1 RADIOBUTTON GROUP rd DEFAULT 'X' USER-COMMAND rd,
                  r_rd2 RADIOBUTTON GROUP rd .
     PARAMETERS :p_file TYPE rlgrap-filename MODIF ID rd2.
 
-    SELECTION-SCREEN : FUNCTION KEY 1 .
 
   SELECTION-SCREEN END OF BLOCK bl3.
-
 
 *----------------------------------------------------------------------*
 *       CLASS lcl_report DEFINITION

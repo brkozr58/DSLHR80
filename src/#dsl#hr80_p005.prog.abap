@@ -32,6 +32,7 @@ REPORT /dsl/hr80_p005 MESSAGE-ID /dsl/hr80.
     APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0' ) TO s_statu.
     APPEND VALUE #( sign = 'I' option = 'EQ'  low = '1' ) TO s_statu.
 
+
 *  AT SELECTION-SCREEN
   AT SELECTION-SCREEN   .
     go_main->at_selection_screen( ).

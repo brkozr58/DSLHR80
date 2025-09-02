@@ -1,6 +1,8 @@
 *----------------------------------------------------------------------*
 ***INCLUDE /DSL/HR80_P005_004.
 *----------------------------------------------------------------------*
+
+
 *&---------------------------------------------------------------------*
 *& Module STATUS_2000 OUTPUT
 *&---------------------------------------------------------------------*
@@ -336,5 +338,132 @@ FORM input_rfper_read .
         AND pa1_endda GE sy-datum.
 
 
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form POPUP_USER_COMMAND
+*&---------------------------------------------------------------------*
+FORM popup_user_command  TABLES pt_table STRUCTURE /dsl/hr80_s009
+                          USING pe_ucomm sender .
+  DATA : lt_t005 TYPE TABLE OF /dsl/hr80_t005   .
+
+  CASE pe_ucomm.
+      WHEN 'CANC'.
+        EXIT.
+      WHEN 'TEMP'.
+        PERFORM template_lgart_file .
+      WHEN 'SFILE'.
+        PERFORM get_excel_payment TABLES pt_table  .
+        EXIT.
+      WHEN 'BATCH'.
+        IF pt_table[] IS NOT INITIAL .
+          lt_t005 = VALUE #( FOR ls_table IN pt_table
+                      ( molga       = go_alv->gs_t003-molga
+                        grpid       = go_alv->gs_t003-grpid
+                        vrsid       = go_alv->gs_t003-vrsid
+                        pernr       = ls_table-pernr
+                        lgart       = ls_table-lgart
+                        begda       = ls_table-begda
+                        endda       = ls_table-endda
+                        anzhl       = ls_table-anzhl
+                        betrg       = ls_table-betrg
+                        )
+                    ).
+          MODIFY /dsl/hr80_t005 FROM TABLE lt_t005[].
+          MESSAGE s020   .
+        ELSE.
+          MESSAGE s047   .
+        ENDIF.
+
+    ENDCASE.
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form TEMPLATE_LGART_FILE
+*&---------------------------------------------------------------------*
+FORM template_lgart_file .
+
+  DATA : BEGIN OF ls_head,
+       header(80),
+     END OF ls_head,
+     lt_head LIKE TABLE OF ls_head.
+  DATA: ld_filename TYPE string,
+        ld_path     TYPE string,
+        ld_fullpath TYPE string,
+        ld_result   TYPE i.
+  FIELD-SYMBOLS <fs>          TYPE any .
+
+  DATA : ls_data TYPE /dsl/hr80_s009 .
+  DATA : lt_data TYPE TABLE OF /dsl/hr80_s009 .
+
+
+  DEFINE add_head.
+    ls_head-header = &1.
+    APPEND ls_head TO lt_head.
+    CLEAR  ls_head .
+  END-OF-DEFINITION.
+
+  " dosyanın oluşturulması
+  CALL METHOD cl_gui_frontend_services=>file_save_dialog
+    EXPORTING
+*     window_title      = ' '
+      default_extension = 'XLS'
+      default_file_name = 'Örnek_şablon.xls'
+      initial_directory = 'C:\'
+    CHANGING
+      filename          = ld_filename
+      path              = ld_path
+      fullpath          = ld_fullpath
+      user_action       = ld_result.
+
+  IF sy-subrc <> 0.
+    MESSAGE i000 DISPLAY LIKE 'E' WITH 'Dizin seçilemedi' .
+  ELSE.
+    DATA : lt_fcat      TYPE lvc_t_fcat.
+
+    CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+      EXPORTING
+        i_structure_name       = '/DSL/HR80_S009'
+        i_client_never_display = abap_true
+        i_bypassing_buffer     = abap_true
+      CHANGING
+        ct_fieldcat            = lt_fcat
+      EXCEPTIONS
+        inconsistent_interface = 1
+        program_error          = 2
+        OTHERS                 = 3.
+
+
+    APPEND VALUE #( pernr   = '340'
+                    lgart   = '2000'
+                    begda   = '20250101'''
+                    endda   = '20250101'''
+                    anzhl   = '1'
+                    betrg   = '15000'
+
+                      ) TO lt_data.
+
+    LOOP AT lt_fcat INTO DATA(ls_fcat)  .
+      add_head : ls_fcat-scrtext_l .
+    ENDLOOP.
+
+    CALL FUNCTION 'GUI_DOWNLOAD'
+      EXPORTING
+        filename              = ld_fullpath
+        filetype              = 'ASC'
+        write_field_separator = 'X'
+        confirm_overwrite     = 'X'
+        dat_mode              = 'D'
+      TABLES
+        data_tab              = lt_data[]
+*        data_tab              = <dyn_table>[]
+        fieldnames            = lt_head[]
+      EXCEPTIONS
+        file_open_error       = 1
+        file_write_error      = 2
+        OTHERS                = 3.
+
+  ENDIF.
 
 ENDFORM.

@@ -13,6 +13,7 @@ FORM check_paramaters  CHANGING cv_check.
   IF s_vrsid[] IS INITIAL .
     MESSAGE i003 DISPLAY LIKE 'E'.
     cv_check = 'X'.
+    EXIT.
   ENDIF.
 
   CLEAR :go_alv->gs_t003.
@@ -24,6 +25,7 @@ FORM check_paramaters  CHANGING cv_check.
   IF sy-subrc NE 0 .
     MESSAGE i005 DISPLAY LIKE 'E'.
     cv_check = 'X'.
+    EXIT.
 *  ELSEIF sy-subrc EQ 0 AND go_alv->gs_t003 NE '0'
 *                       AND go_alv->gs_t003 NE '1'.
 *    MESSAGE i046 DISPLAY LIKE 'E' WITH go_alv->gs_t003-vrsid_t.
@@ -33,6 +35,7 @@ FORM check_paramaters  CHANGING cv_check.
   IF s_gjahr[] IS INITIAL .
     s_gjahr = 'IEQ'.
     s_gjahr-low = go_alv->gs_t003-gjahr.
+    s_gjahr-high = space.
     APPEND s_gjahr.
     LOOP AT s_gjahr.  ENDLOOP.
   ENDIF.
@@ -70,6 +73,7 @@ ENDFORM.
 FORM at_selection_screen .
   go_alv->create_fcat( ).
 
+
   CASE 'X'.
     WHEN r_rd1 . " Rapor
       sscrfields-functxt_01 = ''.
@@ -79,9 +83,17 @@ FORM at_selection_screen .
     WHEN OTHERS.
   ENDCASE.
 
+
   CASE sscrfields-ucomm.
     WHEN 'FC01'.
       go_main->template_file( ).
+    WHEN 'CHAL'.
+      CLEAR gv_error.
+      go_main->check_paramaters( CHANGING cv_check = gv_error ).
+      CHECK gv_error IS INITIAL .
+      PERFORM add_lgart.
+
+
     WHEN 'RD' OR space .
       LOOP AT SCREEN.
         CHECK screen-group1 EQ 'RD2'.
@@ -934,13 +946,36 @@ ENDFORM.
 *& Form ADD_LGART
 *&---------------------------------------------------------------------*
 FORM add_lgart .
+   DATA answer  .
+
+   go_main->popup_to_confirm(
+     EXPORTING
+       titlebar       = 'Bilgi'
+       text_question  = TEXT-drm
+       text_button_1  = 'Toplu aktar'
+       text_button_2  = 'Giriş ekranı'
+     IMPORTING
+       answer         = answer
+     EXCEPTIONS
+       text_not_found = 1
+   ).
+   CASE answer.
+   	WHEN '2' . "'Giriş ekranı
+      PERFORM add_lgart_input USING go_alv->gs_t003.
+   	WHEN '1' . "'Toplu aktar'.
+      PERFORM add_lgart_batch USING go_alv->gs_t003.
+   ENDCASE.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form ADD_LGART_INPUT
+*&---------------------------------------------------------------------*
+FORM add_lgart_input USING ps_t003     TYPE /dsl/hr80_t003.
 
   DATA : ivals       TYPE TABLE OF sval.
   DATA : xvals       TYPE sval.
   DATA : returncode .
-  DATA : ls_t003     TYPE /dsl/hr80_t003.
   DATA : ls_t005     TYPE /dsl/hr80_t005.
-  DATA : ls_t010     TYPE /dsl/hr80_t010.
 
 *      Normal koyuluk derecesi girişe hazır
 *01  açık renkli girişe hazır
@@ -958,6 +993,8 @@ FORM add_lgart .
     APPEND xvals TO ivals.
   END-OF-DEFINITION.
 
+  MOVE-CORRESPONDING ps_t003 TO ls_t005.
+
   CALL FUNCTION 'POPUP_GET_VALUES_SET_MAX_FIELD'
     EXPORTING
       number_of_fields = '40'
@@ -965,72 +1002,334 @@ FORM add_lgart .
       out_of_range     = 1
     .
 
-  SELECT SINGLE * FROM /dsl/hr80_t003 INTO ls_t003
-      WHERE vrsid IN s_vrsid[]
-        AND grpid IN s_grpid[]
-        AND gjahr IN s_gjahr[]
-        AND molga EQ p_molga .
+  add_vals: '/DSL/HR80_T005' 'MOLGA' '02' ls_t005-molga abap_false.
+  add_vals: '/DSL/HR80_T005' 'GRPID' '02' ls_t005-grpid abap_false.
+  add_vals: '/DSL/HR80_T005' 'VRSID' '02' ls_t005-vrsid abap_false.
+  add_vals: '/DSL/HR80_T005' 'PERNR' '01' ls_t005-pernr abap_false.
+  add_vals: '/DSL/HR80_T005' 'BEGDA' '01' ls_t005-begda abap_false.
+  add_vals: '/DSL/HR80_T005' 'ENDDA' '01' ls_t005-endda abap_false.
+  add_vals: '/DSL/HR80_T005' 'LGART' '01' ls_t005-lgart abap_false.
+  add_vals: '/DSL/HR80_T005' 'ANZHL' '01' ls_t005-anzhl abap_false.
+  add_vals: '/DSL/HR80_T005' 'BETRG' '01' ls_t005-betrg abap_false.
+  add_vals: '/DSL/HR80_T010' 'WAERS' '02' 'TRY'         abap_false.
+  DO.
+    CLEAR returncode .
+    CALL FUNCTION 'POPUP_GET_VALUES'
+      EXPORTING
+         popup_title     = 'Bütçe versiyonu durum değişikliği'
+         start_column    = 15
+         start_row       = 10
+      IMPORTING
+         returncode      = returncode
+      TABLES
+         fields          = ivals
+      EXCEPTIONS
+         error_in_fields = 1
+         OTHERS          = 2.
+    IF returncode IS INITIAL.
+      LOOP AT ivals INTO xvals.
+        ASSIGN COMPONENT xvals-fieldname OF STRUCTURE ls_t005
+            TO FIELD-SYMBOL(<fs>).
+        CHECK <fs> IS ASSIGNED .
+        SHIFT xvals-value LEFT DELETING LEADING space.
+        <fs> = xvals-value.
+        UNASSIGN <fs>.
+      ENDLOOP.
 
-  MOVE-CORRESPONDING ls_t003 TO ls_t005.
+      MODIFY /dsl/hr80_t005 FROM ls_t005.
+      MESSAGE s020   .
+    ELSE.
+      EXIT.
+    ENDIF.
 
-   DATA answer  .
-   go_main->popup_to_confirm(
-     EXPORTING
-       titlebar       = 'Bilgi'
-       text_question  = TEXT-drm
-       text_button_1  = 'Toplu aktar'
-       text_button_2  = 'Giriş ekranı'
-     IMPORTING
-       answer         = answer
-     EXCEPTIONS
-       text_not_found = 1
-   ).
-   CASE answer.
-   	WHEN '1' . "'Toplu aktar'.
-   	WHEN '2' . "'Giriş ekranı
-      add_vals: '/DSL/HR80_T005' 'MOLGA' '02' ls_t005-molga abap_false.
-      add_vals: '/DSL/HR80_T005' 'GRPID' '02' ls_t005-grpid abap_false.
-      add_vals: '/DSL/HR80_T005' 'VRSID' '02' ls_t005-vrsid abap_false.
-      add_vals: '/DSL/HR80_T005' 'PERNR' '01' ls_t005-pernr abap_false.
-      add_vals: '/DSL/HR80_T005' 'BEGDA' '01' ls_t005-begda abap_false.
-      add_vals: '/DSL/HR80_T005' 'ENDDA' '01' ls_t005-endda abap_false.
-      add_vals: '/DSL/HR80_T005' 'LGART' '01' ls_t005-lgart abap_false.
-      add_vals: '/DSL/HR80_T005' 'ANZHL' '01' ls_t005-anzhl abap_false.
-      add_vals: '/DSL/HR80_T005' 'BETRG' '01' ls_t005-betrg abap_false.
-      add_vals: '/DSL/HR80_T010' 'WAERS' '02' 'TRY'         abap_false.
-      DO.
-        CLEAR returncode .
-        CALL FUNCTION 'POPUP_GET_VALUES'
-          EXPORTING
-             popup_title     = 'Bütçe versiyonu durum değişikliği'
-             start_column    = 15
-             start_row       = 10
-          IMPORTING
-             returncode      = returncode
-          TABLES
-             fields          = ivals
-          EXCEPTIONS
-             error_in_fields = 1
-             OTHERS          = 2.
-        IF returncode IS INITIAL.
-          LOOP AT ivals INTO xvals.
-            ASSIGN COMPONENT xvals-fieldname OF STRUCTURE ls_t003
-                TO FIELD-SYMBOL(<fs>).
-            CHECK <fs> IS ASSIGNED .
-            SHIFT xvals-value LEFT DELETING LEADING space.
-            <fs> = xvals-value.
-            UNASSIGN <fs>.
-          ENDLOOP.
+  ENDDO.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form ADD_LGART_BATCH
+*&---------------------------------------------------------------------*
+FORM add_lgart_batch  USING ps_t003 TYPE /dsl/hr80_t003.
 
-          MODIFY /dsl/hr80_t005 FROM ls_t005.
-          MESSAGE s020   .
-        ELSE.
-          EXIT.
+
+  PERFORM popup_list_display
+         USING 'Listedeki kayıtlar aktarılacaktır. Emin misiniz?' .
+
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form GET_EXCEL_PAYMENT
+*&---------------------------------------------------------------------*
+FORM get_excel_payment  TABLES lt_table STRUCTURE /dsl/hr80_s009.
+
+  DATA : lv_file TYPE rlgrap-filename.
+  DATA ls_table TYPE /dsl/hr80_s009 .
+
+  FIELD-SYMBOLS: <fs> TYPE any.
+  DATA : ld_index     TYPE sy-index.
+  DATA : lv_fname     TYPE rlgrap-filename.
+  DATA : p_scol  TYPE i VALUE '1',
+         p_srow  TYPE i VALUE '1',
+         p_ecol  TYPE i VALUE '256',
+         p_erow  TYPE i VALUE '65536',
+         lv_type TYPE c.
+  DATA : lv_string1 TYPE string,
+         lv_string2 TYPE string,
+         lv_string3 TYPE string.
+  DATA : lv_length TYPE i.
+
+  DATA : lv_decimal TYPE p LENGTH 10 DECIMALS 2.
+
+  DATA : lt_intern TYPE  TABLE OF kcde_cells .
+  FIELD-SYMBOLS <f1> TYPE kcde_cells .
+
+    CALL FUNCTION 'F4_FILENAME'
+      IMPORTING
+        file_name = lv_file.
+
+
+*Note: Alternative function module - 'ALSM_EXCEL_TO_INTERNAL_TABLE'
+  CALL FUNCTION 'KCD_EXCEL_OLE_TO_INT_CONVERT'
+    EXPORTING
+      filename                = lv_file
+      i_begin_col             = p_scol
+      i_begin_row             = p_srow
+      i_end_col               = p_ecol
+      i_end_row               = p_erow
+    TABLES
+      intern                  = lt_intern
+    EXCEPTIONS
+      inconsistent_parameters = 1
+      upload_ole              = 2
+      OTHERS                  = 3.
+  IF sy-subrc <> 0.
+    FORMAT COLOR COL_BACKGROUND INTENSIFIED.
+    WRITE:/ 'Dosya Yüklenirken Hata !'.
+    EXIT.
+  ENDIF.
+  IF lt_intern[] IS INITIAL.
+    CHECK 1 EQ 2.
+  ELSE.
+    SORT lt_intern BY row col.
+    DELETE lt_intern WHERE row EQ 1.
+  ENDIF.
+
+
+  LOOP AT lt_intern ASSIGNING <f1>.
+    MOVE : <f1>-col TO ld_index.
+    UNASSIGN <fs> .
+    ASSIGN COMPONENT ld_index OF STRUCTURE ls_table TO <fs> .
+    DESCRIBE FIELD <fs> TYPE lv_type.
+
+    CASE lv_type.
+      WHEN 'D'.
+        IF <f1>-value IS NOT INITIAL OR
+           <f1>-value+0(8) NE '0000000'.
+          SPLIT <f1>-value AT '.' INTO lv_string1 lv_string2 lv_string3.
+          IF sy-subrc EQ 0 .
+            lv_length = strlen( lv_string1 ).
+            IF lv_length EQ 1.
+              CONCATENATE '0' lv_string1  INTO lv_string1.
+            ENDIF.
+            CLEAR lv_length.
+
+            lv_length = strlen( lv_string2 ).
+            IF lv_length EQ 1.
+              CONCATENATE '0' lv_string2  INTO lv_string2.
+            ENDIF.
+            CONCATENATE lv_string1 lv_string2 lv_string3
+                  INTO <f1>-value .
+            CONCATENATE <f1>-value+4(4)   <f1>-value+2(2)
+                         <f1>-value+0(2) INTO <fs>.
+          ELSE.
+            <fs> = <f1>-value.
+          ENDIF.
+
         ENDIF.
+      WHEN 'P'.
+        CALL FUNCTION 'MOVE_CHAR_TO_NUM'
+          EXPORTING
+            chr             = <f1>-value
+          IMPORTING
+            num             = lv_decimal
+          EXCEPTIONS
+            convt_no_number = 1
+            convt_overflow  = 2
+            OTHERS          = 3.
+        MOVE lv_decimal TO <fs>.
+      WHEN OTHERS.
+        MOVE <f1>-value TO <fs>.
+    ENDCASE.
 
-      ENDDO.
-   ENDCASE.
+    AT END OF row.
+      APPEND ls_table TO lt_table.
+      CLEAR ls_table.
+    ENDAT.
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form POPUP_LIST_DISPLAY
+*&---------------------------------------------------------------------*
+FORM popup_list_display
+        USING pv_title .
+
+*  DATA : lo_alv       TYPE REF TO cl_salv_table.
+*  DATA : gr_display   TYPE REF TO cl_salv_display_settings.
+  FIELD-SYMBOLS <ft> TYPE STANDARD TABLE  .
+
+  DATA(lo_salv) = NEW lcl_event_receiver_salv( ).
 
 
+
+  TRY.
+      cl_salv_table=>factory(
+        IMPORTING
+          r_salv_table = lo_salv->lo_alv
+        CHANGING
+          t_table      = lo_salv->lo_table ).
+
+    CATCH cx_salv_msg.
+  ENDTRY.
+
+  DATA: lr_functions TYPE REF TO cl_salv_functions_list.
+
+  DATA(lo_event) = lo_salv->lo_alv->get_event( ).
+
+  SET HANDLER lo_salv->handle_user_command FOR lo_event.
+
+  lr_functions = lo_salv->lo_alv->get_functions( ).
+  lr_functions->set_all( 'X' ).
+    lo_salv->lo_alv->set_screen_status(
+          report        = sy-repid
+          pfstatus      = 'POP_S'
+             ).
+
+  IF lo_salv->lo_alv IS BOUND.
+    lo_salv->gr_display = lo_salv->lo_alv->get_display_settings( ).
+    lo_salv->gr_display->set_list_header( pv_title ).
+    lo_salv->lo_alv->set_screen_popup(
+        start_column = 1
+        end_column   = 100
+        start_line   = 1
+        end_line     = 20 ).
+
+    lo_salv->lo_alv->display( ).
+
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form LEAVING_WORK
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+FORM leaving_work .
+
+  DATA : ivals       TYPE TABLE OF sval.
+  DATA : xvals       TYPE sval.
+  DATA : returncode .
+  DATA : lt_rows TYPE lvc_t_row.
+  DATA : lt_rown TYPE lvc_t_roid.
+  DATA : ls_leav_work TYPE /dsl/hr80_t010.
+  DATA : answer.
+
+*      Normal koyuluk derecesi girişe hazır
+*01	açık renkli girişe hazır
+*02	Normal koyuluk derecesi girişe hazır değil
+*03	açık renkli girişe hazır değil
+*04	Görüntüleme!
+
+  DEFINE add_vals.
+    CLEAR xvals .
+    xvals-tabname       = &1.
+    xvals-fieldname     = &2.
+    xvals-field_attr    = &3.
+    xvals-value         = &4.
+    xvals-field_obl     = &5.
+    APPEND xvals TO ivals.
+  END-OF-DEFINITION.
+
+
+
+  go_alv->mo_grid->get_selected_rows(
+    IMPORTING
+      et_index_rows = lt_rows
+      et_row_no     = lt_rown
+  ).
+
+  IF lines( lt_rown ) GT 0.
+    go_main->popup_to_confirm(
+      EXPORTING
+        titlebar       = 'Uyarı'
+        text_question  = TEXT-lea
+        text_button_1  = 'Evet'
+        text_button_2  = 'Hayır'
+      IMPORTING
+        answer         = answer
+      EXCEPTIONS
+        text_not_found = 1
+    ).
+
+    IF answer EQ '1'.
+      go_alv->record_check = 'C'." DEğişiklik kontrolü için
+      CLEAR ls_leav_work.
+      ls_leav_work-begda = sy-datum.
+      ls_leav_work-massn = '10'.
+*      ls_leav_work-massg = .
+      ls_leav_work-stat2 = '0'.
+
+      add_vals: '/DSL/HR80_T010' 'BEGDA'   '01' ls_leav_work-begda   abap_false .
+      add_vals: '/DSL/HR80_T010' 'MASSN'   '01' ls_leav_work-massn   abap_false .
+      add_vals: '/DSL/HR80_T010' 'MASSG'   '01' ls_leav_work-massg   abap_false .
+      add_vals: '/DSL/HR80_T010' 'STAT2'   '01' ls_leav_work-stat2   abap_false .
+
+      CALL FUNCTION 'POPUP_GET_VALUES_SET_MAX_FIELD'
+        EXPORTING
+          number_of_fields = '40'
+        EXCEPTIONS
+          out_of_range     = 1
+        .
+        DO.
+          CLEAR returncode .
+          CALL FUNCTION 'POPUP_GET_VALUES'
+            EXPORTING
+               popup_title     = 'İşten Çıkış'
+               start_column    = 15
+               start_row       = 10
+            IMPORTING
+               returncode      = returncode
+            TABLES
+               fields          = ivals
+            EXCEPTIONS
+               error_in_fields = 1
+               OTHERS          = 2.
+          IF returncode IS INITIAL.
+            LOOP AT ivals INTO xvals.
+              ASSIGN COMPONENT xvals-fieldname OF STRUCTURE ls_leav_work
+                  TO FIELD-SYMBOL(<fs>).
+              CHECK <fs> IS ASSIGNED .
+              SHIFT xvals-value LEFT DELETING LEADING space.
+              <fs> = xvals-value.
+              UNASSIGN <fs>.
+            ENDLOOP.
+
+
+****            işten çıkış için kod yazılacak.
+
+            EXIT.
+          ELSE. " Hayır
+            EXIT.
+          ENDIF.
+
+        ENDDO.
+
+
+
+
+*      LOOP AT lt_rown ASSIGNING FIELD-SYMBOL(<ls_rown>).
+*        go_alv->gt_main[ <ls_rown>-row_id ]-mark = abap_true.
+*      ENDLOOP.
+    ENDIF.
+  ELSE.
+    MESSAGE s006 DISPLAY LIKE 'E' .
+  ENDIF.
 
 ENDFORM.

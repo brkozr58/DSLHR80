@@ -102,7 +102,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
     CHECK gv_error IS INITIAL .
     CALL SCREEN 0100.
 
-" burak
+
 
 
 *&---------------------------------------------------------------------*

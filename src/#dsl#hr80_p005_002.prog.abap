@@ -2,6 +2,51 @@
 *& Include          /DSL/HR80_P005_002
 *&---------------------------------------------------------------------*
 
+CLASS lcl_event_receiver_salv DEFINITION.
+
+  PUBLIC SECTION.
+
+    DATA : lo_alv       TYPE REF TO cl_salv_table.
+    DATA : gr_display   TYPE REF TO cl_salv_display_settings.
+    DATA : lo_table TYPE TABLE OF /dsl/hr80_s009.
+
+    METHODS:
+      handle_user_command
+          FOR EVENT added_function OF cl_salv_events
+            IMPORTING e_salv_function sender  .
+
+ENDCLASS.
+*----------------------------------------------------------------------*
+*       CLASS lcl_event_receiver_salv IMPLEMENTATION
+*----------------------------------------------------------------------*
+CLASS lcl_event_receiver_salv IMPLEMENTATION.
+
+  METHOD handle_user_command.
+
+    PERFORM popup_user_command TABLES lo_table
+            USING e_salv_function sender.
+
+    CASE e_salv_function.
+      WHEN 'BATCH' OR 'CANC'.
+          lo_alv->close_screen( ).
+      WHEN OTHERS.
+        DATA(ls_stable) = VALUE lvc_s_stbl( row = 'X' col = 'X' ).
+
+        IF lo_alv IS BOUND.
+          lo_alv->refresh(
+            EXPORTING
+              s_stable     = ls_stable
+              refresh_mode = if_salv_c_refresh=>soft
+          ).
+        ENDIF.
+    ENDCASE.
+
+  ENDMETHOD.
+
+ENDCLASS.
+
+
+
 
 *----------------------------------------------------------------------*
 *       CLASS lcl_report IMPLEMENTATION
@@ -10,6 +55,8 @@ CLASS lcl_report IMPLEMENTATION.
 
   METHOD constructor.
 *    go_alv = NEW #( ).
+
+    chlogvar = '@JL@ Ek ödeme oluştur'.
 
   ENDMETHOD.
 
@@ -674,6 +721,9 @@ CLASS lcl_alv IMPLEMENTATION.
     DATA : lt_rows TYPE lvc_t_row.
 
     CASE e_ucomm.
+      WHEN 'LEAVW'  .
+        PERFORM leaving_work.
+
       WHEN 'COPY'.
         PERFORM row_record USING 'N' lt_rows .
 
@@ -724,14 +774,15 @@ CLASS lcl_alv IMPLEMENTATION.
 
     IF go_alv->gs_t003-statu EQ '0' OR go_alv->gs_t003-statu EQ '1'.
       insert_value :
-        'COPY'      icon_new_employee 'DUMMY Personel Oluştur',
-        'INSERT'    icon_insert_row   'Personel Ekle' ,
-        'CHANGE'    icon_change       'Personel Değiştir',
-        'DELETE'    icon_delete_row   'Personel Sil',
-        'ADD_LGART' icon_payment      TEXT-t01,
-        'MODFIY'    icon_system_save  'Kaydet'.
+        'COPY'      icon_new_employee           TEXT-t10,
+        'INSERT'    icon_insert_row             TEXT-t11  ,
+        'CHANGE'    icon_change                 TEXT-t12 ,
+        'DELETE'    icon_delete_row             TEXT-t13 ,
+        'LEAVW'     icon_wf_workitem_reserved   TEXT-t14 ,
+        'ADD_LGART' icon_payment                TEXT-t01,
+        'MODFIY'    icon_system_save            TEXT-t15 .
     ENDIF.
-    insert_value : 'STATU'  icon_set_state  'Versiyon durumu değiştir'.
+    insert_value : 'STATU'  icon_set_state      TEXT-t16 .
 
   ENDMETHOD.
 
