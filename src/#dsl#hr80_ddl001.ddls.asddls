@@ -88,20 +88,20 @@ define view /DSL/HR80_CDS001
                                                 and t530t.sprsl = $session.system_language
   //
 {
-  key     t1.molga,
-  key     t1.grpid,
-  key     t1.vrsid,
-  key     t3.statu,
-  key     t1.gjahr,
-  key     t1.pernr,
-          t1.ename,
-          t1.rfper,
-          t3.vrsid_t,
+          t1.molga,
+          t1.grpid,
           t2.grpid_t,
-
+          t1.vrsid,
+          t3.vrsid_t,
+          t3.statu,
+          t1.gjahr,
+          t1.rfper,
+          t1.pernr,
+          t1.ename,
+        
           t1.begda        as pa1_begda,
           t1.endda        as pa1_endda,
-
+        
           t1.bukrs,
           bukrs.butxt     as bukrs_t,
           t1.orgeh,

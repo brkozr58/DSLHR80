@@ -57,6 +57,7 @@ CLASS lcl_report IMPLEMENTATION.
 *    go_alv = NEW #( ).
 
     chlogvar = '@JL@ Ek ödeme oluştur'.
+*    chnge = '@0Z@ Versiyon statüsü'.
 
   ENDMETHOD.
 
@@ -65,7 +66,47 @@ CLASS lcl_report IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD at_selection_screen.
-    PERFORM at_selection_screen .
+    go_alv->create_fcat( ).
+    CASE 'X'.
+      WHEN r_rd1 . " Rapor
+        sscrfields-functxt_01 = ''.
+
+      WHEN r_rd2 . " Toplu aktarım
+        sscrfields-functxt_01 = '@J2@Şablon İndir'.
+      WHEN OTHERS.
+    ENDCASE.
+
+    CASE sscrfields-ucomm.
+      WHEN 'RD' OR space .
+        LOOP AT SCREEN.
+          CHECK screen-group1 EQ 'RD2'.
+          CASE 'X'.
+            WHEN r_rd1 . " Rapor
+              screen-active = 0 .
+            WHEN r_rd2 . " Toplu aktarım
+              screen-active = 1 .
+            WHEN OTHERS.
+          ENDCASE.
+          MODIFY SCREEN.
+        ENDLOOP.
+
+      WHEN 'FC01'.
+        go_main->template_file( ).
+
+      WHEN 'CHNG'.
+        CLEAR gv_error.
+        go_main->check_paramaters( CHANGING cv_check = gv_error ).
+        CHECK gv_error IS INITIAL .
+        PERFORM change_statu .
+
+      WHEN 'CHAL'.
+        CLEAR gv_error.
+        go_main->check_paramaters( CHANGING cv_check = gv_error ).
+        CHECK gv_error IS INITIAL .
+        PERFORM add_lgart.
+
+      WHEN OTHERS.
+    ENDCASE.
   ENDMETHOD.
 
   METHOD split_container.

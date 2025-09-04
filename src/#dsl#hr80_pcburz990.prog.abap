@@ -12,7 +12,6 @@ INCLUDE /dsl/hr80_calc.
 **********************************************************************
 
 
-
 **********************************************************************
 ***!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 **********************************************************************
@@ -85,20 +84,117 @@ FORM change_person_data .
     lr_rfper = 'IEQ'.lr_rfper-low = p_rfper.APPEND lr_rfper.
   ENDIF.
 
-  LOOP AT p0001 ASSIGNING FIELD-SYMBOL(<p0001>)
-    WHERE begda LE aper-endda.
-    LOOP AT gt_t010 INTO DATA(ls_t010) WHERE pernr IN lr_pernr[] .
-      change_value : ls_t010-werks_new <p0001>-werks,
-                     ls_t010-btrtl_new <p0001>-btrtl,
-                     ls_t010-persg_new <p0001>-persg,
-                     ls_t010-persk_new <p0001>-persk,
-                     ls_t010-orgeh     <p0001>-orgeh,
-                     ls_t010-plans     <p0001>-plans,
-                     ls_t010-stell     <p0001>-stell,
-                     ls_t010-kokrs     <p0001>-kokrs,
-                     ls_t010-kostl     <p0001>-kostl.
+*  REFRESH : p0000,p0001.
+  CLEAR : p0000,p0001.
+  DATA : lt_p0000 TYPE TABLE OF p0000 WITH HEADER LINE .
+  DATA : lt_p0001 TYPE TABLE OF p0001 WITH HEADER LINE .
+
+  LOOP AT p0000.
+    LOOP AT gt_t010 INTO DATA(ls_t010)
+          WHERE pernr EQ p0000-pernr
+            AND begda LE p0000-endda
+            AND endda GE p0000-begda.
+      IF ls_t010-begda NE p0000-begda.
+      "önceki kaydı sınırla
+        MOVE-CORRESPONDING p0000 TO lt_p0000.
+        lt_p0000-endda = ls_t010-begda - 1 .
+        COLLECT lt_p0000.
+
+        " bütçe işlemler dizisini ekle
+        MOVE-CORRESPONDING p0000 TO lt_p0000.
+        MOVE-CORRESPONDING ls_t010 TO lt_p0000.
+        IF ls_t010-rfper IS NOT INITIAL .
+          lt_p0000-pernr = ls_t010-rfper.
+        ENDIF.
+        COLLECT lt_p0000.
+      ENDIF.
     ENDLOOP.
+    IF sy-subrc NE 0 .
+      MOVE-CORRESPONDING p0000 TO lt_p0000.
+      COLLECT lt_p0000.
+    ENDIF.
   ENDLOOP.
+
+  LOOP AT p0001.
+    LOOP AT gt_t010 INTO ls_t010
+          WHERE pernr EQ p0001-pernr
+            AND begda LE p0001-endda
+            AND endda GE p0001-begda.
+      IF ls_t010-begda NE p0001-begda.
+      "önceki kaydı sınırla
+        MOVE-CORRESPONDING p0001 TO lt_p0001.
+        lt_p0001-endda = ls_t010-begda - 1 .
+        COLLECT lt_p0001.
+
+        " bütçe işlemler dizisini ekle
+        MOVE-CORRESPONDING p0001 TO lt_p0001.
+        MOVE-CORRESPONDING ls_t010 TO lt_p0001.
+        IF ls_t010-rfper IS NOT INITIAL .
+          lt_p0001-pernr = ls_t010-rfper.
+        ENDIF.
+        change_value : ls_t010-abkrs     lt_p0001-abkrs,
+                       ls_t010-werks_new lt_p0001-werks,
+                       ls_t010-btrtl_new lt_p0001-btrtl,
+                       ls_t010-persg_new lt_p0001-persg,
+                       ls_t010-persk_new lt_p0001-persk,
+                       ls_t010-orgeh     lt_p0001-orgeh,
+                       ls_t010-plans     lt_p0001-plans,
+                       ls_t010-stell     lt_p0001-stell,
+                       ls_t010-kokrs     lt_p0001-kokrs,
+                       ls_t010-kostl     lt_p0001-kostl.
+        COLLECT lt_p0001.
+      ENDIF.
+    ENDLOOP.
+    IF sy-subrc NE 0 .
+      MOVE-CORRESPONDING p0001 TO lt_p0001.
+      COLLECT lt_p0001.
+    ENDIF.
+  ENDLOOP.
+
+  p0000[] = lt_p0000[].
+  p0001[] = lt_p0001[].
+
+*  LOOP AT gt_t010 INTO DATA(ls_t010) WHERE pernr IN lr_pernr[] .
+*    MOVE-CORRESPONDING ls_t010 TO p0000 .
+*    p0000-infty = '0000'.
+*    IF ls_t010-rfper IS NOT INITIAL .
+*      p0000-pernr = ls_t010-rfper.
+*    ENDIF.
+*    COLLECT p0000.
+*    MOVE-CORRESPONDING ls_t010 TO p0001 .
+*    IF ls_t010-rfper IS NOT INITIAL .
+*      p0001-pernr = ls_t010-rfper.
+*    ENDIF.
+*    p0000-infty = '0001'.
+*    change_value : ls_t010-abkrs     p0001-abkrs,
+*                   ls_t010-werks_new p0001-werks,
+*                   ls_t010-btrtl_new p0001-btrtl,
+*                   ls_t010-persg_new p0001-persg,
+*                   ls_t010-persk_new p0001-persk,
+*                   ls_t010-orgeh     p0001-orgeh,
+*                   ls_t010-plans     p0001-plans,
+*                   ls_t010-stell     p0001-stell,
+*                   ls_t010-kokrs     p0001-kokrs,
+*                   ls_t010-kostl     p0001-kostl.
+*    COLLECT p0001.
+*  ENDLOOP.
+  SORT p0000 ASCENDING BY begda endda.
+  SORT p0001 ASCENDING BY begda endda.
+
+*  LOOP AT p0001 ASSIGNING FIELD-SYMBOL(<p0001>)
+*    WHERE begda LE aper-endda.
+*    LOOP AT gt_t010 INTO DATA(ls_t010) WHERE pernr IN lr_pernr[] .
+*      change_value : ls_t010-werks_new <p0001>-werks,
+*                     ls_t010-btrtl_new <p0001>-btrtl,
+*                     ls_t010-persg_new <p0001>-persg,
+*                     ls_t010-persk_new <p0001>-persk,
+*                     ls_t010-orgeh     <p0001>-orgeh,
+*                     ls_t010-plans     <p0001>-plans,
+*                     ls_t010-stell     <p0001>-stell,
+*                     ls_t010-kokrs     <p0001>-kokrs,
+*                     ls_t010-kostl     <p0001>-kostl.
+*    ENDLOOP.
+*  ENDLOOP.
 
   LOOP AT p0008 ASSIGNING FIELD-SYMBOL(<p0008>)
     WHERE begda LE aper-endda.
@@ -156,6 +252,7 @@ FORM get_budget_datas .
         INTO DATA(mtext)
         WITH p_vrsid  .
     PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
+    PERFORM errors TABLES error_ptext.
   ENDIF.
 
   SELECT * FROM /dsl/hr80_t004   INTO TABLE gt_t004
@@ -167,6 +264,7 @@ FORM get_budget_datas .
         INTO mtext
         WITH p_vrsid  .
     PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
+    PERFORM errors TABLES error_ptext.
   ENDIF.
 
   SELECT * FROM /dsl/hr80_t005   INTO TABLE gt_t005
@@ -188,6 +286,7 @@ FORM get_budget_datas .
     MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '037'
         INTO mtext   .
     PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
+    PERFORM errors TABLES error_ptext.
   ENDIF.
 
   SELECT * FROM /dsl/hr80_tvergd INTO TABLE gt_tvergd

@@ -26,8 +26,8 @@ FORM check_paramaters  CHANGING cv_check.
     MESSAGE i005 DISPLAY LIKE 'E'.
     cv_check = 'X'.
     EXIT.
-*  ELSEIF sy-subrc EQ 0 AND go_alv->gs_t003 NE '0'
-*                       AND go_alv->gs_t003 NE '1'.
+*  ELSEIF sy-subrc EQ 0 AND go_alv->gs_t003-statu NE '0'
+*                       AND go_alv->gs_t003-statu NE '1'.
 *    MESSAGE i046 DISPLAY LIKE 'E' WITH go_alv->gs_t003-vrsid_t.
 *    cv_check = 'X'.
   ENDIF.
@@ -68,49 +68,6 @@ FORM check_paramaters  CHANGING cv_check.
 
 ENDFORM.
 *&---------------------------------------------------------------------*
-*& Form AT_SELECTION_SCREEN
-*&---------------------------------------------------------------------*
-FORM at_selection_screen .
-  go_alv->create_fcat( ).
-
-
-  CASE 'X'.
-    WHEN r_rd1 . " Rapor
-      sscrfields-functxt_01 = ''.
-
-    WHEN r_rd2 . " Toplu aktarım
-      sscrfields-functxt_01 = '@J2@Şablon İndir'.
-    WHEN OTHERS.
-  ENDCASE.
-
-
-  CASE sscrfields-ucomm.
-    WHEN 'FC01'.
-      go_main->template_file( ).
-    WHEN 'CHAL'.
-      CLEAR gv_error.
-      go_main->check_paramaters( CHANGING cv_check = gv_error ).
-      CHECK gv_error IS INITIAL .
-      PERFORM add_lgart.
-
-
-    WHEN 'RD' OR space .
-      LOOP AT SCREEN.
-        CHECK screen-group1 EQ 'RD2'.
-        CASE 'X'.
-          WHEN r_rd1 . " Rapor
-            screen-active = 0 .
-          WHEN r_rd2 . " Toplu aktarım
-            screen-active = 1 .
-          WHEN OTHERS.
-        ENDCASE.
-        MODIFY SCREEN.
-      ENDLOOP.
-
-    WHEN OTHERS.
-  ENDCASE.
-ENDFORM.
-*&---------------------------------------------------------------------*
 *& Form GET_DATA
 *&---------------------------------------------------------------------*
 FORM get_data .
@@ -129,8 +86,8 @@ FORM get_data .
       AND orgeh       IN s_orgeh[]
       AND plans       IN s_plans[]
       AND stell       IN s_stell[]
-      AND pa1_begda   LE s_datum-low
-      AND pa1_endda   GE s_datum-low
+*      AND pa1_begda   LE s_datum-low
+*      AND pa1_endda   GE s_datum-low
 *      AND datum   IN s_datum[]
  .
   IF sy-subrc NE 0 .
@@ -148,8 +105,8 @@ FORM get_data .
         AND orgeh       IN s_orgeh[]
         AND plans       IN s_plans[]
         AND stell       IN s_stell[]
-        AND pa1_begda   LE s_datum-low
-        AND pa1_endda   GE s_datum-low
+*        AND pa1_begda   LE s_datum-low
+*        AND pa1_endda   GE s_datum-low
       .
     go_alv->record_check = 'C'." DEğişiklik kontrolü için
   ENDIF.
@@ -360,7 +317,7 @@ FORM modify_fcat .
   go_alv->modify_target_value(  fname  = 'GRPID'    targt  = 'TEXT'   zvalue = TEXT-grp ).
   go_alv->modify_target_value(  fname  = 'VRSID'    targt  = 'TEXT'   zvalue = TEXT-vrs ).
 
-*  go_alv->modify_target_value(  fname  = 'MOLGA'    targt  = 'NO_OUT' zvalue = 'X' ).
+  go_alv->modify_target_value(  fname  = 'MOLGA'    targt  = 'NO_OUT' zvalue = 'X' ).
   go_alv->modify_target_value(  fname  = 'GJAHR'    targt  = 'NO_OUT' zvalue = 'X' ).
   go_alv->modify_target_value(  fname  = 'GRPID'    targt  = 'NO_OUT' zvalue = 'X' ).
   go_alv->modify_target_value(  fname  = 'VRSID'    targt  = 'NO_OUT' zvalue = 'X' ).
@@ -608,6 +565,7 @@ FORM get_excel  USING file_name TYPE any .
                                           massg       = ls_dyn-massg
               )
             ).
+  SORT go_alv->gt_main ASCENDING BY pernr pa1_begda.
   IF go_alv->gt_main[] IS NOT INITIAL ..
     go_alv->record_check = 'C'.
   ENDIF.
@@ -1048,12 +1006,41 @@ ENDFORM.
 *& Form ADD_LGART_BATCH
 *&---------------------------------------------------------------------*
 FORM add_lgart_batch  USING ps_t003 TYPE /dsl/hr80_t003.
+  DATA: lr_functions TYPE REF TO cl_salv_functions_list.
+  FIELD-SYMBOLS <ft> TYPE STANDARD TABLE  .
+  DATA(lo_salv) = NEW lcl_event_receiver_salv( ).
 
+  TRY.
+      cl_salv_table=>factory(
+        IMPORTING
+          r_salv_table = lo_salv->lo_alv
+        CHANGING
+          t_table      = lo_salv->lo_table ).
+      DATA(lo_event) = lo_salv->lo_alv->get_event( ).
 
-  PERFORM popup_list_display
-         USING 'Listedeki kayıtlar aktarılacaktır. Emin misiniz?' .
+      SET HANDLER lo_salv->handle_user_command FOR lo_event.
 
+      lr_functions = lo_salv->lo_alv->get_functions( ).
+      lr_functions->set_all( 'X' ).
+        lo_salv->lo_alv->set_screen_status(
+              report        = sy-repid
+              pfstatus      = 'POP_S'
+                 ).
 
+      IF lo_salv->lo_alv IS BOUND.
+        lo_salv->gr_display = lo_salv->lo_alv->get_display_settings( ).
+        lo_salv->gr_display->set_list_header( TEXT-003 ).
+        lo_salv->lo_alv->set_screen_popup(
+            start_column = 1
+            end_column   = 100
+            start_line   = 1
+            end_line     = 20 ).
+
+        lo_salv->lo_alv->display( ).
+
+      ENDIF.
+    CATCH cx_salv_msg.
+  ENDTRY.
 
 ENDFORM.
 *&---------------------------------------------------------------------*
@@ -1167,69 +1154,30 @@ FORM get_excel_payment  TABLES lt_table STRUCTURE /dsl/hr80_s009.
   ENDLOOP.
 ENDFORM.
 *&---------------------------------------------------------------------*
-*& Form POPUP_LIST_DISPLAY
-*&---------------------------------------------------------------------*
-FORM popup_list_display
-        USING pv_title .
-
-*  DATA : lo_alv       TYPE REF TO cl_salv_table.
-*  DATA : gr_display   TYPE REF TO cl_salv_display_settings.
-  FIELD-SYMBOLS <ft> TYPE STANDARD TABLE  .
-
-  DATA(lo_salv) = NEW lcl_event_receiver_salv( ).
-
-
-
-  TRY.
-      cl_salv_table=>factory(
-        IMPORTING
-          r_salv_table = lo_salv->lo_alv
-        CHANGING
-          t_table      = lo_salv->lo_table ).
-
-    CATCH cx_salv_msg.
-  ENDTRY.
-
-  DATA: lr_functions TYPE REF TO cl_salv_functions_list.
-
-  DATA(lo_event) = lo_salv->lo_alv->get_event( ).
-
-  SET HANDLER lo_salv->handle_user_command FOR lo_event.
-
-  lr_functions = lo_salv->lo_alv->get_functions( ).
-  lr_functions->set_all( 'X' ).
-    lo_salv->lo_alv->set_screen_status(
-          report        = sy-repid
-          pfstatus      = 'POP_S'
-             ).
-
-  IF lo_salv->lo_alv IS BOUND.
-    lo_salv->gr_display = lo_salv->lo_alv->get_display_settings( ).
-    lo_salv->gr_display->set_list_header( pv_title ).
-    lo_salv->lo_alv->set_screen_popup(
-        start_column = 1
-        end_column   = 100
-        start_line   = 1
-        end_line     = 20 ).
-
-    lo_salv->lo_alv->display( ).
-
-  ENDIF.
-ENDFORM.
-*&---------------------------------------------------------------------*
 *& Form LEAVING_WORK
 *&---------------------------------------------------------------------*
 *& text
 *&---------------------------------------------------------------------*
 FORM leaving_work .
-
-  DATA : ivals       TYPE TABLE OF sval.
-  DATA : xvals       TYPE sval.
+  DATA : ivals           TYPE TABLE OF sval.
+  DATA : xvals           TYPE sval.
+  DATA : lt_rows         TYPE lvc_t_row.
+  DATA : lt_rown         TYPE lvc_t_roid.
+  DATA : ls_leav_work    TYPE /dsl/hr80_t010.
   DATA : returncode .
-  DATA : lt_rows TYPE lvc_t_row.
-  DATA : lt_rown TYPE lvc_t_roid.
-  DATA : ls_leav_work TYPE /dsl/hr80_t010.
   DATA : answer.
+
+  DATA : lmc_de TYPE raw4 .
+  DATA : lt_styl  TYPE lvc_t_styl.
+
+  lt_styl = VALUE #( FOR ls IN go_alv->mt_fcat
+            WHERE ( no_out NE 'X'
+              AND edit   EQ 'X'
+              AND fieldname NE 'RFPER' )
+        ( fieldname = ls-fieldname
+          style     = cl_gui_alv_grid=>mc_style_enabled ) ).
+
+
 
 *      Normal koyuluk derecesi girişe hazır
 *01	açık renkli girişe hazır
@@ -1277,9 +1225,9 @@ FORM leaving_work .
       ls_leav_work-stat2 = '0'.
 
       add_vals: '/DSL/HR80_T010' 'BEGDA'   '01' ls_leav_work-begda   abap_false .
-      add_vals: '/DSL/HR80_T010' 'MASSN'   '01' ls_leav_work-massn   abap_false .
+      add_vals: '/DSL/HR80_T010' 'MASSN'   '02' ls_leav_work-massn   abap_false .
       add_vals: '/DSL/HR80_T010' 'MASSG'   '01' ls_leav_work-massg   abap_false .
-      add_vals: '/DSL/HR80_T010' 'STAT2'   '01' ls_leav_work-stat2   abap_false .
+      add_vals: '/DSL/HR80_T010' 'STAT2'   '02' ls_leav_work-stat2   abap_false .
 
       CALL FUNCTION 'POPUP_GET_VALUES_SET_MAX_FIELD'
         EXPORTING
@@ -1303,7 +1251,8 @@ FORM leaving_work .
                OTHERS          = 2.
           IF returncode IS INITIAL.
             LOOP AT ivals INTO xvals.
-              ASSIGN COMPONENT xvals-fieldname OF STRUCTURE ls_leav_work
+              ASSIGN COMPONENT xvals-fieldname
+                    OF STRUCTURE ls_leav_work
                   TO FIELD-SYMBOL(<fs>).
               CHECK <fs> IS ASSIGNED .
               SHIFT xvals-value LEFT DELETING LEADING space.
@@ -1311,8 +1260,50 @@ FORM leaving_work .
               UNASSIGN <fs>.
             ENDLOOP.
 
+            LOOP AT lt_rown ASSIGNING FIELD-SYMBOL(<ls_rown>).
+              DATA(lv_pernr) =
+                        go_alv->gt_main[ <ls_rown>-row_id ]-pernr.
+              LOOP AT go_alv->gt_main ASSIGNING
+                      FIELD-SYMBOL(<fs_main>)
+                          WHERE pernr     EQ lv_pernr
+                            AND pa1_endda GE ls_leav_work-begda.
+                CLEAR go_alv->gs_main.
+                MOVE-CORRESPONDING <fs_main> TO go_alv->gs_main.
+                go_alv->gs_main-oprtn     = 'C'.
+                go_alv->gs_main-pa1_endda = ls_leav_work-begda  .
+                go_alv->gs_main-pa1_begda = ls_leav_work-begda + 1.
+                go_alv->gs_main-massn     = ls_leav_work-massn .
+                go_alv->gs_main-massg     = ls_leav_work-massg .
+                go_alv->gs_main-stat2     = ls_leav_work-stat2 .
+                go_alv->gs_main-abkrs     = '99' .
+                go_alv->gs_main-oprtn     = <fs_main>-oprtn.
+                CLEAR : go_alv->gs_main-t_styl.
 
-****            işten çıkış için kod yazılacak.
+                lmc_de = cl_gui_alv_grid=>mc_style_enabled.
+
+                DELETE lt_styl WHERE fieldname EQ 'RFPER'.
+*                IF is_data-pernr GT '8999999'.
+                IF go_alv->gs_main-pernr GT go_alv->gmc_dummy.
+                  INSERT VALUE #( fieldname = 'RFPER' style = lmc_de )
+                        INTO TABLE lt_styl .
+                ELSEIF go_alv->gs_main-pernr EQ '00000000'.
+                  INSERT VALUE #( fieldname = 'RFPER' style = lmc_de )
+                        INTO TABLE lt_styl .
+                ELSE.
+                  INSERT VALUE #( fieldname = 'RFPER'
+                          style = cl_gui_alv_grid=>mc_style_disabled )
+                        INTO TABLE lt_styl .
+                ENDIF.
+                go_alv->gs_main-t_styl[] = lt_styl[].
+
+                go_alv->gs_main-color      = 'C110'.
+                APPEND go_alv->gs_main TO go_alv->gt_main.
+                CLEAR go_alv->gs_main .
+                EXIT.
+              ENDLOOP.
+            ENDLOOP.
+
+            SORT go_alv->gt_main ASCENDING BY pernr pa1_begda.
 
             EXIT.
           ELSE. " Hayır
@@ -1321,12 +1312,6 @@ FORM leaving_work .
 
         ENDDO.
 
-
-
-
-*      LOOP AT lt_rown ASSIGNING FIELD-SYMBOL(<ls_rown>).
-*        go_alv->gt_main[ <ls_rown>-row_id ]-mark = abap_true.
-*      ENDLOOP.
     ENDIF.
   ELSE.
     MESSAGE s006 DISPLAY LIKE 'E' .

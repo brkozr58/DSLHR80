@@ -16,9 +16,11 @@ SELECT-OPTIONS :  s_pernr FOR /dsl/hr80_t010-pernr NO INTERVALS ,
                   s_orgeh FOR /dsl/hr80_t010-orgeh NO INTERVALS ,
                   s_plans FOR /dsl/hr80_t010-plans NO INTERVALS ,
                   s_stell FOR /dsl/hr80_t010-stell NO INTERVALS ,
-                  s_datum FOR /dsl/hr80_t010-begda NO-EXTENSION
-                                                   NO INTERVALS
-                                                   DEFAULT sy-datum.
+                  s_datum FOR /dsl/hr80_t010-begda
+*                                                   NO-EXTENSION
+*                                                   NO INTERVALS
+*                                                   DEFAULT sy-datum
+                                                   .
 
 SELECTION-SCREEN END OF BLOCK bl2.
 

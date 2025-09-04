@@ -85,7 +85,31 @@ ENDFORM.
 *&---------------------------------------------------------------------*
 FORM get_data .
 
-  SELECT * FROM /dsl/hr80_ddl001 INTO CORRESPONDING
+*  SELECT * FROM /dsl/hr80_ddl001 INTO CORRESPONDING
+  SELECT molga
+         abkrs
+         grpid
+         vrsid
+         statu
+         gjahr
+         pernr
+         ename
+         rfper
+         vrsid_t
+         grpid_t
+         bukrs
+         bukrs_t
+         orgeh
+         orgeh_t
+         plans
+         plans_t
+         stell
+         stell_t
+         kokrs
+         kokrs_t
+         kostl
+         kostl_t
+    FROM /dsl/hr80_ddl001 INTO CORRESPONDING
               FIELDS OF TABLE go_alv->gt_main
     WHERE grpid       IN s_grpid[]
       AND vrsid       IN s_vrsid[]
@@ -99,11 +123,11 @@ FORM get_data .
       AND orgeh       IN s_orgeh[]
       AND plans       IN s_plans[]
       AND stell       IN s_stell[]
-      AND pa1_begda   LE s_datum-low
-      AND pa1_endda   GE s_datum-low .
+      AND ( pa1_begda   IN s_datum[] OR pa1_endda   IN s_datum[] )
+    .
 
   SORT go_alv->gt_main ASCENDING BY pernr pa1_begda.
-
+  DELETE ADJACENT DUPLICATES FROM go_alv->gt_main.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form MODIFY_RECORD
@@ -154,8 +178,6 @@ ENDFORM.
 *&---------------------------------------------------------------------*
 FORM save_main .
 
-*  DATA : ls_t010  TYPE /dsl/hr80_t010 .
-*  DATA : lt_t010  TYPE TABLE OF /dsl/hr80_t010 .
   DATA : lt_t011  TYPE TABLE OF /dsl/hr80_t011 .
   DATA : lr_pernr TYPE RANGE OF /dsl/hr80_t011-pernr WITH HEADER LINE .
   DATA : number TYPE numc10.
@@ -237,6 +259,7 @@ FORM modify_fcat .
   go_alv->modify_target_value(  fname  = 'STELL_T'    targt  = 'TEXT' zvalue = 'İş tanımı' ).
 
   LOOP AT go_alv->mt_fcat INTO DATA(ls_fcat) .
+     go_alv->modify_target_value(  fname  = ls_fcat-fieldname targt  = 'NO_OUT' zvalue = 'X' ).
 
     CASE ls_fcat-fieldname.
       WHEN 'PERNR' OR 'ENAME'.
@@ -248,6 +271,34 @@ FORM modify_fcat .
                               targt  = 'KEY'
                               zvalue = space ).
 
+    ENDCASE.
+
+    CASE ls_fcat-fieldname.
+      WHEN
+          'ABKRS' OR
+*          'MOLGA' OR
+*           'GRPID' OR
+*           'VRSID' OR
+*           'STATU' OR
+*           'GJAHR' OR
+           'PERNR' OR
+           'ENAME' OR
+           'RFPER' OR
+*           'VRSID_T' OR
+*           'GRPID_T' OR
+           'BUKRS' OR
+           'BUKRS_T' OR
+           'ORGEH' OR
+           'ORGEH_T' OR
+           'PLANS' OR
+           'PLANS_T' OR
+           'STELL' OR
+           'STELL_T' OR
+           'KOKRS' OR
+           'KOKRS_T' OR
+           'KOSTL' OR
+           'KOSTL_T' .
+     go_alv->modify_target_value(  fname  = ls_fcat-fieldname targt  = 'NO_OUT' zvalue = '' ).
     ENDCASE.
 
     go_alv->modify_target_value(  fname  = ls_fcat-fieldname
@@ -474,17 +525,17 @@ FORM calc_simu .
                         ( pernr    = ls_emp-pernr )  ) .
       CALL FUNCTION 'HR_PCLX_INIT_BUFFER'.
 
-*      IF lr_pers[] IS NOT INITIAL .
-*        " PA0003 change
-*        SUBMIT rputrbk0
-*                  WITH pnppernr IN lr_pers[]
-*                  WITH p_test   EQ abap_false
-*                  WITH p_adval  EQ abap_false
-*                  WITH p_prdat  EQ abap_true
-*                  WITH d_prdat  EQ go_alv->gs_t003-begda
-*               EXPORTING LIST TO MEMORY
-*                     AND RETURN.
-*      ENDIF.
+      IF lr_pers[] IS NOT INITIAL .
+        " PA0003 change
+        SUBMIT rputrbk0
+                  WITH pnppernr IN lr_pers[]
+                  WITH p_test   EQ abap_false
+                  WITH p_adval  EQ abap_false
+                  WITH p_prdat  EQ abap_true
+                  WITH d_prdat  EQ go_alv->gs_t003-begda
+               EXPORTING LIST TO MEMORY
+                     AND RETURN.
+      ENDIF.
 
       CLEAR : buffer.
 *      CALL FUNCTION 'HR_PAYROLL_SIMULATION'
@@ -816,12 +867,6 @@ FORM read_simu_message  TABLES   pt_msgtab "STRUCTURE msgtab
   REFRESH pt_msgtab.
 
   exp_imp_tab = 'MSGTAB'.          APPEND exp_imp_tab.
-*  exp_imp_tab = 'EDTFORM'.         APPEND exp_imp_tab.
-*  exp_imp_tab = 'HRFORMS_ID_TAB'.  APPEND exp_imp_tab.
-*  exp_imp_tab = 'LOG_BASIC'.       APPEND exp_imp_tab.
-*  exp_imp_tab = 'LOG_REF'.         APPEND exp_imp_tab.
-
-
   IMPORT (exp_imp_tab) FROM MEMORY ID mem_key.
 
   FREE MEMORY ID mem_key.

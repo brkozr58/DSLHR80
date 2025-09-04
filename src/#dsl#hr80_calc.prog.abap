@@ -16,10 +16,10 @@ TABLES :  /dsl/hr80_t001    ,"Bütçe - Grup tanımı
   " CALC programında bu parametrelere ulaşabilecek.
   "sadece submitte çalışması sağlanacaktır.
   " değiştirmeyiniz!!!!!!!!!!!
-  PARAMETERS p_molga TYPE /dsl/hr80_t001-molga NO-DISPLAY .
-  PARAMETERS p_grpid TYPE /dsl/hr80_t003-grpid NO-DISPLAY .
-  PARAMETERS p_vrsid TYPE /dsl/hr80_t003-vrsid NO-DISPLAY .
-  PARAMETERS p_statu TYPE /dsl/hr80_t003-statu NO-DISPLAY .
+  PARAMETERS p_molga TYPE /dsl/hr80_t011-molga DEFAULT '47' NO-DISPLAY .
+  PARAMETERS p_grpid TYPE /dsl/hr80_t011-grpid ."NO-DISPLAY .
+  PARAMETERS p_vrsid TYPE /dsl/hr80_t011-vrsid ."NO-DISPLAY .
+  PARAMETERS p_statu TYPE /dsl/hr80_t003-statu DEFAULT '2' NO-DISPLAY .
   PARAMETERS p_pernr TYPE /dsl/hr80_t010-pernr NO-DISPLAY .
   PARAMETERS p_rfper TYPE /dsl/hr80_t010-rfper NO-DISPLAY .
 

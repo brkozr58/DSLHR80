@@ -1,6 +1,20 @@
 *&---------------------------------------------------------------------*
 *& Report /DSL/HR80_P005
 *&---------------------------------------------------------------------*
+*& CREATED BY       : DETAYSOFT CONSULTING                             *
+*& E-MAIL           : INFO@DETAYSOFT.COM                               *
+*& DEVELOPER        : BURAK.OZER@DETAYSOFT.COM                         *
+*& CREATED DATE     : 12.07.2025                                       *
+*& TITLE            : Personel verileri işlemleri                      *
+*& TICKET           : XXXXXXXXXXXX                                     *
+*& REQUEST          :                                                  *
+*&---------------------------------------------------------------------*
+*& CHANGE HISTORY:                                                     *
+*& NO VRSYN DATE.       AUTHOR       DESCRIPTION                       *
+*& 01  12.07.2025       P0340                                          *
+*&                                                                     *
+*&                                                                     *
+*&---------------------------------------------------------------------*
 REPORT /dsl/hr80_p005 MESSAGE-ID /dsl/hr80.
 
   TABLES : sscrfields,rlgrap.

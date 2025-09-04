@@ -3173,6 +3173,12 @@
     </item>
     <item>
      <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Listedeki kayıtlar aktarılacaktır. Emin misiniz?</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>BEG</KEY>
      <ENTRY>Bütçe başlangıç tarihi</ENTRY>
      <LENGTH>132</LENGTH>

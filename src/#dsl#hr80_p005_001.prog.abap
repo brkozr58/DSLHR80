@@ -7,6 +7,7 @@
 
 
 
+
 SELECTION-SCREEN BEGIN OF BLOCK bl2 WITH FRAME TITLE TEXT-001 .
 SELECT-OPTIONS :  s_pernr FOR /dsl/hr80_t010-pernr NO INTERVALS ,
                   s_werks FOR /dsl/hr80_t010-werks NO INTERVALS ,
@@ -16,23 +17,32 @@ SELECT-OPTIONS :  s_pernr FOR /dsl/hr80_t010-pernr NO INTERVALS ,
                   s_orgeh FOR /dsl/hr80_t010-orgeh NO INTERVALS ,
                   s_plans FOR /dsl/hr80_t010-plans NO INTERVALS ,
                   s_stell FOR /dsl/hr80_t010-stell NO INTERVALS ,
-                  s_datum FOR /dsl/hr80_t010-begda NO-EXTENSION
-                                                   NO INTERVALS
-                                                   DEFAULT sy-datum.
+                  s_datum FOR /dsl/hr80_t010-begda NO-DISPLAY
+*                                                   NO-EXTENSION
+*                                                   NO INTERVALS
+*                                                   DEFAULT sy-datum
+                                                   .
 SELECTION-SCREEN END OF BLOCK bl2.
 
 
-  SELECTION-SCREEN BEGIN OF BLOCK bl3 WITH FRAME TITLE TEXT-002  .
-
-    SELECTION-SCREEN PUSHBUTTON 5(42) chlogvar
-                    USER-COMMAND chal VISIBLE LENGTH 60.
-
-    PARAMETERS : r_rd1 RADIOBUTTON GROUP rd DEFAULT 'X' USER-COMMAND rd,
-                 r_rd2 RADIOBUTTON GROUP rd .
-    PARAMETERS :p_file TYPE rlgrap-filename MODIF ID rd2.
+*SELECTION-SCREEN BEGIN OF BLOCK bl4  WITH FRAME .
+*SELECTION-SCREEN PUSHBUTTON 1(42) chnge
+*                USER-COMMAND chng VISIBLE LENGTH 60.
+*SELECTION-SCREEN END OF BLOCK bl4.
 
 
-  SELECTION-SCREEN END OF BLOCK bl3.
+
+SELECTION-SCREEN BEGIN OF BLOCK bl3 WITH FRAME TITLE TEXT-002  .
+
+SELECTION-SCREEN PUSHBUTTON 1(42) chlogvar
+                USER-COMMAND chal VISIBLE LENGTH 60.
+
+PARAMETERS : r_rd1 RADIOBUTTON GROUP rd DEFAULT 'X' USER-COMMAND rd,
+             r_rd2 RADIOBUTTON GROUP rd .
+PARAMETERS :p_file TYPE rlgrap-filename MODIF ID rd2.
+
+
+SELECTION-SCREEN END OF BLOCK bl3.
 
 *----------------------------------------------------------------------*
 *       CLASS lcl_report DEFINITION
