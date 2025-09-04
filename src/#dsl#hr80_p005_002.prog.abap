@@ -57,7 +57,7 @@ CLASS lcl_report IMPLEMENTATION.
 *    go_alv = NEW #( ).
 
     chlogvar = '@JL@ Ek ödeme oluştur'.
-*    chnge = '@0Z@ Versiyon statüsü'.
+    chnge = '@0Z@ Versiyon statüsü'.
 
   ENDMETHOD.
 
@@ -66,6 +66,18 @@ CLASS lcl_report IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD at_selection_screen.
+
+    LOOP AT SCREEN.
+      IF screen-name CP '*S_STATU*'.
+        screen-input = 0 .
+        screen-output = 1 .
+      ENDIF.
+      IF screen-name CP '*S_GJAHR*'.
+        screen-active = 0 .
+      ENDIF.
+      MODIFY SCREEN.
+    ENDLOOP.
+
     go_alv->create_fcat( ).
     CASE 'X'.
       WHEN r_rd1 . " Rapor
@@ -94,9 +106,14 @@ CLASS lcl_report IMPLEMENTATION.
         go_main->template_file( ).
 
       WHEN 'CHNG'.
-        CLEAR gv_error.
-        go_main->check_paramaters( CHANGING cv_check = gv_error ).
-        CHECK gv_error IS INITIAL .
+        IF s_grpid[] IS INITIAL .
+          MESSAGE i001 DISPLAY LIKE 'E'.
+        ENDIF.
+
+        IF s_vrsid[] IS INITIAL .
+          MESSAGE i003 DISPLAY LIKE 'E'.
+          EXIT.
+        ENDIF.
         PERFORM change_statu .
 
       WHEN 'CHAL'.

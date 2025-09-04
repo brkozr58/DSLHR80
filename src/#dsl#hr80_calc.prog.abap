@@ -33,4 +33,5 @@ TABLES :  /dsl/hr80_t001    ,"Bütçe - Grup tanımı
           gt_t010   TYPE TABLE OF /dsl/hr80_t010    WITH HEADER LINE, "Bütçe - Personel anaverileri
           gt_t011   TYPE TABLE OF /dsl/hr80_t011    WITH HEADER LINE, "Bütçe - Bordro sonuçları
           gt_tvergd TYPE TABLE OF /dsl/hr80_tvergd  WITH HEADER LINE, "Bütçe - Vergi dilimleri (T7TRT01)
-          gt_tvergi TYPE TABLE OF /dsl/hr80_tvergi  WITH HEADER LINE. "Bütçe - Vergi indirimleri (T7TRT02)
+          gt_tvergi TYPE TABLE OF /dsl/hr80_tvergi  WITH HEADER LINE, "Bütçe - Vergi indirimleri (T7TRT02)
+          gt_t512z  TYPE TABLE OF t512z             WITH HEADER LINE .

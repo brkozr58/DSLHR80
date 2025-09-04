@@ -38,5 +38,6 @@ SELECT-OPTIONS : s_grpid FOR /dsl/hr80_t003-grpid
                       NO INTERVALS
 *                      OBLIGATORY
                       DEFAULT '1'
+*                      NO-DISPLAY
                  .
 SELECTION-SCREEN END OF BLOCK bl1.

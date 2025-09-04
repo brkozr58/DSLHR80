@@ -1269,13 +1269,15 @@ FORM leaving_work .
                             AND pa1_endda GE ls_leav_work-begda.
                 CLEAR go_alv->gs_main.
                 MOVE-CORRESPONDING <fs_main> TO go_alv->gs_main.
-                go_alv->gs_main-oprtn     = 'C'.
-                go_alv->gs_main-pa1_endda = ls_leav_work-begda  .
+                <fs_main>-oprtn           = 'C'.
+                <fs_main>-pa1_endda       = ls_leav_work-begda  .
                 go_alv->gs_main-pa1_begda = ls_leav_work-begda + 1.
+                go_alv->gs_main-oprtn     = 'C'.
                 go_alv->gs_main-massn     = ls_leav_work-massn .
                 go_alv->gs_main-massg     = ls_leav_work-massg .
                 go_alv->gs_main-stat2     = ls_leav_work-stat2 .
                 go_alv->gs_main-abkrs     = '99' .
+                go_alv->gs_main-plans     = '99999999' .
                 go_alv->gs_main-oprtn     = <fs_main>-oprtn.
                 CLEAR : go_alv->gs_main-t_styl.
 

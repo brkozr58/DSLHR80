@@ -88,28 +88,42 @@ FORM change_person_data .
   CLEAR : p0000,p0001.
   DATA : lt_p0000 TYPE TABLE OF p0000 WITH HEADER LINE .
   DATA : lt_p0001 TYPE TABLE OF p0001 WITH HEADER LINE .
-
+  SORT gt_t010 ASCENDING BY begda endda.
   LOOP AT p0000.
     LOOP AT gt_t010 INTO DATA(ls_t010)
           WHERE pernr EQ p0000-pernr
             AND begda LE p0000-endda
             AND endda GE p0000-begda.
-      IF ls_t010-begda NE p0000-begda.
-      "önceki kaydı sınırla
-        MOVE-CORRESPONDING p0000 TO lt_p0000.
-        lt_p0000-endda = ls_t010-begda - 1 .
-        COLLECT lt_p0000.
-
-        " bütçe işlemler dizisini ekle
+      IF ls_t010-begda GT p0000-begda AND
+         ls_t010-massn EQ p0000-massn AND
+         ls_t010-massg EQ p0000-massg AND
+         ls_t010-endda LT p0000-endda  .
+        " bütçede işlemler dizisi değişikliği varmı
+        LOOP AT gt_t010 TRANSPORTING NO FIELDS
+          WHERE pernr EQ p0000-pernr
+            AND begda LE p0000-endda
+            AND endda GE p0000-begda
+            AND massn NE p0000-massn
+            AND massg NE p0000-massg.
+        ENDLOOP.
+        IF sy-subrc EQ 0. " varsa pa0 dakini bütçe verisi ile sınırla
+          MOVE-CORRESPONDING p0000 TO lt_p0000.
+          lt_p0000-endda = ls_t010-endda.
+          COLLECT lt_p0000.
+        ELSE. " yoksa pa0000 dan al
+          MOVE-CORRESPONDING p0000 TO lt_p0000.
+          COLLECT lt_p0000.
+        ENDIF.
+      ELSE.
         MOVE-CORRESPONDING p0000 TO lt_p0000.
         MOVE-CORRESPONDING ls_t010 TO lt_p0000.
-        IF ls_t010-rfper IS NOT INITIAL .
+        IF ls_t010-rfper IS NOT INITIAL ." DUMMY personellerde referans personel numarasnı al
           lt_p0000-pernr = ls_t010-rfper.
         ENDIF.
         COLLECT lt_p0000.
       ENDIF.
     ENDLOOP.
-    IF sy-subrc NE 0 .
+    IF sy-subrc NE 0 ." Bütçe verisine denk gelmeyen eski işlemler dizisini aynen al
       MOVE-CORRESPONDING p0000 TO lt_p0000.
       COLLECT lt_p0000.
     ENDIF.
@@ -120,30 +134,23 @@ FORM change_person_data .
           WHERE pernr EQ p0001-pernr
             AND begda LE p0001-endda
             AND endda GE p0001-begda.
-      IF ls_t010-begda NE p0001-begda.
-      "önceki kaydı sınırla
-        MOVE-CORRESPONDING p0001 TO lt_p0001.
-        lt_p0001-endda = ls_t010-begda - 1 .
-        COLLECT lt_p0001.
-
-        " bütçe işlemler dizisini ekle
-        MOVE-CORRESPONDING p0001 TO lt_p0001.
-        MOVE-CORRESPONDING ls_t010 TO lt_p0001.
-        IF ls_t010-rfper IS NOT INITIAL .
-          lt_p0001-pernr = ls_t010-rfper.
-        ENDIF.
-        change_value : ls_t010-abkrs     lt_p0001-abkrs,
-                       ls_t010-werks_new lt_p0001-werks,
-                       ls_t010-btrtl_new lt_p0001-btrtl,
-                       ls_t010-persg_new lt_p0001-persg,
-                       ls_t010-persk_new lt_p0001-persk,
-                       ls_t010-orgeh     lt_p0001-orgeh,
-                       ls_t010-plans     lt_p0001-plans,
-                       ls_t010-stell     lt_p0001-stell,
-                       ls_t010-kokrs     lt_p0001-kokrs,
-                       ls_t010-kostl     lt_p0001-kostl.
-        COLLECT lt_p0001.
+      " bütçe işlemler dizisini ekle
+      MOVE-CORRESPONDING p0001 TO lt_p0001.
+      MOVE-CORRESPONDING ls_t010 TO lt_p0001.
+      IF ls_t010-rfper IS NOT INITIAL . " DUMMY personellerde referans personel numarasnı al
+        lt_p0001-pernr = ls_t010-rfper.
       ENDIF.
+      change_value : ls_t010-abkrs     lt_p0001-abkrs,
+                     ls_t010-werks_new lt_p0001-werks,
+                     ls_t010-btrtl_new lt_p0001-btrtl,
+                     ls_t010-persg_new lt_p0001-persg,
+                     ls_t010-persk_new lt_p0001-persk,
+                     ls_t010-orgeh     lt_p0001-orgeh,
+                     ls_t010-plans     lt_p0001-plans,
+                     ls_t010-stell     lt_p0001-stell,
+                     ls_t010-kokrs     lt_p0001-kokrs,
+                     ls_t010-kostl     lt_p0001-kostl.
+      COLLECT lt_p0001.
     ENDLOOP.
     IF sy-subrc NE 0 .
       MOVE-CORRESPONDING p0001 TO lt_p0001.
@@ -154,51 +161,12 @@ FORM change_person_data .
   p0000[] = lt_p0000[].
   p0001[] = lt_p0001[].
 
-*  LOOP AT gt_t010 INTO DATA(ls_t010) WHERE pernr IN lr_pernr[] .
-*    MOVE-CORRESPONDING ls_t010 TO p0000 .
-*    p0000-infty = '0000'.
-*    IF ls_t010-rfper IS NOT INITIAL .
-*      p0000-pernr = ls_t010-rfper.
-*    ENDIF.
-*    COLLECT p0000.
-*    MOVE-CORRESPONDING ls_t010 TO p0001 .
-*    IF ls_t010-rfper IS NOT INITIAL .
-*      p0001-pernr = ls_t010-rfper.
-*    ENDIF.
-*    p0000-infty = '0001'.
-*    change_value : ls_t010-abkrs     p0001-abkrs,
-*                   ls_t010-werks_new p0001-werks,
-*                   ls_t010-btrtl_new p0001-btrtl,
-*                   ls_t010-persg_new p0001-persg,
-*                   ls_t010-persk_new p0001-persk,
-*                   ls_t010-orgeh     p0001-orgeh,
-*                   ls_t010-plans     p0001-plans,
-*                   ls_t010-stell     p0001-stell,
-*                   ls_t010-kokrs     p0001-kokrs,
-*                   ls_t010-kostl     p0001-kostl.
-*    COLLECT p0001.
-*  ENDLOOP.
   SORT p0000 ASCENDING BY begda endda.
   SORT p0001 ASCENDING BY begda endda.
 
-*  LOOP AT p0001 ASSIGNING FIELD-SYMBOL(<p0001>)
-*    WHERE begda LE aper-endda.
-*    LOOP AT gt_t010 INTO DATA(ls_t010) WHERE pernr IN lr_pernr[] .
-*      change_value : ls_t010-werks_new <p0001>-werks,
-*                     ls_t010-btrtl_new <p0001>-btrtl,
-*                     ls_t010-persg_new <p0001>-persg,
-*                     ls_t010-persk_new <p0001>-persk,
-*                     ls_t010-orgeh     <p0001>-orgeh,
-*                     ls_t010-plans     <p0001>-plans,
-*                     ls_t010-stell     <p0001>-stell,
-*                     ls_t010-kokrs     <p0001>-kokrs,
-*                     ls_t010-kostl     <p0001>-kostl.
-*    ENDLOOP.
-*  ENDLOOP.
-
   LOOP AT p0008 ASSIGNING FIELD-SYMBOL(<p0008>)
     WHERE begda LE aper-endda.
-    LOOP AT gt_t010 INTO ls_t010 WHERE pernr IN lr_pernr[] .
+    LOOP AT gt_t010 INTO ls_t010  .
       change_value : ls_t010-trfar_new <p0008>-trfar,
                      ls_t010-trfgb_new <p0008>-trfgb,
                      ls_t010-trfgr_new <p0008>-trfgr,
@@ -209,6 +177,30 @@ FORM change_person_data .
   ENDLOOP.
 
 
+" DUMMY personellerde PA daki sicil gönderilmeli
+*p_rfper
+
+  DATA : lv_infty(7).
+  FIELD-SYMBOLS <infty> TYPE any .
+  FIELD-SYMBOLS <infty_tab> TYPE ANY TABLE.
+
+  " Ek ödemeleri bilgi tiplerine aktar.
+  LOOP AT gt_t005 WHERE pernr IN lr_pernr[].
+    LOOP AT gt_t512z WHERE lgart = gt_t005-lgart .
+      lv_infty = 'P' && gt_t512z-infty.
+      ASSIGN (lv_infty) TO <infty>.
+      lv_infty = lv_infty && '[]'.
+      ASSIGN (lv_infty) TO <infty_tab>.
+      CHECK <infty> IS ASSIGNED AND <infty_tab> IS ASSIGNED  .
+
+
+      UNASSIGN <infty> .
+      UNASSIGN <infty_tab> .
+    ENDLOOP.
+
+  ENDLOOP.
+
+
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form REFRESH_TABLES
@@ -216,7 +208,7 @@ ENDFORM.
 FORM refresh_tables .
   REFRESH : gt_t001,gt_t002,gt_t003,gt_t004,
             gt_t005,gt_t007,gt_t010,gt_t011,
-            gt_tvergd,gt_tvergi .
+            gt_tvergd,gt_tvergi,gt_t512z .
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form GET_BUDGET_DATAS
@@ -238,10 +230,15 @@ FORM get_budget_datas .
     lr_rfper = 'IEQ'.lr_rfper-low = p_rfper.APPEND lr_rfper.
   ENDIF.
 
+  SELECT * FROM t512z INTO TABLE gt_t512z
+      WHERE molga EQ p_molga.
+
   SELECT * FROM /dsl/hr80_t001   INTO TABLE gt_t001
-        WHERE molga EQ p_molga AND grpid EQ p_grpid.
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid.
   SELECT * FROM /dsl/hr80_t002   INTO TABLE gt_t002
-        WHERE molga EQ p_molga AND grpid EQ p_grpid.
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid.
   SELECT * FROM /dsl/hr80_t003   INTO TABLE gt_t003
         WHERE molga EQ p_molga
           AND grpid EQ p_grpid
