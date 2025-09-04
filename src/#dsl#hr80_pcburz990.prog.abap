@@ -32,7 +32,10 @@ FORM fuzbdgt.
       "/dsl/hr80_t010 tablosundan personel için güncel verileri alınacak
       PERFORM change_person_data.
 
-    WHEN '03'. " Bütçe Oranları
+    WHEN '03'. " Temel, Ek ve zaman
+      PERFORM basic_additional_time_data.
+
+    WHEN '04'. " Bütçe Oranları
       PERFORM change_ratio .
 
     WHEN OTHERS.
@@ -57,7 +60,148 @@ FORM log_budget  TABLES ptext STRUCTURE plog_text
   ptext-tintensiv1  = $inten.
   ptext-empty_lines = $eline.
   APPEND ptext.
-ENDFORM.                                                    "log_0769
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form REFRESH_TABLES
+*&---------------------------------------------------------------------*
+FORM refresh_tables .
+  REFRESH : gt_t001,gt_t002,gt_t003,gt_t004,
+            gt_t005,gt_t007,gt_t010,gt_t011,
+            gt_tvergd,gt_tvergi,gt_t512z,gt_t554s.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form GET_BUDGET_DATAS
+*&---------------------------------------------------------------------*
+FORM get_budget_datas .
+  DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
+  DATA : lr_pernr TYPE RANGE OF /dsl/hr80_t010-pernr WITH HEADER LINE.
+  DATA : lr_lgart TYPE RANGE OF /dsl/hr80_t011-lgart WITH HEADER LINE.
+
+" PA personelleri için pernr-pernr yi al. seçim ekranında ki zli eklenen
+" P_PERNR  parametresini boş göndermelisin
+  IF p_pernr IS NOT INITIAL .
+    lr_pernr = 'IEQ'.lr_pernr-low = p_pernr.APPEND lr_pernr.
+  ELSE.
+    lr_pernr = 'IEQ'.lr_pernr-low = pernr-pernr.APPEND lr_pernr.
+  ENDIF.
+
+" DUMMY personellerde PA daki sicil gönderilmeli
+  IF p_rfper IS NOT INITIAL .
+    lr_rfper = 'IEQ'.lr_rfper-low = p_rfper.APPEND lr_rfper.
+  ENDIF.
+
+*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0008' ) TO lr_lgart.
+  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0014' ) TO lr_lgart.
+  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0015' ) TO lr_lgart.
+*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0057' ) TO lr_lgart.
+*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0216' ) TO lr_lgart.
+*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0776' ) TO lr_lgart.
+  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '2010' ) TO lr_lgart.
+
+  SELECT * FROM t512z INTO TABLE gt_t512z
+      WHERE molga EQ p_molga
+        AND lgart IN lr_lgart[].
+
+
+  SELECT * FROM /dsl/hr80_t001   INTO TABLE gt_t001
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid.
+
+  SELECT * FROM /dsl/hr80_t002   INTO TABLE gt_t002
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid.
+
+  SELECT * FROM /dsl/hr80_t003   INTO TABLE gt_t003
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid
+          AND statu EQ p_statu.
+  IF sy-subrc NE 0 OR p_statu NE '2'. "
+    MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '043'
+        INTO DATA(mtext)
+        WITH p_vrsid  .
+    PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
+    PERFORM errors TABLES error_ptext.
+  ENDIF.
+
+  SELECT * FROM /dsl/hr80_t004   INTO TABLE gt_t004
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid.
+  IF sy-subrc NE 0  .
+    MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '044'
+        INTO mtext
+        WITH p_vrsid  .
+    PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
+    PERFORM errors TABLES error_ptext.
+  ENDIF.
+
+  SELECT * FROM /dsl/hr80_t005   INTO TABLE gt_t005
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid
+          AND pernr IN lr_pernr[].
+
+  SELECT * FROM /dsl/hr80_t007   INTO TABLE gt_t007
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid.
+
+  SELECT * FROM /dsl/hr80_t010   INTO TABLE gt_t010
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid
+          AND pernr IN lr_pernr[]
+          AND rfper IN lr_rfper[].
+  IF sy-subrc NE 0  .
+    MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '037'
+        INTO mtext   .
+    PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
+    PERFORM errors TABLES error_ptext.
+  ELSE.
+    DATA : lt_t001p TYPE TABLE OF t001p WITH HEADER LINE .
+
+    SELECT * FROM t001p INTO TABLE lt_t001p
+        FOR ALL ENTRIES IN gt_t010
+        WHERE molga EQ p_molga
+          AND ( ( werks EQ gt_t010-werks AND btrtl EQ gt_t010-btrtl )
+                OR
+                ( werks EQ gt_t010-werks_new AND btrtl EQ gt_t010-btrtl_new )
+               ) .
+    SORT lt_t001p ASCENDING .
+    DELETE ADJACENT DUPLICATES FROM lt_t001p.
+
+*    ls_t001p = cl_hr_t001p=>read( werks = ls_p0001-werks
+*                                  btrtl = ls_p0001-btrtl ).
+*
+*    CALL FUNCTION 'HR_READ_T554S'
+*      EXPORTING
+*        moabw = ls_t001p-moabw
+*        atype = <ls_p2001>-subty
+*        date  = <ls_p2001>-endda
+*      IMPORTING
+*        w554s = ls_t554s.
+
+
+    SELECT * FROM t554s INTO TABLE gt_t554s
+      FOR ALL ENTRIES IN lt_t001p
+        WHERE moabw EQ lt_t001p-moabw
+          AND endda GE aper-begda
+          AND begda LE aper-endda.
+    SORT gt_t554s ASCENDING .
+    DELETE ADJACENT DUPLICATES FROM gt_t554s.
+  ENDIF.
+
+  SELECT * FROM /dsl/hr80_tvergd INTO TABLE gt_tvergd
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid.
+
+  SELECT * FROM /dsl/hr80_tvergi INTO TABLE gt_tvergi
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid.
+ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form CHANGE_PERSON_DATA
 *&---------------------------------------------------------------------*
@@ -177,43 +321,14 @@ FORM change_person_data .
   ENDLOOP.
 
 
-" DUMMY personellerde PA daki sicil gönderilmeli
-*p_rfper
-
-  DATA : lv_infty(7).
-  FIELD-SYMBOLS <infty> TYPE any .
-  FIELD-SYMBOLS <infty_tab> TYPE ANY TABLE.
-
-  " Ek ödemeleri bilgi tiplerine aktar.
-  LOOP AT gt_t005 WHERE pernr IN lr_pernr[].
-    LOOP AT gt_t512z WHERE lgart = gt_t005-lgart .
-      lv_infty = 'P' && gt_t512z-infty.
-      ASSIGN (lv_infty) TO <infty>.
-      lv_infty = lv_infty && '[]'.
-      ASSIGN (lv_infty) TO <infty_tab>.
-      CHECK <infty> IS ASSIGNED AND <infty_tab> IS ASSIGNED  .
-
-
-      UNASSIGN <infty> .
-      UNASSIGN <infty_tab> .
-    ENDLOOP.
-
-  ENDLOOP.
 
 
 ENDFORM.
 *&---------------------------------------------------------------------*
-*& Form REFRESH_TABLES
+*& Form BASIC_ADDITIONAL_TIME_DATA
 *&---------------------------------------------------------------------*
-FORM refresh_tables .
-  REFRESH : gt_t001,gt_t002,gt_t003,gt_t004,
-            gt_t005,gt_t007,gt_t010,gt_t011,
-            gt_tvergd,gt_tvergi,gt_t512z .
-ENDFORM.
-*&---------------------------------------------------------------------*
-*& Form GET_BUDGET_DATAS
-*&---------------------------------------------------------------------*
-FORM get_budget_datas .
+FORM basic_additional_time_data.
+
   DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
   DATA : lr_pernr TYPE RANGE OF /dsl/hr80_t010-pernr WITH HEADER LINE.
 
@@ -230,78 +345,49 @@ FORM get_budget_datas .
     lr_rfper = 'IEQ'.lr_rfper-low = p_rfper.APPEND lr_rfper.
   ENDIF.
 
-  SELECT * FROM t512z INTO TABLE gt_t512z
-      WHERE molga EQ p_molga.
+" DUMMY personellerde PA daki sicil gönderilmeli
+*p_rfper
 
-  SELECT * FROM /dsl/hr80_t001   INTO TABLE gt_t001
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid.
-  SELECT * FROM /dsl/hr80_t002   INTO TABLE gt_t002
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid.
-  SELECT * FROM /dsl/hr80_t003   INTO TABLE gt_t003
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid
-          AND statu EQ p_statu.
-  IF sy-subrc NE 0 OR p_statu NE '2'. "
-    MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '043'
-        INTO DATA(mtext)
-        WITH p_vrsid  .
-    PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
-    PERFORM errors TABLES error_ptext.
-  ENDIF.
+  DATA : lv_infty(7).
+  FIELD-SYMBOLS <infty> TYPE any .
+  FIELD-SYMBOLS <infty_tab> TYPE ANY TABLE.
 
-  SELECT * FROM /dsl/hr80_t004   INTO TABLE gt_t004
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid.
-  IF sy-subrc NE 0  .
-    MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '044'
-        INTO mtext
-        WITH p_vrsid  .
-    PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
-    PERFORM errors TABLES error_ptext.
-  ENDIF.
+  " Ek ödemeleri bilgi tiplerine aktar.
+  LOOP AT gt_t005 WHERE pernr IN lr_pernr[].
 
-  SELECT * FROM /dsl/hr80_t005   INTO TABLE gt_t005
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid
-          AND pernr IN lr_pernr[].
-  SELECT * FROM /dsl/hr80_t007   INTO TABLE gt_t007
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid.
-  SELECT * FROM /dsl/hr80_t010   INTO TABLE gt_t010
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid
-          AND pernr IN lr_pernr[]
-          AND rfper IN lr_rfper[].
-  IF sy-subrc NE 0  .
-    MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '037'
-        INTO mtext   .
-    PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
-    PERFORM errors TABLES error_ptext.
-  ENDIF.
+    " 0014,0015,2010 verileri için bilgitiplerine  ekle
+    LOOP AT gt_t512z WHERE lgart = gt_t005-lgart .
+      lv_infty = 'P' && gt_t512z-infty.
+      ASSIGN (lv_infty) TO <infty>.
+      lv_infty = lv_infty && '[]'.
+      ASSIGN (lv_infty) TO <infty_tab>.
+      CHECK <infty> IS ASSIGNED AND <infty_tab> IS ASSIGNED  .
 
-  SELECT * FROM /dsl/hr80_tvergd INTO TABLE gt_tvergd
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid.
-  SELECT * FROM /dsl/hr80_tvergi INTO TABLE gt_tvergi
-        WHERE molga EQ p_molga
-          AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid.
 
+      UNASSIGN <infty> .
+      UNASSIGN <infty_tab> .
+    ENDLOOP.
+
+    " 2001 Devamsızlık verileri için bilgitiplerine  ekle
+    LOOP AT gt_t554s WHERE SUBTY EQ gt_t005-lgart.
+      CHECK gt_t005-begda LE aper-endda AND gt_t005-endda GE aper-begda.
+      CLEAR : p2001.
+      p2001-pernr = pernr-pernr.
+      p2001-infty = '2001'.
+      p2001-begda = gt_t005-begda.
+      p2001-endda = gt_t005-endda.
+      p2001-subty = p2001-awart = gt_t005-lgart.
+
+    ENDLOOP.
+
+  ENDLOOP.
 
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form CHANGE_RATIO
 *&---------------------------------------------------------------------*
 FORM change_ratio .
-  FIELD-SYMBOLS <lfs> TYPE ANY .
+  FIELD-SYMBOLS <lfs> TYPE any .
   DATA : lv_field(30).
   DATA : lr_bukrs  TYPE RANGE OF bukrs.
   DATA : lr_kostl  TYPE RANGE OF kostl.
@@ -328,7 +414,7 @@ FORM change_ratio .
     lv_field = &1 && aper-begda+4(2).
     ASSIGN COMPONENT lv_field OF STRUCTURE ls_param TO <lfs>.
     IF <lfs> IS ASSIGNED .
-      if <lfs> IS NOT INITIAL .
+      IF <lfs> IS NOT INITIAL .
         IF &3-&2 IS NOT INITIAL.
           &3-&2 = &3-&2 + ( ( &3-&2 * <lfs> ) / 100 ).
         ENDIF.
