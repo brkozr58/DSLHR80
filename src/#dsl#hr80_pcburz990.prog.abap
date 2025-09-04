@@ -301,6 +301,7 @@ ENDFORM.
 *& Form CHANGE_RATIO
 *&---------------------------------------------------------------------*
 FORM change_ratio .
+  FIELD-SYMBOLS <lfs> TYPE ANY .
   DATA : lv_field(30).
   DATA : lr_bukrs  TYPE RANGE OF bukrs.
   DATA : lr_kostl  TYPE RANGE OF kostl.
@@ -314,9 +315,28 @@ FORM change_ratio .
   DATA : lr_abkrs  TYPE RANGE OF abkrs.
   DATA : lr_pernr  TYPE RANGE OF persno.
   DATA : lt_param  TYPE TABLE OF /dsl/hr80_t004    WITH HEADER LINE.
+  DATA : ls_param  TYPE /dsl/hr80_t004     .
 
 
   DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
+  DATA : betpe,
+         anzhl,
+         betrg.
+
+
+  DEFINE calc_ratio .
+    lv_field = &1 && aper-begda+4(2).
+    ASSIGN COMPONENT lv_field OF STRUCTURE ls_param TO <lfs>.
+    IF <lfs> IS ASSIGNED .
+      if <lfs> IS NOT INITIAL .
+        IF &3-&2 IS NOT INITIAL.
+          &3-&2 = &3-&2 + ( ( &3-&2 * <lfs> ) / 100 ).
+        ENDIF.
+      ENDIF.
+    ENDIF.
+    UNASSIGN <lfs>.
+  END-OF-DEFINITION.
+
 
 " PA personelleri için pernr-pernr yi al. seçim ekranında ki zli eklenen
 " P_PERNR  parametresini boş göndermelisin
@@ -337,11 +357,10 @@ FORM change_ratio .
   LOOP AT wpbp.
     lt_param[] = gt_t004[].
 
-
     " personel numarasına özel kayıt girildiyse aynı lgartta boş olanları sil
     SORT lt_param BY pernr lgart .
 
-    LOOP AT lt_param INTO DATA(ls_param) .
+    LOOP AT lt_param INTO ls_param .
       IF lt_param-pernr IS NOT INITIAL .
         READ TABLE lt_param TRANSPORTING NO FIELDS
                        WITH KEY pernr = space
@@ -394,54 +413,12 @@ FORM change_ratio .
             WITH KEY lgart = ls_param-lgart
                      apznr = wpbp-apznr.
       IF sy-subrc EQ 0 .
-        lv_field = 'RAT' && aper-begda+4(2).
-        ASSIGN COMPONENT lv_field OF STRUCTURE ls_param TO
-                FIELD-SYMBOL(<rat>).
-        lv_field = 'ANZ' && aper-begda+4(2).
-        ASSIGN COMPONENT lv_field OF STRUCTURE ls_param TO
-                FIELD-SYMBOL(<anz>).
-        lv_field = 'BET' && aper-begda+4(2).
-        ASSIGN COMPONENT lv_field OF STRUCTURE ls_param TO
-                FIELD-SYMBOL(<bet>).
-
-        IF <rat> IS ASSIGNED AND <rat> IS NOT INITIAL .
-          IF <it>-betpe IS NOT INITIAL.
-            <it>-betpe = <it>-betpe + ( ( <it>-betpe * <rat> ) / 100 ).
-          ENDIF.
-        ENDIF.
-
-        IF <anz> IS ASSIGNED AND <anz> IS NOT INITIAL .
-          IF <it>-anzhl IS NOT INITIAL.
-            <it>-anzhl = <it>-anzhl + ( ( <it>-anzhl * <anz> ) / 100 ).
-          ENDIF.
-        ENDIF.
-
-        IF <bet> IS ASSIGNED AND <bet> IS NOT INITIAL .
-          IF <it>-betrg IS NOT INITIAL.
-            <it>-betrg = <it>-betrg + ( ( <it>-betrg * <bet> ) / 100 ).
-          ENDIF.
-        ENDIF.
-
+        calc_ratio : 'RAT' betpe <it>,
+                     'ANZ' anzhl <it>,
+                     'BET' betrg <it>.
       ENDIF.
 
     ENDLOOP.
   ENDLOOP.
-
-  DATA : ls_it LIKE LINE OF it .
-
-  LOOP AT gt_t005 WHERE pernr IN lr_pernr[]
-                    AND begda LE aper-endda
-                    AND endda GE aper-begda.
-    ls_it-abart = wpbp-abart.
-*    ls_it-apznr = wpbp-apznr.
-    ls_it-lgart = gt_t005-lgart.
-    ls_it-anzhl = gt_t005-anzhl.
-    ls_it-betrg = gt_t005-betrg.
-    APPEND ls_it TO it.
-    CLEAR ls_it .
-
-  ENDLOOP.
-
-
 
 ENDFORM.

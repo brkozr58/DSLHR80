@@ -9,8 +9,9 @@
 CLASS lcl_report IMPLEMENTATION.
 
   METHOD constructor.
-
-    SELECT * FROM t596f INTO t596f WHERE sname EQ '47SCHEMA'
+    DATA : sname TYPE t596f-sname.
+    sname = p_molga && 'SCHEMA'.
+    SELECT * FROM t596f INTO t596f WHERE sname EQ sname
                           AND begda LE sy-datum
                           AND endda GE sy-datum
       ORDER BY PRIMARY KEY.
@@ -22,7 +23,7 @@ CLASS lcl_report IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
-    p_schema = '=R00'.
+*    p_schema = '=R00'." geçici eklendi
     REFRESH s_statu.
     APPEND VALUE #( sign = 'I' option = 'EQ'  low = '2' ) TO s_statu.
 
