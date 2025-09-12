@@ -61,6 +61,7 @@ ENDFORM.
 FORM at_selection_screen .
   DATA : lv_job      TYPE btcjob .
   DATA : lv_jobc     TYPE btcjobcnt.
+  DATA : answer.
 
   IF go_alv IS BOUND .
     go_alv->create_fcat( ).
@@ -97,48 +98,63 @@ FORM at_selection_screen .
       CLEAR gv_error.
       go_main->check_paramaters( CHANGING cv_check = gv_error ).
       CHECK gv_error IS INITIAL .
-
-      lv_job       = '/DSL/HR80_'   &&
-                     s_grpid-low    &&
-                     '-'            &&
-                     s_vrsid-low .
-      CLEAR lv_jobc.
-      CALL FUNCTION 'JOB_OPEN'
+      go_main->popup_to_confirm(
         EXPORTING
-          jobname  = lv_job
+          titlebar       = 'Bilgi'
+          text_question  = 'Bütçe bordro sonuçları aktarımı yapılacaktır. Daha önce çalışan sonuçlar varsa silinecektir. Devam etsin mi? '
+          text_button_1  = 'Evet'
+          text_button_2  = 'Hayır'
         IMPORTING
-          jobcount = lv_jobc.
+          answer         = answer
+        EXCEPTIONS
+          text_not_found = 1
+      ).
 
-      SUBMIT /dsl/hr80_p006
-              WITH p_molga  = p_molga
-              WITH p_schema = p_schema
-              WITH p_simu   = 'X'
-              WITH p_vari   = p_vari
-              WITH s_btrtl  IN s_btrtl[]
-              WITH s_datum  IN s_datum[]
-              WITH s_gjahr  IN s_gjahr[]
-              WITH s_grpid  IN s_grpid[]
-              WITH s_orgeh  IN s_orgeh[]
-              WITH s_pernr  IN s_pernr[]
-              WITH s_persg  IN s_persg[]
-              WITH s_persk  IN s_persk[]
-              WITH s_plans  IN s_plans[]
-              WITH s_statu  IN s_statu[]
-              WITH s_stell  IN s_stell[]
-              WITH s_vrsid  IN s_vrsid[]
-              WITH s_werks  IN s_werks[]
-              VIA JOB lv_job NUMBER lv_jobc AND RETURN.
+      IF answer EQ '1'. " EVET
+          lv_job       = '/DSL/HR80_'   &&
+                         s_grpid-low    &&
+                         '-'            &&
+                         s_vrsid-low .
+          CLEAR lv_jobc.
+          CALL FUNCTION 'JOB_OPEN'
+            EXPORTING
+              jobname  = lv_job
+            IMPORTING
+              jobcount = lv_jobc.
 
-      CALL FUNCTION 'JOB_CLOSE'
-        EXPORTING
-          jobname   = lv_job
-          jobcount  = lv_jobc
-          strtimmed = 'X'.
-    IF sy-subrc EQ 0.
-      MESSAGE s048 DISPLAY LIKE 'I'.
-    ELSE.
-      MESSAGE e049 DISPLAY LIKE 'I'.
-    ENDIF.
+          SUBMIT /dsl/hr80_p006
+                  WITH p_molga  = p_molga
+                  WITH p_schema = p_schema
+                  WITH p_simu   = 'X'
+                  WITH p_vari   = p_vari
+                  WITH s_btrtl  IN s_btrtl[]
+                  WITH s_datum  IN s_datum[]
+                  WITH s_gjahr  IN s_gjahr[]
+                  WITH s_grpid  IN s_grpid[]
+                  WITH s_orgeh  IN s_orgeh[]
+                  WITH s_pernr  IN s_pernr[]
+                  WITH s_persg  IN s_persg[]
+                  WITH s_persk  IN s_persk[]
+                  WITH s_plans  IN s_plans[]
+                  WITH s_statu  IN s_statu[]
+                  WITH s_stell  IN s_stell[]
+                  WITH s_vrsid  IN s_vrsid[]
+                  WITH s_werks  IN s_werks[]
+                  VIA JOB lv_job NUMBER lv_jobc AND RETURN.
+
+          CALL FUNCTION 'JOB_CLOSE'
+            EXPORTING
+              jobname   = lv_job
+              jobcount  = lv_jobc
+              strtimmed = 'X'.
+        IF sy-subrc EQ 0.
+          MESSAGE s048 DISPLAY LIKE 'I'.
+        ELSE.
+          MESSAGE e049 DISPLAY LIKE 'I'.
+        ENDIF.
+      ELSE.
+      ENDIF.
+
   ENDCASE.
 
 ENDFORM.
