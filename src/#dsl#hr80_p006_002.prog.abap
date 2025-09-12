@@ -26,8 +26,11 @@ CLASS lcl_report IMPLEMENTATION.
 *    p_schema = '=R00'." geçici eklendi
     REFRESH s_statu.
     APPEND VALUE #( sign = 'I' option = 'EQ'  low = '2' ) TO s_statu.
+    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '3' ) TO s_statu.
 
     chlogvar = '@0Z@'.
+    py_job = '@M4@' && 'Artalanda çalıştır'.
+    chnge = '@0Z@ Versiyon statüsü'.
 
   ENDMETHOD.
 
@@ -238,8 +241,30 @@ CLASS lcl_alv IMPLEMENTATION.
   METHOD handle_user_command.
     DATA : lt_rows TYPE lvc_t_row.
     DATA answer  .
-
+    CLEAR answer.
     CASE e_ucomm.
+      WHEN 'MODFIY'.
+        go_alv->check_changed_data( ).
+        IF go_alv->record_check EQ 'C'." DEğişiklik kontrolü için
+          go_main->popup_to_confirm(
+            EXPORTING
+              titlebar       = 'Bilgi'
+              text_question  = 'Değişiklikler saklansın mı? '
+              text_button_1  = 'Evet'
+              text_button_2  = 'Hayır'
+            IMPORTING
+              answer         = answer
+            EXCEPTIONS
+              text_not_found = 1
+          ).
+
+          IF answer EQ '1'. " EVET
+            go_main->save_main( ).
+            cl_gui_cfw=>flush( ).
+          ELSE.
+            CLEAR : go_alv->record_check.
+          ENDIF.
+        ENDIF.
       WHEN 'CALC'.
         go_main->popup_to_confirm(
           EXPORTING
@@ -291,22 +316,22 @@ CLASS lcl_alv IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD handle_toolbar.
+    DEFINE insert_value .
+      INSERT VALUE #( butn_type = 0
+                      function  = &1
+                      icon      = &2
+                      disabled  = space
+                      text      = &3
+                      quickinfo = &3
+                      )
+              INTO TABLE e_object->mt_toolbar.
+    END-OF-DEFINITION.
 
-    INSERT VALUE #( butn_type = 0
-                    function  = 'STATU'
-                    icon      = icon_set_state
-                    disabled  = space
-                    text      = 'Versiyon durumu değiştir'
-                    )
-            INTO TABLE e_object->mt_toolbar.
 
-    INSERT VALUE #( butn_type = 0
-                    function  = 'CALC'
-                    icon      = icon_cashing_up
-                    disabled  = space
-                    text      = 'Hesaplamayı başlat'
-                    )
-            INTO TABLE e_object->mt_toolbar.
+      insert_value :
+        'STATU'   icon_set_state           text-bt1 ,
+        'CALC'    icon_cashing_up          text-bt2  ,
+        'MODFIY'  icon_system_save         text-bt3 .
 
   ENDMETHOD.
 

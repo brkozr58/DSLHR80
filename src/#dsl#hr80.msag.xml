@@ -296,6 +296,18 @@
      <MSGNR>047</MSGNR>
      <TEXT>Aktarılacak dosya seçiniz!</TEXT>
     </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>Artalan çalışması başlatıldı.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>T</SPRSL>
+     <ARBGB>/DSL/HR80</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>Artalanda çalıştırılamadı!</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

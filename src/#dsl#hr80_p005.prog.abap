@@ -42,9 +42,6 @@ REPORT /dsl/hr80_p005 MESSAGE-ID /dsl/hr80.
     go_main = NEW #( ).
     go_alv = NEW #( ).
 
-    REFRESH s_statu.
-    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0' ) TO s_statu.
-    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '1' ) TO s_statu.
 
 
 *  AT SELECTION-SCREEN

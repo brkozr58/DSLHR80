@@ -56,9 +56,12 @@ CLASS lcl_report IMPLEMENTATION.
   METHOD constructor.
 *    go_alv = NEW #( ).
 
-    chlogvar = '@JL@ Ek ödeme oluştur'.
+    chlogvar = '@JL@ 14/15/2001/2010 oluştur'.
     chnge = '@0Z@ Versiyon statüsü'.
 
+    REFRESH s_statu.
+    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0' ) TO s_statu.
+    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '1' ) TO s_statu.
   ENDMETHOD.
 
   METHOD check_paramaters.

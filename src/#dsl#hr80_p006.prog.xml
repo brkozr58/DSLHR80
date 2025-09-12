@@ -288,6 +288,24 @@
     </item>
     <item>
      <ID>I</ID>
+     <KEY>BT1</KEY>
+     <ENTRY>Versiyon durumu değiştir</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>BT2</KEY>
+     <ENTRY>Hesaplamayı başlat</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>BT3</KEY>
+     <ENTRY>Kaydet</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>CHE</KEY>
      <ENTRY>Bordro sonucu alındı</ENTRY>
      <LENGTH>132</LENGTH>

@@ -29,17 +29,17 @@ FORM check_paramaters  CHANGING cv_check.
     cv_check = 'X'.
   ENDIF.
 
-  IF s_gjahr[] IS INITIAL .
-    s_gjahr = 'IEQ'.
-    s_gjahr-low = go_alv->gs_t003-gjahr.
-    APPEND s_gjahr.
-    LOOP AT s_gjahr.  ENDLOOP.
-  ENDIF.
-
-  IF s_gjahr[] IS INITIAL .
-    MESSAGE i027 DISPLAY LIKE 'E'.
-    cv_check = 'X'.
-  ENDIF.
+*  IF s_gjahr[] IS INITIAL .
+*    s_gjahr = 'IEQ'.
+*    s_gjahr-low = go_alv->gs_t003-gjahr.
+*    APPEND s_gjahr.
+*    LOOP AT s_gjahr.  ENDLOOP.
+*  ENDIF.
+*
+*  IF s_gjahr[] IS INITIAL .
+*    MESSAGE i027 DISPLAY LIKE 'E'.
+*    cv_check = 'X'.
+*  ENDIF.
 
   SELECT * FROM /dsl/hr80_t011
     WHERE grpid IN @s_grpid[]
@@ -59,25 +59,87 @@ ENDFORM.
 *& Form AT_SELECTION_SCREEN
 *&---------------------------------------------------------------------*
 FORM at_selection_screen .
-  go_alv->create_fcat( ).
+  DATA : lv_job      TYPE btcjob .
+  DATA : lv_jobc     TYPE btcjobcnt.
 
-
-  IF sscrfields-ucomm = 'CHAL'.
-    CALL FUNCTION 'HR_PL_CHANGE_VAR_ON_SEL_SCREEN'
-      EXPORTING
-        imp_procl     = 'C'
-        imp_schema    = p_schema
-      CHANGING
-        chan_var_name = p_vari
-      EXCEPTIONS
-        missing_info  = 1
-        schema_error  = 2.
-    IF sy-subrc <> 0.
-      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-    ENDIF.
-
+  IF go_alv IS BOUND .
+    go_alv->create_fcat( ).
   ENDIF.
+
+  CASE sscrfields-ucomm.
+      WHEN 'CHNG'.
+        IF s_grpid[] IS INITIAL .
+          MESSAGE i001 DISPLAY LIKE 'E'.
+        ENDIF.
+
+        IF s_vrsid[] IS INITIAL .
+          MESSAGE i003 DISPLAY LIKE 'E'.
+          EXIT.
+        ENDIF.
+        PERFORM change_statu .
+    WHEN 'CHAL'.
+      CALL FUNCTION 'HR_PL_CHANGE_VAR_ON_SEL_SCREEN'
+        EXPORTING
+          imp_procl     = 'C'
+          imp_schema    = p_schema
+        CHANGING
+          chan_var_name = p_vari
+        EXCEPTIONS
+          missing_info  = 1
+          schema_error  = 2.
+      IF sy-subrc <> 0.
+        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+      ENDIF.
+
+
+    WHEN 'PYJ'.
+      CLEAR gv_error.
+      go_main->check_paramaters( CHANGING cv_check = gv_error ).
+      CHECK gv_error IS INITIAL .
+
+      lv_job       = '/DSL/HR80_'   &&
+                     s_grpid-low    &&
+                     '-'            &&
+                     s_vrsid-low .
+      CLEAR lv_jobc.
+      CALL FUNCTION 'JOB_OPEN'
+        EXPORTING
+          jobname  = lv_job
+        IMPORTING
+          jobcount = lv_jobc.
+
+      SUBMIT /dsl/hr80_p006
+              WITH p_molga  = p_molga
+              WITH p_schema = p_schema
+              WITH p_simu   = 'X'
+              WITH p_vari   = p_vari
+              WITH s_btrtl  IN s_btrtl[]
+              WITH s_datum  IN s_datum[]
+              WITH s_gjahr  IN s_gjahr[]
+              WITH s_grpid  IN s_grpid[]
+              WITH s_orgeh  IN s_orgeh[]
+              WITH s_pernr  IN s_pernr[]
+              WITH s_persg  IN s_persg[]
+              WITH s_persk  IN s_persk[]
+              WITH s_plans  IN s_plans[]
+              WITH s_statu  IN s_statu[]
+              WITH s_stell  IN s_stell[]
+              WITH s_vrsid  IN s_vrsid[]
+              WITH s_werks  IN s_werks[]
+              VIA JOB lv_job NUMBER lv_jobc AND RETURN.
+
+      CALL FUNCTION 'JOB_CLOSE'
+        EXPORTING
+          jobname   = lv_job
+          jobcount  = lv_jobc
+          strtimmed = 'X'.
+    IF sy-subrc EQ 0.
+      MESSAGE s048 DISPLAY LIKE 'I'.
+    ELSE.
+      MESSAGE e049 DISPLAY LIKE 'I'.
+    ENDIF.
+  ENDCASE.
 
 ENDFORM.
 *&---------------------------------------------------------------------*
@@ -105,10 +167,10 @@ FORM get_data .
          plans_t
          stell
          stell_t
-         kokrs
-         kokrs_t
-         kostl
-         kostl_t
+*         kokrs
+*         kokrs_t
+*         kostl
+*         kostl_t
     FROM /dsl/hr80_ddl001 INTO CORRESPONDING
               FIELDS OF TABLE go_alv->gt_main
     WHERE grpid       IN s_grpid[]
@@ -186,12 +248,18 @@ FORM save_main .
   REFRESH lt_t011.
   REFRESH : lr_pernr.
 
-  IF go_alv->gt_t011 IS NOT INITIAL .
-    DELETE FROM /dsl/hr80_t011
-                          WHERE molga EQ p_molga
-                            AND grpid IN s_grpid[]
-                            AND vrsid IN s_vrsid[].
-  ENDIF.
+*  IF go_alv->gt_t011 IS NOT INITIAL .
+*    DELETE FROM /dsl/hr80_t011
+*                          WHERE molga EQ p_molga
+*                            AND grpid IN s_grpid[]
+*                            AND vrsid IN s_vrsid[].
+*  ENDIF.
+*  IF go_alv->gt_t012[] IS NOT INITIAL .
+*    DELETE FROM /dsl/hr80_t012
+*                          WHERE molga EQ p_molga
+*                            AND grpid IN s_grpid[]
+*                            AND vrsid IN s_vrsid[].
+*  ENDIF.
 
   lr_pernr[] = VALUE #( FOR ls_main IN go_alv->gt_main
               WHERE ( oprtn = 'N' OR oprtn = 'C' )
@@ -203,8 +271,14 @@ FORM save_main .
   lt_t011[] = VALUE #( FOR ls_11 IN go_alv->gt_t011
                        WHERE ( pernr IN lr_pernr[] )
                       ( ls_11 ) ).
+  IF go_alv->gt_t012[] IS NOT INITIAL .
+    MODIFY /dsl/hr80_t012 FROM TABLE go_alv->gt_t012[].
+  ENDIF.
   IF lt_t011[] IS NOT INITIAL .
     MODIFY /dsl/hr80_t011 FROM TABLE lt_t011[].
+    " Bordro sonuçlarını aldığında versiyon durumunu değiştir.
+    go_alv->gs_t003-statu = '3'.
+    MODIFY /dsl/hr80_t003 FROM go_alv->gs_t003.
   ENDIF.
   IF sy-subrc EQ 0 .
     MESSAGE s020 DISPLAY LIKE 'I' .
@@ -214,6 +288,9 @@ FORM save_main .
             WHERE pernr IN lr_pernr[].
     CLEAR go_alv->record_check .
     COMMIT WORK AND WAIT .
+
+    REFRESH : go_alv->gt_t012[].
+    REFRESH : go_alv->gt_t011[].
   ENDIF.
 ENDFORM.
 *&---------------------------------------------------------------------*
@@ -292,12 +369,12 @@ FORM modify_fcat .
            'ORGEH_T' OR
            'PLANS' OR
            'PLANS_T' OR
+*           'KOKRS' OR
+*           'KOKRS_T' OR
+*           'KOSTL' OR
+*           'KOSTL_T'OR
            'STELL' OR
-           'STELL_T' OR
-           'KOKRS' OR
-           'KOKRS_T' OR
-           'KOSTL' OR
-           'KOSTL_T' .
+           'STELL_T'  .
      go_alv->modify_target_value(  fname  = ls_fcat-fieldname targt  = 'NO_OUT' zvalue = '' ).
     ENDCASE.
 
@@ -493,9 +570,21 @@ FORM calc_simu .
             datum   TYPE sy-datum,
          END OF ls_key.
 
+  DATA : ls_t012 TYPE /dsl/hr80_t012 .
+  DEFINE add_message .
+    MOVE-CORRESPONDING go_alv->gs_t003 TO ls_t012.
+    ls_t012-pernr = &1.
+    ls_t012-spmon = &2.
+    ls_t012-msgty = &3.
+    ls_t012-messg = &4.
+    ls_t012-uname = sy-uname.
+    ls_t012-datum = sy-datum.
+    ls_t012-uzeit = sy-uzeit.
+    COLLECT ls_t012 INTO go_alv->gt_t012.
+END-OF-DEFINITION.
+
 
   lr_abkrs[] = VALUE #( FOR ls_abkrs IN go_alv->gt_main
-*              WHERE ( pernr LT '90000000' )
                     ( option = 'EQ'
                       sign   = 'I'
                       low    = ls_abkrs-abkrs )  ) .
@@ -601,9 +690,13 @@ FORM calc_simu .
                   <fs_main>-msg = TEXT-che.
                   <fs_main>-oprtn = 'N'.
                 ENDIF.
-                PERFORM read_result USING buffer
-                                          <fs_main>-pernr
-                                 CHANGING <fs_main> .
+                add_message : ls_emp_num-pernr
+                              go_alv->gs_t003-endda(6)
+                              'S'
+                              <fs_main>-msg.
+*                PERFORM read_result USING buffer
+*                                          <fs_main>-pernr
+*                                 CHANGING <fs_main> .
 
                 go_alv->record_check = 'C'. " Değişiklik kontrolü
 
@@ -625,8 +718,16 @@ FORM calc_simu .
                   <fs_main>-color = TEXT-red.
                   <fs_main>-msg = TEXT-inc.
                 ENDIF.
+                add_message : ls_emp_num-pernr
+                              go_alv->gs_t003-endda(6)
+                              'E'
+                              <fs_main>-msg.
+                go_alv->record_check = 'C'. " Değişiklik kontrolü
 
             ENDCASE.
+            PERFORM read_result USING buffer
+                                      <fs_main>-pernr
+                             CHANGING <fs_main> .
           ENDLOOP.
 
         WHEN 1.RAISE program_not_exist  .EXIT.
@@ -689,8 +790,8 @@ FORM calc_simu .
           i_grpid              = go_alv->gs_t003-grpid
           i_vrsid              = go_alv->gs_t003-vrsid
           i_statu              = go_alv->gs_t003-statu
-          i_pernr              = <fs_main>-pernr
-          i_rfper              = <fs_main>-rfper
+          i_pernr              = <fs_main>-pernr " DUMMY Personel numarası
+          i_rfper              = <fs_main>-rfper " Referans personel numarası
           "<<--------END CODE------>>
 
         TABLES
@@ -718,9 +819,6 @@ FORM calc_simu .
                                      USING ls_key.
 
           LOOP AT lt_emp_num INTO ls_emp_num.
-*            READ TABLE go_alv->gt_main ASSIGNING <fs_main>
-*                WITH KEY pernr = ls_emp_num-pernr.
-*            CHECK sy-subrc EQ 0 .
             CASE ls_emp_num-retcd.
               WHEN 99 OR 0 .
                 IF ls_emp_num-retcd EQ 99.
@@ -732,10 +830,14 @@ FORM calc_simu .
                   <fs_main>-msg = TEXT-che.
                   <fs_main>-oprtn = 'N'.
                 ENDIF.
-
-                PERFORM read_result USING buffer
-                                          <fs_main>-rfper
-                                 CHANGING <fs_main> .
+                add_message : <fs_main>-pernr
+                              go_alv->gs_t003-endda(6)
+                              'S'
+                              <fs_main>-msg.
+*
+*                PERFORM read_result USING buffer
+*                                          <fs_main>-rfper
+*                                 CHANGING <fs_main> .
                 go_alv->record_check = 'C'. " Değişiklik kontrolü
               WHEN OTHERS.
 
@@ -755,8 +857,17 @@ FORM calc_simu .
                   <fs_main>-color = TEXT-red.
                   <fs_main>-msg = TEXT-inc.
                 ENDIF.
+                add_message : <fs_main>-pernr
+                              go_alv->gs_t003-endda(6)
+                              'E'
+                              <fs_main>-msg.
+                go_alv->record_check = 'C'. " Değişiklik kontrolü
 
             ENDCASE.
+            PERFORM read_result USING buffer
+                                      <fs_main>-rfper
+                             CHANGING <fs_main> .
+            go_alv->record_check = 'C'. " Değişiklik kontrolü
           ENDLOOP.
 
         WHEN 1.RAISE program_not_exist  .EXIT.
@@ -870,4 +981,28 @@ FORM read_simu_message  TABLES   pt_msgtab "STRUCTURE msgtab
   IMPORT (exp_imp_tab) FROM MEMORY ID mem_key.
 
   FREE MEMORY ID mem_key.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form PAYROLL_SIMU
+*&---------------------------------------------------------------------*
+FORM payroll_simu_job .
+   go_main->calc_simu(
+       EXCEPTIONS
+         program_not_exist   = 038
+         variant_not_exist   = 039
+         missing_parameter   = 040
+         wrong_parameter     = 041
+         wrong_country_group = 042
+         OTHERS              = 999
+       ).
+   CASE sy-subrc .
+     WHEN 038. MESSAGE e038 WITH 'HTRCALC0' DISPLAY LIKE 'I'.
+     WHEN 039. MESSAGE e039 WITH p_vari 'HTRCALC0' DISPLAY LIKE 'I'.
+     WHEN 040. MESSAGE e040 DISPLAY LIKE 'I'.
+     WHEN 041. MESSAGE e041 DISPLAY LIKE 'I'.
+     WHEN 042. MESSAGE e042 DISPLAY LIKE 'I'.
+     WHEN 999. MESSAGE e000 WITH 'HTRCALC0' DISPLAY LIKE 'I'.
+     WHEN OTHERS .
+      go_main->save_main( ).
+   ENDCASE.
 ENDFORM.

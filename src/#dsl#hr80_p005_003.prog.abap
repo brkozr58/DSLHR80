@@ -194,6 +194,11 @@ FORM change_record USING mode.
       et_row_no     = lt_rown
   ).
 
+  IF mode EQ 'C' AND lines( lt_rows ) GT 1.
+    MESSAGE s030 DISPLAY LIKE 'E' .
+    EXIT.
+  ENDIF.
+
   PERFORM row_record USING mode lt_rows .
 
 ENDFORM.

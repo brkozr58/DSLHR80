@@ -384,6 +384,7 @@ CLASS lcl_tree_event_receiver IMPLEMENTATION.
     CASE fcode.
       WHEN 'GRPID'.
         CALL TRANSACTION '/DSL/HR80_MENU'.
+
     ENDCASE.
   ENDMETHOD.
 
@@ -403,6 +404,10 @@ CLASS lcl_tree_event_receiver IMPLEMENTATION.
         butn_type = '0'
         text      = 'Menü Uyarlaması'
         quickinfo = 'Menü Uyarlaması'.
+
+
+
+
   ENDMETHOD.
 
 ENDCLASS.                    "lcl_tree_event_receiver IMPLEMENTATION

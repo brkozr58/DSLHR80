@@ -59,7 +59,8 @@ FORM log_budget  TABLES ptext STRUCTURE plog_text
   ptext-tlength1    = $lengt.
   ptext-tintensiv1  = $inten.
   ptext-empty_lines = $eline.
-  APPEND ptext.
+  APPEND ptext.CLEAR ptext .
+  CLEAR &text1 .
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form REFRESH_TABLES
@@ -67,7 +68,7 @@ ENDFORM.
 FORM refresh_tables .
   REFRESH : gt_t001,gt_t002,gt_t003,gt_t004,
             gt_t005,gt_t007,gt_t010,gt_t011,
-            gt_tvergd,gt_tvergi,gt_t512z,gt_t554s.
+            gt_tvergd,gt_tvergi,gt_t005_subty.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form GET_BUDGET_DATAS
@@ -75,12 +76,15 @@ ENDFORM.
 FORM get_budget_datas .
   DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
   DATA : lr_pernr TYPE RANGE OF /dsl/hr80_t010-pernr WITH HEADER LINE.
-  DATA : lr_lgart TYPE RANGE OF /dsl/hr80_t011-lgart WITH HEADER LINE.
+  DATA : lr_moabw TYPE RANGE OF t001p-moabw WITH HEADER LINE.
+  DATA : lr_infty TYPE RANGE OF t512z-infty WITH HEADER LINE.
+  DATA : lt_t001p TYPE TABLE OF t001p WITH HEADER LINE .
+
 
 " PA personelleri için pernr-pernr yi al. seçim ekranında ki zli eklenen
 " P_PERNR  parametresini boş göndermelisin
   IF p_pernr IS NOT INITIAL .
-    lr_pernr = 'IEQ'.lr_pernr-low = p_pernr.APPEND lr_pernr.
+    lr_pernr = 'IEQ'.lr_pernr-low = p_pernr.APPEND lr_pernr." DUMMY Personel numarası
   ELSE.
     lr_pernr = 'IEQ'.lr_pernr-low = pernr-pernr.APPEND lr_pernr.
   ENDIF.
@@ -90,18 +94,34 @@ FORM get_budget_datas .
     lr_rfper = 'IEQ'.lr_rfper-low = p_rfper.APPEND lr_rfper.
   ENDIF.
 
-*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0008' ) TO lr_lgart.
-  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0014' ) TO lr_lgart.
-  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0015' ) TO lr_lgart.
-*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0057' ) TO lr_lgart.
-*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0216' ) TO lr_lgart.
-*  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0776' ) TO lr_lgart.
-  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '2010' ) TO lr_lgart.
+  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0014' ) TO lr_infty.
+  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0015' ) TO lr_infty.
+  APPEND VALUE #( sign = 'I' option = 'EQ'  low = '2010' ) TO lr_infty.
 
-  SELECT * FROM t512z INTO TABLE gt_t512z
-      WHERE molga EQ p_molga
-        AND lgart IN lr_lgart[].
+*  SELECT * FROM t512z INTO TABLE gt_t512z
+*  SELECT * FROM t512z INTO CORRESPONDING FIELDS OF TABLE gt_t005_subty
+*      WHERE molga EQ p_molga
+*        AND infty IN lr_infty[].
 
+    SELECT t1~molga
+           t2~sprsl
+           t1~infty
+           t1~lgart
+           t2~lgtxt AS lgart_t
+           t1~begda
+           t1~endda
+          FROM t512z AS t1
+          INNER JOIN t512t AS t2
+              ON    t2~molga EQ t1~molga
+                AND t2~lgart EQ t1~lgart
+        INTO CORRESPONDING FIELDS OF TABLE gt_t005_subty
+        WHERE t1~molga EQ p_molga
+          AND t2~sprsl EQ sy-langu
+          AND t1~infty IN lr_infty[]
+          AND t1~begda LE sy-datum
+          AND t1~endda GE sy-datum.
+  SORT gt_t005_subty ASCENDING BY infty lgart .
+  DELETE ADJACENT DUPLICATES FROM gt_t005_subty COMPARING infty lgart.
 
   SELECT * FROM /dsl/hr80_t001   INTO TABLE gt_t001
         WHERE molga EQ p_molga
@@ -159,18 +179,6 @@ FORM get_budget_datas .
     PERFORM log_budget  TABLES ptext USING '1' '80' '0' 1 mtext .
     PERFORM errors TABLES error_ptext.
   ELSE.
-    DATA : lt_t001p TYPE TABLE OF t001p WITH HEADER LINE .
-
-    SELECT * FROM t001p INTO TABLE lt_t001p
-        FOR ALL ENTRIES IN gt_t010
-        WHERE molga EQ p_molga
-          AND ( ( werks EQ gt_t010-werks AND btrtl EQ gt_t010-btrtl )
-                OR
-                ( werks EQ gt_t010-werks_new AND btrtl EQ gt_t010-btrtl_new )
-               ) .
-    SORT lt_t001p ASCENDING .
-    DELETE ADJACENT DUPLICATES FROM lt_t001p.
-
 *    ls_t001p = cl_hr_t001p=>read( werks = ls_p0001-werks
 *                                  btrtl = ls_p0001-btrtl ).
 *
@@ -182,14 +190,52 @@ FORM get_budget_datas .
 *      IMPORTING
 *        w554s = ls_t554s.
 
+    SELECT * FROM t001p INTO TABLE lt_t001p
+        FOR ALL ENTRIES IN gt_t010
+        WHERE molga EQ p_molga
+          AND ( ( werks EQ gt_t010-werks AND
+                  btrtl EQ gt_t010-btrtl )
+                OR
+                ( werks EQ gt_t010-werks_new AND
+                  btrtl EQ gt_t010-btrtl_new )
+               ) .
+    SORT lt_t001p ASCENDING .
+    DELETE ADJACENT DUPLICATES FROM lt_t001p.
+    lr_moabw[] = VALUE #( FOR ls_t001p IN lt_t001p
+              WHERE ( molga EQ p_molga )
+                    ( sign    = 'I'
+                      option  = 'EQ'
+                      low     = ls_t001p-moabw
+                      high    = ls_t001p-moabw ) ).
 
-    SELECT * FROM t554s INTO TABLE gt_t554s
-      FOR ALL ENTRIES IN lt_t001p
-        WHERE moabw EQ lt_t001p-moabw
-          AND endda GE aper-begda
-          AND begda LE aper-endda.
-    SORT gt_t554s ASCENDING .
-    DELETE ADJACENT DUPLICATES FROM gt_t554s.
+
+    SELECT
+          FROM t554s AS t1
+          INNER JOIN t554t AS t2
+              ON    t2~awart EQ t1~subty
+      FIELDS
+           t2~sprsl,
+            t1~subty AS lgart     ,
+           t2~atext AS lgart_t   ,
+           CAST( '2001' AS CHAR( 4 ) )  AS infty,
+           t1~begda              ,
+           t1~endda
+        WHERE t1~moabw IN @lr_moabw
+          AND t2~sprsl EQ @sy-langu
+          AND t1~begda LE @sy-datum
+          AND t1~endda GE @sy-datum
+        APPENDING CORRESPONDING FIELDS OF TABLE @gt_t005_subty.
+
+    SORT gt_t005_subty ASCENDING BY infty lgart .
+    DELETE ADJACENT DUPLICATES FROM gt_t005_subty COMPARING infty lgart.
+*
+*    SELECT * FROM t554s INTO TABLE gt_t554s
+*      FOR ALL ENTRIES IN lt_t001p
+*        WHERE moabw EQ lt_t001p-moabw
+*          AND endda GE aper-begda
+*          AND begda LE aper-endda.
+*    SORT gt_t554s ASCENDING .
+*    DELETE ADJACENT DUPLICATES FROM gt_t554s.
   ENDIF.
 
   SELECT * FROM /dsl/hr80_tvergd INTO TABLE gt_tvergd
@@ -235,20 +281,23 @@ FORM change_person_data .
   SORT gt_t010 ASCENDING BY begda endda.
   LOOP AT p0000.
     LOOP AT gt_t010 INTO DATA(ls_t010)
-          WHERE pernr EQ p0000-pernr
-            AND begda LE p0000-endda
-            AND endda GE p0000-begda.
+          WHERE begda LE p0000-endda
+            AND endda GE p0000-begda
+*            AND  pernr EQ p0000-pernr
+             .
       IF ls_t010-begda GT p0000-begda AND
          ls_t010-massn EQ p0000-massn AND
          ls_t010-massg EQ p0000-massg AND
          ls_t010-endda LT p0000-endda  .
         " bütçede işlemler dizisi değişikliği varmı
         LOOP AT gt_t010 TRANSPORTING NO FIELDS
-          WHERE pernr EQ p0000-pernr
-            AND begda LE p0000-endda
+          WHERE begda LE p0000-endda
             AND endda GE p0000-begda
             AND massn NE p0000-massn
-            AND massg NE p0000-massg.
+            AND massg NE p0000-massg
+            AND pernr IN lr_pernr[]
+*            AND  pernr EQ p0000-pernr
+          .
         ENDLOOP.
         IF sy-subrc EQ 0. " varsa pa0 dakini bütçe verisi ile sınırla
           MOVE-CORRESPONDING p0000 TO lt_p0000.
@@ -275,9 +324,11 @@ FORM change_person_data .
 
   LOOP AT p0001.
     LOOP AT gt_t010 INTO ls_t010
-          WHERE pernr EQ p0001-pernr
-            AND begda LE p0001-endda
-            AND endda GE p0001-begda.
+          WHERE begda LE p0001-endda
+            AND endda GE p0001-begda
+            AND  pernr IN lr_pernr[]
+*            AND  pernr EQ p0000-pernr
+      .
       " bütçe işlemler dizisini ekle
       MOVE-CORRESPONDING p0001 TO lt_p0001.
       MOVE-CORRESPONDING ls_t010 TO lt_p0001.
@@ -310,7 +361,7 @@ FORM change_person_data .
 
   LOOP AT p0008 ASSIGNING FIELD-SYMBOL(<p0008>)
     WHERE begda LE aper-endda.
-    LOOP AT gt_t010 INTO ls_t010  .
+    LOOP AT gt_t010 INTO ls_t010  WHERE pernr IN lr_pernr[].
       change_value : ls_t010-trfar_new <p0008>-trfar,
                      ls_t010-trfgb_new <p0008>-trfgb,
                      ls_t010-trfgr_new <p0008>-trfgr,
@@ -348,38 +399,76 @@ FORM basic_additional_time_data.
 " DUMMY personellerde PA daki sicil gönderilmeli
 *p_rfper
 
-  DATA : lv_infty(7).
-  FIELD-SYMBOLS <infty> TYPE any .
-  FIELD-SYMBOLS <infty_tab> TYPE ANY TABLE.
 
   " Ek ödemeleri bilgi tiplerine aktar.
   LOOP AT gt_t005 WHERE pernr IN lr_pernr[].
 
-    " 0014,0015,2010 verileri için bilgitiplerine  ekle
-    LOOP AT gt_t512z WHERE lgart = gt_t005-lgart .
-      lv_infty = 'P' && gt_t512z-infty.
-      ASSIGN (lv_infty) TO <infty>.
-      lv_infty = lv_infty && '[]'.
-      ASSIGN (lv_infty) TO <infty_tab>.
-      CHECK <infty> IS ASSIGNED AND <infty_tab> IS ASSIGNED  .
+    " 0014,0015,2001,2010 verileri için bilgitiplerine  ekle
+    LOOP AT gt_t005_subty WHERE lgart = gt_t005-lgart .
+      CASE gt_t005_subty-infty.
+        WHEN '0014' .
+          CLEAR p0014 .
+          IF p_pernr IS NOT INITIAL .
+            p0014-pernr =  p_pernr.
+          ELSE.
+            p0014-pernr = pernr-pernr.
+          ENDIF.
+          p0014-infty = gt_t005_subty-infty.
+          p0014-subty = p0014-lgart = gt_t005-lgart.
+          p0014-begda = gt_t005-begda.
+          p0014-endda = gt_t005-endda.
+          p0014-betrg = gt_t005-betrg.
+          p0014-anzhl = gt_t005-anzhl.
+          p0014-waers = p0008-waers.
+          COLLECT p0014 .
 
+        WHEN '0015' .
+          CLEAR p0015 .
+          IF p_pernr IS NOT INITIAL .
+            p0015-pernr =  p_pernr.
+          ELSE.
+            p0015-pernr = pernr-pernr.
+          ENDIF.
+          p0015-infty = gt_t005_subty-infty.
+          p0015-subty = p0015-lgart = gt_t005-lgart.
+          p0015-begda = gt_t005-begda.
+          p0015-endda = gt_t005-endda.
+          p0015-betrg = gt_t005-betrg.
+          p0015-anzhl = gt_t005-anzhl.
+          p0015-waers = p0008-waers.
+          COLLECT p0015 .
 
-      UNASSIGN <infty> .
-      UNASSIGN <infty_tab> .
+        WHEN '2010' .
+          CLEAR p2010 .
+          IF p_pernr IS NOT INITIAL .
+            p2010-pernr =  p_pernr.
+          ELSE.
+            p2010-pernr = pernr-pernr.
+          ENDIF.
+          p2010-infty = gt_t005_subty-infty.
+          p2010-subty = p0015-lgart = gt_t005-lgart.
+          p2010-begda = gt_t005-begda.
+          p2010-endda = gt_t005-endda.
+          p2010-betrg = gt_t005-betrg.
+          p2010-anzhl = gt_t005-anzhl.
+          p2010-waers = p0008-waers.
+          COLLECT p2010 .
+
+        WHEN '2001' .
+          CLEAR p2001 .
+          IF p_pernr IS NOT INITIAL .
+            p2001-pernr =  p_pernr.
+          ELSE.
+            p2001-pernr = pernr-pernr.
+          ENDIF.
+          p2001-infty = gt_t005_subty-infty.
+          p2001-subty = p2001-awart = gt_t005-lgart.
+          p2001-begda = gt_t005-begda.
+          p2001-endda = gt_t005-endda.
+          p2001-kaltg = gt_t005-anzhl.
+          COLLECT p2001 .
+      ENDCASE.
     ENDLOOP.
-
-    " 2001 Devamsızlık verileri için bilgitiplerine  ekle
-    LOOP AT gt_t554s WHERE SUBTY EQ gt_t005-lgart.
-      CHECK gt_t005-begda LE aper-endda AND gt_t005-endda GE aper-begda.
-      CLEAR : p2001.
-      p2001-pernr = pernr-pernr.
-      p2001-infty = '2001'.
-      p2001-begda = gt_t005-begda.
-      p2001-endda = gt_t005-endda.
-      p2001-subty = p2001-awart = gt_t005-lgart.
-
-    ENDLOOP.
-
   ENDLOOP.
 
 ENDFORM.
@@ -402,6 +491,11 @@ FORM change_ratio .
   DATA : lr_pernr  TYPE RANGE OF persno.
   DATA : lt_param  TYPE TABLE OF /dsl/hr80_t004    WITH HEADER LINE.
   DATA : ls_param  TYPE /dsl/hr80_t004     .
+*  DATA : lv_lgtxt TYPE t512t-lgtxt.
+  DATA : lt_t512t TYPE TABLE OF t512t WITH HEADER LINE ..
+
+  DATA : lv_mtext TYPE text132.
+  DATA : lv_oran(10).
 
 
   DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
@@ -417,11 +511,32 @@ FORM change_ratio .
       IF <lfs> IS NOT INITIAL .
         IF &3-&2 IS NOT INITIAL.
           &3-&2 = &3-&2 + ( ( &3-&2 * <lfs> ) / 100 ).
+
+"<<--------log------>>
+          WRITE <lfs> TO lv_oran .
+          SHIFT lv_oran LEFT DELETING LEADING space.
+*          lv_mtext+30(10) = &4 && ' %' && lv_oran.
+          lv_mtext+30(10) = &4.
+          lv_mtext+30(10) = '%' && lv_oran.
+          WRITE &5 TO lv_mtext+35(21).
+*          SHIFT lv_mtext+35(21) LEFT DELETING LEADING space.
+          WRITE &3-&2 TO lv_mtext+58(21).
+*          SHIFT lv_mtext+58(21) LEFT DELETING LEADING space.
+          PERFORM log_budget  TABLES ptext USING '1' '90' '0' 0 lv_mtext .
+"<<-------- ------>>
+
+
         ENDIF.
       ENDIF.
     ENDIF.
     UNASSIGN <lfs>.
   END-OF-DEFINITION.
+
+  SELECT * FROM t512t INTO TABLE lt_t512t
+      FOR ALL ENTRIES IN it
+        WHERE molga EQ p_molga
+          AND sprsl EQ sy-langu
+          AND lgart EQ it-lgart.
 
 
 " PA personelleri için pernr-pernr yi al. seçim ekranında ki zli eklenen
@@ -441,8 +556,20 @@ FORM change_ratio .
 
 
   LOOP AT wpbp.
-    lt_param[] = gt_t004[].
+    lt_param[] = gt_t004[]. " Oran tablosu aktarımı
 
+"<<--------İşleme günlüğü
+    lv_mtext = 'Dönem:       '.
+    WRITE aper-begda TO lv_mtext+14(10).
+    WRITE aper-endda TO lv_mtext+27(10).
+    PERFORM log_budget  TABLES ptext USING '1' '90' '0' 1 lv_mtext .
+
+    lv_mtext = 'Ücret türü'.
+    lv_mtext+30(10) = 'Oran'.
+    lv_mtext+45(21) = 'Eski değer'.
+    lv_mtext+68(21) = 'Yeni değer'.
+    PERFORM log_budget  TABLES ptext USING '1' '90' '0' 0 lv_mtext .
+"<<-------------->>
     " personel numarasına özel kayıt girildiyse aynı lgartta boş olanları sil
     SORT lt_param BY pernr lgart .
 
@@ -476,10 +603,6 @@ FORM change_ratio .
                         ( sign = 'I' option = 'EQ' low = space ) ).
     lr_stell = VALUE #( ( sign = 'I' option = 'EQ' low = wpbp-stell )
                         ( sign = 'I' option = 'EQ' low = space ) ).
-*    lr_abkrs = VALUE #( ( sign = 'I' option = 'EQ' low = wpbp-ansvh )
-*                        ( sign = 'I' option = 'EQ' low = space ) ).
-*    lr_pernr = VALUE #( ( sign = 'I' option = 'EQ' low = wpbp-bukrs )
-*                        ( sign = 'I' option = 'EQ' low = space ) ).
 
 
     LOOP AT lt_param INTO ls_param
@@ -495,13 +618,19 @@ FORM change_ratio .
           AND abkrs IN lr_abkrs[]
           AND pernr IN lr_pernr[].
 
+      DATA : ls_temp LIKE LINE OF it .
       READ TABLE it ASSIGNING FIELD-SYMBOL(<it>)
             WITH KEY lgart = ls_param-lgart
                      apznr = wpbp-apznr.
       IF sy-subrc EQ 0 .
-        calc_ratio : 'RAT' betpe <it>,
-                     'ANZ' anzhl <it>,
-                     'BET' betrg <it>.
+        MOVE-CORRESPONDING <it> TO ls_temp. " işleme için gerekli
+        READ TABLE lt_t512t WITH KEY lgart = <it>-lgart.
+        CLEAR lv_mtext.
+        lv_mtext = <it>-lgart && '-' && lt_t512t-lgtxt.
+        calc_ratio : 'RAT' betpe <it> 'BETPE' ls_temp-betpe,
+                     'ANZ' anzhl <it> 'ANZHL' ls_temp-anzhl,
+                     'BET' betrg <it> 'BETRG' ls_temp-betrg.
+*
       ENDIF.
 
     ENDLOOP.

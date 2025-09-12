@@ -1661,8 +1661,8 @@
       <TEXTNO>001</TEXTNO>
       <TYPE>E</TYPE>
       <TEXT_TYPE>S</TEXT_TYPE>
-      <TEXT_NAME>ICON_XLS</TEXT_NAME>
-      <ICON_ID>@J2@</ICON_ID>
+      <TEXT_NAME>ICON_BIW_SOURCE_SYS_FILE</TEXT_NAME>
+      <ICON_ID>@6M@</ICON_ID>
       <FUN_TEXT>Dosya seç</FUN_TEXT>
       <ICON_TEXT>Dosya seç</ICON_TEXT>
       <INFO_TEXT>Dosya seç</INFO_TEXT>
@@ -1672,8 +1672,8 @@
       <TEXTNO>001</TEXTNO>
       <TYPE>E</TYPE>
       <TEXT_TYPE>S</TEXT_TYPE>
-      <TEXT_NAME>ICON_IMPORT_TRANSPORT_REQUEST</TEXT_NAME>
-      <ICON_ID>@K5@</ICON_ID>
+      <TEXT_NAME>ICON_XLS</TEXT_NAME>
+      <ICON_ID>@J2@</ICON_ID>
       <FUN_TEXT>Aktarım Formatı</FUN_TEXT>
       <ICON_TEXT>Aktarım Formatı</ICON_TEXT>
       <INFO_TEXT>Aktarım Formatı</INFO_TEXT>
@@ -2166,97 +2166,97 @@
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
       <NO>01</NO>
-      <PFNO>S</PFNO>
-     </RSMPE_BUT>
-     <RSMPE_BUT>
-      <PFK_CODE>000003</PFK_CODE>
-      <CODE>0001</CODE>
-      <NO>02</NO>
       <PFNO>20</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>03</NO>
+      <NO>02</NO>
       <PFNO>17</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>04</NO>
-      <PFNO>S</PFNO>
+      <NO>03</NO>
+      <PFNO>13</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>05</NO>
+      <NO>04</NO>
       <PFNO>16</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>06</NO>
+      <NO>05</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>07</NO>
+      <NO>06</NO>
       <PFNO>39</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>08</NO>
+      <NO>07</NO>
       <PFNO>37</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
+      <NO>08</NO>
+      <PFNO>S</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000003</PFK_CODE>
+      <CODE>0001</CODE>
       <NO>09</NO>
-      <PFNO>S</PFNO>
-     </RSMPE_BUT>
-     <RSMPE_BUT>
-      <PFK_CODE>000003</PFK_CODE>
-      <CODE>0001</CODE>
-      <NO>10</NO>
-      <PFNO>S</PFNO>
-     </RSMPE_BUT>
-     <RSMPE_BUT>
-      <PFK_CODE>000003</PFK_CODE>
-      <CODE>0001</CODE>
-      <NO>11</NO>
       <PFNO>28</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>12</NO>
+      <NO>10</NO>
       <PFNO>40</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>13</NO>
+      <NO>11</NO>
       <PFNO>29</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>14</NO>
+      <NO>12</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>15</NO>
+      <NO>13</NO>
       <PFNO>30</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>16</NO>
+      <NO>14</NO>
       <PFNO>42</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000003</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>15</NO>
+      <PFNO>S</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000003</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>16</NO>
+      <PFNO>43</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
@@ -2268,43 +2268,25 @@
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
       <NO>18</NO>
-      <PFNO>43</PFNO>
-     </RSMPE_BUT>
-     <RSMPE_BUT>
-      <PFK_CODE>000003</PFK_CODE>
-      <CODE>0001</CODE>
-      <NO>19</NO>
-      <PFNO>S</PFNO>
-     </RSMPE_BUT>
-     <RSMPE_BUT>
-      <PFK_CODE>000003</PFK_CODE>
-      <CODE>0001</CODE>
-      <NO>20</NO>
       <PFNO>32</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>21</NO>
+      <NO>19</NO>
       <PFNO>33</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>22</NO>
+      <NO>20</NO>
       <PFNO>34</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>23</NO>
+      <NO>21</NO>
       <PFNO>S</PFNO>
-     </RSMPE_BUT>
-     <RSMPE_BUT>
-      <PFK_CODE>000003</PFK_CODE>
-      <CODE>0001</CODE>
-      <NO>24</NO>
-      <PFNO>13</PFNO>
      </RSMPE_BUT>
     </BUT>
     <PFK>
@@ -3175,7 +3157,7 @@
      <ID>I</ID>
      <KEY>003</KEY>
      <ENTRY>Listedeki kayıtlar aktarılacaktır. Emin misiniz?</ENTRY>
-     <LENGTH>132</LENGTH>
+     <LENGTH>70</LENGTH>
     </item>
     <item>
      <ID>I</ID>
@@ -3228,7 +3210,7 @@
     <item>
      <ID>I</ID>
      <KEY>LEA</KEY>
-     <ENTRY>Seçilen personeller için &quot;İşten Çıkış&quot; kaydı oluşturulacaktır! Emin misiniz?</ENTRY>
+     <ENTRY>Seçilen personel veya personeller  için &quot;İşten Çıkış&quot; kaydı oluşturulacaktır! Emin misiniz?</ENTRY>
      <LENGTH>132</LENGTH>
     </item>
     <item>
@@ -3240,7 +3222,7 @@
     <item>
      <ID>I</ID>
      <KEY>T01</KEY>
-     <ENTRY>Ek ödeme oluştur</ENTRY>
+     <ENTRY>14/15/2001/2010 oluştur</ENTRY>
      <LENGTH>132</LENGTH>
     </item>
     <item>
@@ -3327,12 +3309,6 @@
      <ENTRY>.</ENTRY>
      <LENGTH>26</LENGTH>
      <SPLIT>D</SPLIT>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>S_DATUM</KEY>
-     <ENTRY>Tarih</ENTRY>
-     <LENGTH>13</LENGTH>
     </item>
     <item>
      <ID>S</ID>

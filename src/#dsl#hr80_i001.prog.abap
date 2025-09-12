@@ -9,7 +9,8 @@ TABLES :  /dsl/hr80_t001,"Bütçe - Grup tanımı
           /dsl/hr80_t005,"Bütçe - Ek ödeme ücretleri
           /dsl/hr80_t007,"Bütçe - Ücret skalası grupları
           /dsl/hr80_t010,"Bütçe - Personel anaverileri
-          /dsl/hr80_t011."Bütçe - Bordro sonuçları
+          /dsl/hr80_t011,"Bütçe - Bordro sonuçları
+          /dsl/hr80_t012."Bütçe - Bordro çalışma günlüğü
 *
 *
 SELECTION-SCREEN BEGIN OF BLOCK bl1 WITH FRAME TITLE TEXT-000  .
@@ -32,7 +33,7 @@ SELECT-OPTIONS : s_grpid FOR /dsl/hr80_t003-grpid
 
                 s_gjahr FOR /dsl/hr80_t003-gjahr
                       NO INTERVALS
-                      NO-EXTENSION ,
+                      NO-EXTENSION NO-DISPLAY ,
 
                 s_statu FOR /dsl/hr80_t003-statu
                       NO INTERVALS

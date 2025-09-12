@@ -100,7 +100,13 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
 *  END-OF-SELECTION.
   END-OF-SELECTION.
     CHECK gv_error IS INITIAL .
-    CALL SCREEN 0100.
+    CASE 'X'.
+      WHEN p_simu.
+        PERFORM payroll_simu_job .
+      WHEN OTHERS.
+        CALL SCREEN 0100.
+    ENDCASE.
+
 
 
 

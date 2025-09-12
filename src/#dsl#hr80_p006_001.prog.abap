@@ -3,8 +3,7 @@
 *&---------------------------------------------------------------------*
 
 
-  TABLES : /dsl/hr80_s005.
-
+TABLES : /dsl/hr80_s005.
 
 
 SELECTION-SCREEN BEGIN OF BLOCK bl2 WITH FRAME TITLE TEXT-001 .
@@ -17,11 +16,8 @@ SELECT-OPTIONS :  s_pernr FOR /dsl/hr80_t010-pernr NO INTERVALS ,
                   s_plans FOR /dsl/hr80_t010-plans NO INTERVALS ,
                   s_stell FOR /dsl/hr80_t010-stell NO INTERVALS ,
                   s_datum FOR /dsl/hr80_t010-begda
-*                                                   NO-EXTENSION
-*                                                   NO INTERVALS
-*                                                   DEFAULT sy-datum
                                                    .
-
+ PARAMETERS p_simu NO-DISPLAY .
 SELECTION-SCREEN END OF BLOCK bl2.
 
 
@@ -34,6 +30,13 @@ SELECTION-SCREEN PUSHBUTTON 50(42) chlogvar
 
 SELECTION-SCREEN END OF BLOCK bl3.
 
+SELECTION-SCREEN BEGIN OF BLOCK bl4  WITH FRAME .
+SELECTION-SCREEN PUSHBUTTON 1(42) chnge
+                USER-COMMAND chng VISIBLE LENGTH 60.
+SELECTION-SCREEN END OF BLOCK bl4.
+
+SELECTION-SCREEN PUSHBUTTON 5(30) py_job
+                USER-COMMAND pyj  .
 
 
 *----------------------------------------------------------------------*
@@ -114,6 +117,7 @@ CLASS lcl_alv DEFINITION   .
            END OF gs_main,
            gt_main            LIKE TABLE OF gs_main.
     DATA : gt_t011            TYPE TABLE OF /dsl/hr80_t011 .
+    DATA : gt_t012            TYPE TABLE OF /dsl/hr80_t012 .
     DATA : gt_delete            TYPE TABLE OF /dsl/hr80_t011 .
 
     DATA : gs_t003            TYPE /dsl/hr80_t003.

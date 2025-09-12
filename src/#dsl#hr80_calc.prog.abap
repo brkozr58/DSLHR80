@@ -42,10 +42,17 @@ SELECTION-SCREEN END OF BLOCK bdgt2.
           gt_t010   TYPE TABLE OF /dsl/hr80_t010    WITH HEADER LINE, "Bütçe - Personel anaverileri
           gt_t011   TYPE TABLE OF /dsl/hr80_t011    WITH HEADER LINE, "Bütçe - Bordro sonuçları
           gt_tvergd TYPE TABLE OF /dsl/hr80_tvergd  WITH HEADER LINE, "Bütçe - Vergi dilimleri (T7TRT01)
-          gt_tvergi TYPE TABLE OF /dsl/hr80_tvergi  WITH HEADER LINE, "Bütçe - Vergi indirimleri (T7TRT02)
-          gt_t512z  TYPE TABLE OF t512z             WITH HEADER LINE , " ek ödeme zaman türleri
-          gt_t554s  TYPE TABLE OF t554s             WITH HEADER LINE . " Devamsızlık türleri
+          gt_tvergi TYPE TABLE OF /dsl/hr80_tvergi  WITH HEADER LINE. "Bütçe - Vergi indirimleri (T7TRT02)
 
+  DATA: BEGIN OF gt_t005_subty OCCURS 0,
+          molga       TYPE molga    ,
+          sprsl       TYPE spras  ,
+          lgart       TYPE lgart  ,
+          lgart_t     TYPE lgtxt  ,
+          infty       TYPE infty    ,
+          begda       TYPE begda  ,
+          endda       TYPE endda  ,
+        END OF gt_t005_subty.
 
 
 

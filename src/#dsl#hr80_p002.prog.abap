@@ -41,8 +41,8 @@ REPORT /dsl/hr80_p002 MESSAGE-ID /dsl/hr80.
     go_main = NEW #( ).
     go_alv = NEW #( ).
     REFRESH s_statu.
-    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0' ) TO s_statu.
-    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '1' ) TO s_statu.
+*    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0' ) TO s_statu.
+*    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '1' ) TO s_statu.
 
     WRITE icon_usergroup AS ICON TO grpid+0(4).
     grpid+4(20) = TEXT-grp && ' oluştur'.
