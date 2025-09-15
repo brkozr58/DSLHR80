@@ -61,11 +61,25 @@ ENDFORM.
 FORM at_selection_screen .
   DATA : lv_job      TYPE btcjob .
   DATA : lv_jobc     TYPE btcjobcnt.
+  DATA : lv_grpid(20).
+  DATA : lv_vrsid(20).
   DATA : answer.
 
   IF go_alv IS BOUND .
     go_alv->create_fcat( ).
   ENDIF.
+
+    LOOP AT SCREEN.
+      IF screen-name CP '*S_STATU*'.
+        screen-input = 0 .
+        screen-output = 1 .
+      ENDIF.
+      IF screen-name CP '*S_GJAHR*'.
+        screen-active = 0 .
+      ENDIF.
+      MODIFY SCREEN.
+    ENDLOOP.
+
 
   CASE sscrfields-ucomm.
       WHEN 'CHNG'.
@@ -111,10 +125,17 @@ FORM at_selection_screen .
       ).
 
       IF answer EQ '1'. " EVET
+        lv_grpid = s_grpid-low.
+        lv_vrsid = s_vrsid-low.
+        SHIFT lv_grpid LEFT DELETING LEADING '0'.
+        SHIFT lv_grpid LEFT DELETING LEADING space.
+        SHIFT lv_vrsid LEFT DELETING LEADING '0'.
+        SHIFT lv_vrsid LEFT DELETING LEADING space.
           lv_job       = '/DSL/HR80_'   &&
-                         s_grpid-low    &&
+                         'CALC_'   &&
+                         lv_grpid    &&
                          '-'            &&
-                         s_vrsid-low .
+                         lv_vrsid .
           CLEAR lv_jobc.
           CALL FUNCTION 'JOB_OPEN'
             EXPORTING

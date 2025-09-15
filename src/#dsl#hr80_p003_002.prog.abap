@@ -547,40 +547,25 @@ CLASS lcl_alv IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD handle_toolbar.
+    DEFINE insert_value .
+      INSERT VALUE #( butn_type = 0
+                      function  = &1
+                      icon      = &2
+                      disabled  = space
+                      text      = &3
+                      quickinfo = &3
+                      )
+              INTO TABLE e_object->mt_toolbar.
+    END-OF-DEFINITION.
+
     INSERT VALUE #( butn_type = 3 )
             INTO TABLE e_object->mt_toolbar.
 
-    INSERT VALUE #( butn_type = 0
-                    function  = 'INSERT'
-                    icon      = icon_insert_row
-                    disabled  = space
-                    text      = 'Parametre Ekle'
-                    )
-            INTO TABLE e_object->mt_toolbar.
-
-    INSERT VALUE #( butn_type = 0
-                    function  = 'CHANGE'
-                    icon      = icon_change
-                    disabled  = space
-                    text      = 'Parametre Değiştir'
-                    )
-            INTO TABLE e_object->mt_toolbar.
-    INSERT VALUE #( butn_type = 0
-                    function  = 'DELETE'
-                    icon      = icon_delete_row
-                    disabled  = space
-                    text      = 'Parametre Sil'
-                    )
-           INTO TABLE e_object->mt_toolbar.
-
-    INSERT VALUE #( butn_type = 0
-                    function  = 'MODFIY'
-                    icon      = icon_system_save
-                    quickinfo = TEXT-t01
-                    disabled  = space
-                    text      = 'Kaydet'
-                    )
-            INTO TABLE e_object->mt_toolbar.
+    insert_value :
+      'INSERT'    icon_insert_row             'Parametre Ekle'  ,
+      'CHANGE'    icon_change                 'Parametre Değiştir' ,
+      'DELETE'    icon_delete_row             'Parametre Sil' ,
+      'MODFIY'    icon_system_save            'Kaydet' .
 
   ENDMETHOD.
 
@@ -603,6 +588,7 @@ CLASS lcl_alv IMPLEMENTATION.
 
     refresh_alv( ).
   ENDMETHOD.
+
   METHOD refresh_alv.
     DATA(ls_stable) = VALUE lvc_s_stbl( row = 'X' col = 'X' ).
 
@@ -709,7 +695,5 @@ CLASS lcl_alv IMPLEMENTATION.
       mo_document->display_document( parent = mo_top_page ).
     ENDIF.
   ENDMETHOD.
-
-
 
 ENDCLASS.                 " lcl_alv IMPLEMENTATION

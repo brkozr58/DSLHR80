@@ -202,6 +202,12 @@
     </item>
     <item>
      <ID>I</ID>
+     <KEY>CPY</KEY>
+     <ENTRY>Versiyon kopyala</ENTRY>
+     <LENGTH>26</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>DEL</KEY>
      <ENTRY>Versiyon Sil</ENTRY>
      <LENGTH>116</LENGTH>

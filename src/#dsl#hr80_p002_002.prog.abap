@@ -537,8 +537,6 @@ CLASS lcl_report IMPLEMENTATION.
             ENDCASE.
             CLEAR go_alv->record_check." DEğişiklik kontrolü için
           ELSE.
-
-
             INSERT VALUE #( fieldname = 'VRSID_T'
                             style     = cl_gui_alv_grid=>mc_style_enabled )
                  INTO TABLE ls_main-t_styl .
@@ -700,7 +698,6 @@ CLASS lcl_alv IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD set_layout.
     ms_layout-box_fname = 'MARK'.
     ms_layout-col_opt = 'X'.
@@ -750,14 +747,12 @@ CLASS lcl_alv IMPLEMENTATION.
     modify_target_value( fname = 'UZEIT'   targt  = 'NO_OUT' zvalue = 'X' ).
     modify_target_value( fname = 'OPRTN'   targt  = 'NO_OUT' zvalue = 'X' ).
 
-
     modify_target_value( fname = 'VRSID_T' targt = 'EDIT' zvalue = 'X' ).
     modify_target_value( fname = 'STATU'   targt = 'EDIT' zvalue = 'X' ).
     modify_target_value( fname = 'BEGDA'   targt = 'EDIT' zvalue = 'X' ).
     modify_target_value( fname = 'ENDDA'   targt = 'EDIT' zvalue = 'X' ).
     modify_target_value( fname = 'FPBEG'   targt = 'EDIT' zvalue = 'X' ).
     modify_target_value( fname = 'FPEND'   targt = 'EDIT' zvalue = 'X' ).
-
 
   ENDMETHOD.
 
@@ -803,7 +798,6 @@ CLASS lcl_alv IMPLEMENTATION.
     SET HANDLER me->handle_hotspot_click FOR mo_grid.
     SET HANDLER me->handle_data_changed  FOR mo_grid.
 
-
   ENDMETHOD.
 
 
@@ -812,9 +806,9 @@ CLASS lcl_alv IMPLEMENTATION.
             lt_rown	TYPE lvc_t_roid.
     DATA : answer.
 
-
-
     CASE e_ucomm.
+      WHEN 'COPY'.
+
       WHEN 'INSERT'.
         add_new_record( ).
 
@@ -873,33 +867,25 @@ CLASS lcl_alv IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD handle_toolbar.
+    DEFINE insert_value .
+      INSERT VALUE #( butn_type = 0
+                      function  = &1
+                      icon      = &2
+                      disabled  = space
+                      text      = &3
+                      quickinfo = &3
+                      )
+              INTO TABLE e_object->mt_toolbar.
+    END-OF-DEFINITION.
+
     INSERT VALUE #( butn_type = 3 )
             INTO TABLE e_object->mt_toolbar.
 
-    INSERT VALUE #( butn_type = 0
-                    function  = 'INSERT'
-                    icon      = icon_insert_row
-                    disabled  = space
-                    text      = TEXT-ins
-                    )
-            INTO TABLE e_object->mt_toolbar.
-
-    INSERT VALUE #( butn_type = 0
-                    function  = 'DELETE'
-                    icon      = icon_delete_row
-                    disabled  = space
-                    text      = TEXT-del
-                    )
-           INTO TABLE e_object->mt_toolbar.
-
-    INSERT VALUE #( butn_type = 0
-                    function  = 'MODFIY'
-                    icon      = icon_system_save
-                    quickinfo = TEXT-t01
-                    disabled  = space
-                    text      = TEXT-mod
-                    )
-            INTO TABLE e_object->mt_toolbar.
+    insert_value :
+      'INSERT'    icon_insert_row   TEXT-ins  ,
+      'DELETE'    icon_delete_row   TEXT-del ,
+      'COPY'      icon_copy_object  TEXT-cpy ,
+      'MODFIY'    icon_system_save  TEXT-mod .
 
   ENDMETHOD.
 
