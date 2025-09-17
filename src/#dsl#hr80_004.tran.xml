@@ -17,7 +17,7 @@
    <TSTCT>
     <SPRSL>T</SPRSL>
     <TCODE>/DSL/HR80_004</TCODE>
-    <TTEXT>Bütçe için yasal verileri topla</TTEXT>
+    <TTEXT>Bütçe için Yasal Verileri Topla</TTEXT>
    </TSTCT>
   </asx:values>
  </asx:abap>

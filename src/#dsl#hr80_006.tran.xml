@@ -17,7 +17,7 @@
    <TSTCT>
     <SPRSL>T</SPRSL>
     <TCODE>/DSL/HR80_006</TCODE>
-    <TTEXT>Bütçe Bordrosu Çalıştır</TTEXT>
+    <TTEXT>Bordro Çalıştır</TTEXT>
    </TSTCT>
   </asx:values>
  </asx:abap>

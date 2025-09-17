@@ -618,11 +618,13 @@ FORM template_file .
   IF sy-subrc <> 0.
     MESSAGE i000 DISPLAY LIKE 'E' WITH 'Dizin seçilemedi' .
   ELSE.
+    CHECK ld_fullpath IS NOT INITIAL .
     DATA : lt_fcat      TYPE lvc_t_fcat.
     lt_fcat = go_alv->mt_fcat.
     DELETE lt_fcat WHERE no_out EQ 'X'.
     DELETE lt_fcat WHERE fieldname CP '*_T'.
-    APPEND VALUE #( molga       = '47'
+    APPEND VALUE #(
+*                    molga       = '47'
                     rfper       = ''
                     pernr       = '340'
                     ename       = 'Bütçe Personeli'

@@ -78,7 +78,7 @@
       <TYPE>M</TYPE>
       <NEXTSCREEN>2000</NEXTSCREEN>
       <LINES>023</LINES>
-      <COLUMNS>104</COLUMNS>
+      <COLUMNS>105</COLUMNS>
      </HEADER>
      <CONTAINERS>
       <RPY_DYCATT>
@@ -1042,7 +1042,7 @@
        <LINE>  CHAIN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-orgeh.</LINE>
+       <LINE>    FIELD /dsl/hr80_s005-orgeh  .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>    FIELD /dsl/hr80_s005-plans.</LINE>
@@ -1056,6 +1056,8 @@
       <RPY_DYFLOW>
        <LINE>  ENDCHAIN.</LINE>
       </RPY_DYFLOW>
+      <RPY_DYFLOW/>
+      <RPY_DYFLOW/>
       <RPY_DYFLOW>
        <LINE>  CHAIN.</LINE>
       </RPY_DYFLOW>
@@ -1077,8 +1079,25 @@
       </RPY_DYFLOW>
       <RPY_DYFLOW/>
       <RPY_DYFLOW/>
+      <RPY_DYFLOW/>
       <RPY_DYFLOW>
        <LINE> MODULE user_command_2000     .</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW/>
+      <RPY_DYFLOW>
+       <LINE>*</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>*PROCESS ON VALUE-REQUEST.</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>*FIELD /dsl/hr80_s005-orgeh MODULE f4_help_orgeh .</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>*FIELD /dsl/hr80_s005-plans MODULE f4_help_plans .</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>*FIELD /dsl/hr80_s005-stell MODULE f4_help_stell .</LINE>
       </RPY_DYFLOW>
      </FLOW_LOGIC>
     </item>
@@ -3275,7 +3294,7 @@
     </item>
     <item>
      <ID>R</ID>
-     <ENTRY>Bütçe Personel Verileri İşlemleri</ENTRY>
+     <ENTRY>Personel Verileri İşlemleri</ENTRY>
      <LENGTH>33</LENGTH>
     </item>
     <item>

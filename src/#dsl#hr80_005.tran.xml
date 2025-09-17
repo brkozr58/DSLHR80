@@ -17,7 +17,7 @@
    <TSTCT>
     <SPRSL>T</SPRSL>
     <TCODE>/DSL/HR80_005</TCODE>
-    <TTEXT>Bütçe Personel Verileri İşlemleri</TTEXT>
+    <TTEXT>Personel Verileri İşlemleri</TTEXT>
    </TSTCT>
   </asx:values>
  </asx:abap>

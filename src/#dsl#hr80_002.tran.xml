@@ -17,7 +17,7 @@
    <TSTCT>
     <SPRSL>T</SPRSL>
     <TCODE>/DSL/HR80_002</TCODE>
-    <TTEXT>Bütçe plan varyantı</TTEXT>
+    <TTEXT>Bütçe Grubu ve Versiyonu Programı</TTEXT>
    </TSTCT>
   </asx:values>
  </asx:abap>

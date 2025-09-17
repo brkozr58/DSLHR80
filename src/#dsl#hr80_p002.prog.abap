@@ -72,6 +72,8 @@ REPORT /dsl/hr80_p002 MESSAGE-ID /dsl/hr80.
 MODULE status_0100 OUTPUT.
  SET PF-STATUS 'GUI'.
   go_main->create_alv_grid( ).
+
+
 ENDMODULE.
 *&---------------------------------------------------------------------*
 *&      Module  USER_COMMAND_0100  INPUT

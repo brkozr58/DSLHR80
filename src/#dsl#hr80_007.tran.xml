@@ -17,7 +17,7 @@
    <TSTCT>
     <SPRSL>T</SPRSL>
     <TCODE>/DSL/HR80_007</TCODE>
-    <TTEXT>Bütçe için bordro yönetim kaydı</TTEXT>
+    <TTEXT>Bordro Yönetim Kaydı</TTEXT>
    </TSTCT>
   </asx:values>
  </asx:abap>

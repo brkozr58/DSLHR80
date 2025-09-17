@@ -138,7 +138,44 @@ CLASS lcl_report IMPLEMENTATION.
     SORT go_alv->gt_main ASCENDING BY gjahr begda endda .
   ENDMETHOD.
 
+  METHOD copy_vrsid.
+    DATA :  lt_rows	TYPE lvc_t_row,
+            lt_rown	TYPE lvc_t_roid.
+    DATA :  ls_main TYPE /dsl/hr80_s002 .
+    DATA : answer.
+
+    go_alv->mo_grid->get_selected_rows(
+      IMPORTING
+        et_index_rows = lt_rows
+        et_row_no     = lt_rown
+    ).
+
+    IF lines( lt_rown ) EQ 1.
+      go_main->popup_to_confirm(
+        EXPORTING
+          titlebar       = 'Uyarı'
+          text_question  = TEXT-cps
+          text_button_1  = 'Evet'
+          text_button_2  = 'Hayır'
+        IMPORTING
+          answer         = answer
+        EXCEPTIONS
+          text_not_found = 1
+      ).
+
+      go_alv->record_check = 'C'." DEğişiklik kontrolü için
+      READ TABLE lt_rown ASSIGNING FIELD-SYMBOL(<ls_rown>) INDEX 1 .
+      ls_main = go_alv->gt_main[ <ls_rown>-row_id ] .
+      PERFORM copy_vrsid USING ls_main answer.
+    ELSE.
+      MESSAGE s030 DISPLAY LIKE 'E' .
+    ENDIF.
+  ENDMETHOD.
+
   METHOD save_main.
+    DATA: ls_t004 TYPE  /dsl/hr80_t004 .
+    DATA: ls_t005 TYPE  /dsl/hr80_t005 .
+    DATA: ls_t010 TYPE  /dsl/hr80_t010 .
     DATA : ls_t003 TYPE /dsl/hr80_t003.
     DATA : lmc_de TYPE raw4 .
 
@@ -157,6 +194,25 @@ CLASS lcl_report IMPLEMENTATION.
           EXCEPTIONS
             no_range = 1
         ).
+
+        " Personel verileri de kopyalansın
+         IF go_alv->gt_t004 IS NOT INITIAL .
+           CLEAR ls_t004.ls_t004-vrsid = <ls_report>-vrsid.
+           MODIFY  go_alv->gt_t004 FROM ls_t004 TRANSPORTING vrsid
+                WHERE vrsid IS INITIAL .
+         ENDIF.
+         IF go_alv->gt_t005 IS NOT INITIAL .
+           CLEAR ls_t005.ls_t005-vrsid = <ls_report>-vrsid.
+           MODIFY  go_alv->gt_t005 FROM ls_t005 TRANSPORTING vrsid
+                WHERE vrsid IS INITIAL .
+         ENDIF.
+         IF go_alv->gt_t010 IS NOT INITIAL .
+           CLEAR ls_t010.ls_t010-vrsid = <ls_report>-vrsid.
+           MODIFY  go_alv->gt_t010 FROM ls_t010 TRANSPORTING vrsid
+                WHERE vrsid IS INITIAL.
+         ENDIF.
+
+
         CLEAR <ls_report>-oprtn.
       ENDIF.
 
@@ -191,6 +247,22 @@ CLASS lcl_report IMPLEMENTATION.
 
       CLEAR <ls_report>-oprtn.
       MODIFY /dsl/hr80_t003 FROM ls_t003.
+
+      IF go_alv->gt_t004 IS NOT INITIAL .
+        MODIFY /dsl/hr80_t004 FROM TABLE go_alv->gt_t004.
+        REFRESH go_alv->gt_t004.
+      ENDIF.
+
+      IF go_alv->gt_t005 IS NOT INITIAL .
+        MODIFY /dsl/hr80_t005 FROM TABLE go_alv->gt_t005.
+        REFRESH go_alv->gt_t005.
+      ENDIF.
+
+      IF go_alv->gt_t010 IS NOT INITIAL .
+        MODIFY /dsl/hr80_t010 FROM TABLE go_alv->gt_t010.
+        REFRESH go_alv->gt_t010.
+      ENDIF.
+
     ENDLOOP.
     IF sy-subrc EQ 0 .
       MESSAGE s020 DISPLAY LIKE 'I' .
@@ -808,6 +880,7 @@ CLASS lcl_alv IMPLEMENTATION.
 
     CASE e_ucomm.
       WHEN 'COPY'.
+        go_main->copy_vrsid( ) .
 
       WHEN 'INSERT'.
         add_new_record( ).
@@ -1036,7 +1109,8 @@ CLASS lcl_alv IMPLEMENTATION.
             btext	TYPE t001p-btext,
             abkrs	TYPE /dsl/hr80_t002-abkrs,
             atext	TYPE t549t-atext,
-           END OF ls_header.
+           END OF ls_header,
+           lt_header LIKE TABLE OF ls_header .
 
 
     DEFINE add_line.
@@ -1057,6 +1131,7 @@ CLASS lcl_alv IMPLEMENTATION.
 
 
     SELECT SINGLE
+*    SELECT
         t1~bukrs
         t2~butxt
         t1~werks
@@ -1078,6 +1153,7 @@ CLASS lcl_alv IMPLEMENTATION.
                 AND t5~sprsl EQ sy-langu
           INTO CORRESPONDING
               FIELDS OF ls_header
+*              FIELDS OF TABLE lt_header
           WHERE t1~molga EQ p_molga
             AND t1~grpid EQ ls_t001-grpid .
 
@@ -1111,14 +1187,18 @@ CLASS lcl_alv IMPLEMENTATION.
             INTO ls_t001-grpid_t SEPARATED BY '-'.
       add_line : TEXT-mol  ls_t001-molga.
       add_line : TEXT-bgr  ls_t001-grpid_t.
-      DATA(lv_bukrs) = ls_header-bukrs && ' - ' && ls_header-butxt .
-      DATA(lv_name1) = ls_header-werks && ' - ' && ls_header-name1 .
-      DATA(lv_btext) = ls_header-btrtl && ' - ' && ls_header-btext .
-      DATA(lv_atext) = ls_header-abkrs && ' - ' && ls_header-atext .
-      add_line : 'Şirket kodu:'  lv_bukrs.
-      add_line : 'Personel alanı :'  lv_name1.
-      add_line : 'Personel alt alanı :'  lv_btext.
-      add_line : 'Bordro alt birimi :'  lv_atext.
+*      LOOP AT lt_header INTO ls_header.
+        DATA(lv_bukrs) = ls_header-bukrs && ' - ' && ls_header-butxt .
+        DATA(lv_name1) = ls_header-werks && ' - ' && ls_header-name1 .
+        DATA(lv_btext) = ls_header-btrtl && ' - ' && ls_header-btext .
+        DATA(lv_atext) = ls_header-abkrs && ' - ' && ls_header-atext .
+        add_line : 'Şirket kodu:'  lv_bukrs.
+*        add_line : 'Personel alanı :'  lv_name1.
+*        add_line : 'Personel alt alanı :'  lv_btext.
+*        add_line : 'Bordro alt birimi :'  lv_atext.
+
+*      ENDLOOP.
+
       mo_document->display_document( parent = mo_top_page ).
     ENDIF.
   ENDMETHOD.
@@ -1129,3 +1209,193 @@ CLASS lcl_alv IMPLEMENTATION.
 
 
 ENDCLASS.                 " lcl_alv IMPLEMENTATION
+*&---------------------------------------------------------------------*
+*& Form COPY_VRSID
+*&---------------------------------------------------------------------*
+FORM copy_vrsid USING ps_main TYPE /dsl/hr80_s002
+                      pv_pers.
+    DATA: ls_t004 TYPE  /dsl/hr80_t004 .
+    DATA: ls_t005 TYPE  /dsl/hr80_t005 .
+    DATA: ls_t010 TYPE  /dsl/hr80_t010 .
+    DATA: ivals  TYPE TABLE OF sval.
+    DATA: xvals  TYPE sval.
+    DATA : returncode .
+    DATA : ls_main TYPE /dsl/hr80_s002.
+    DATA : s_t003 TYPE /dsl/hr80_t003 .
+    FIELD-SYMBOLS <fs_f> TYPE any .
+
+*        Normal koyuluk derecesi girişe hazır
+*01	açık renkli girişe hazır
+*02	Normal koyuluk derecesi girişe hazır değil
+*03	açık renkli girişe hazır değil
+*04	Görüntüleme!
+
+    DEFINE add_vals.
+      xvals-tabname       = &1.
+      xvals-fieldname     = &2.
+      xvals-field_attr    = &3.
+*      IF &4 IS NOT INITIAL .
+        xvals-value         = &4.
+*      ENDIF.
+      xvals-field_obl     = &5.
+      IF &6 IS NOT INITIAL .
+        xvals-fieldtext     = &6.
+      ENDIF.
+      APPEND xvals TO ivals.
+    END-OF-DEFINITION.
+
+    REFRESH ivals.
+
+
+
+    MOVE-CORRESPONDING ps_main TO ls_main.
+
+    ls_main-statu = '1'.
+
+    go_main->number_simul(
+      EXPORTING
+        nrnr     = CONV #( 'VR' )
+      IMPORTING
+        number   = ls_main-vrsid
+      EXCEPTIONS
+        no_range = 1
+    ).
+    IF sy-subrc <> 0.
+      CHECK 1 = 2 .
+    ENDIF.
+
+    add_vals:
+    '/DSL/HR80_T001' 'MOLGA'   '03'  ls_main-molga   abap_false space,
+    '/DSL/HR80_T003' 'GRPID'   '03'  ls_main-grpid   abap_false space ,
+    '/DSL/HR80_T001' 'GRPID_T' '03'  ls_main-grpid_t abap_false space ,
+    '/DSL/HR80_T003' 'GJAHR'   space sy-datum(4)     abap_true space ,
+    '/DSL/HR80_T003' 'VRSID'   '03'  ls_main-vrsid   abap_false space ,
+    '/DSL/HR80_T003' 'VRSID_T' space ' '             abap_true  space ,
+
+    '/DSL/HR80_T003' 'STATU'   space ls_main-statu   abap_true space ,
+    '/DSL/HR80_T003' 'BEGDA'   space ls_main-begda   abap_true TEXT-beg,
+    '/DSL/HR80_T003' 'ENDDA'   space ls_main-endda   abap_true TEXT-end,
+    '/DSL/HR80_T003' 'FPBEG'   space ls_main-fpbeg   abap_true TEXT-fpb,
+    '/DSL/HR80_T003' 'FPEND'   space ls_main-fpend   abap_true TEXT-fpe.
+
+    CALL FUNCTION 'POPUP_GET_VALUES_SET_MAX_FIELD'
+      EXPORTING
+        number_of_fields = '40'
+      EXCEPTIONS
+        out_of_range     = 1
+      .
+    DO.
+      CALL FUNCTION 'POPUP_GET_VALUES'
+        EXPORTING
+           popup_title     = TEXT-001
+        IMPORTING
+           returncode      = returncode
+        TABLES
+           fields          = ivals
+        EXCEPTIONS
+           error_in_fields = 1
+           OTHERS          = 2.
+      IF returncode IS INITIAL.
+        LOOP AT ivals INTO xvals.
+          UNASSIGN <fs_f>.
+          ASSIGN COMPONENT xvals-fieldname
+              OF STRUCTURE ls_main TO <fs_f>.
+          CHECK <fs_f> IS ASSIGNED .
+          <fs_f> = xvals-value.
+        ENDLOOP.
+
+        IF ls_main IS NOT INITIAL .
+          MOVE-CORRESPONDING ls_main TO s_t003.
+          CLEAR : ls_main-vrsid.
+          go_main->check_vrsid(
+            EXPORTING
+              s_t003    = s_t003
+            EXCEPTIONS
+              no_statu  = 007
+              no_begda  = 008
+              no_endda  = 009
+              big_begda = 010
+              no_fpbeg  = 011
+              no_fpend  = 012
+              big_fpbeg = 013
+              ne_year   = 023
+          ).
+          IF sy-subrc <> 0.
+            CASE sy-subrc.
+              WHEN 007.MESSAGE i007 DISPLAY LIKE 'E' .
+              WHEN 008.MESSAGE i008 DISPLAY LIKE 'E' .
+              WHEN 009.MESSAGE i009 DISPLAY LIKE 'E' .
+              WHEN 010.MESSAGE i010 DISPLAY LIKE 'E' .
+              WHEN 011.MESSAGE i011 DISPLAY LIKE 'E' .
+              WHEN 012.MESSAGE i012 DISPLAY LIKE 'E' .
+              WHEN 013.MESSAGE i013 DISPLAY LIKE 'E' .
+              WHEN 023.MESSAGE i023 DISPLAY LIKE 'E' .
+              WHEN OTHERS.
+            ENDCASE.
+            CLEAR go_alv->record_check." DEğişiklik kontrolü için
+          ELSE.
+            INSERT VALUE #( fieldname = 'VRSID_T'
+                            style     = cl_gui_alv_grid=>mc_style_enabled )
+                 INTO TABLE ls_main-t_styl .
+            INSERT VALUE #( fieldname = 'STATU'
+                            style     = cl_gui_alv_grid=>mc_style_enabled )
+                 INTO TABLE ls_main-t_styl .
+            INSERT VALUE #( fieldname = 'BEGDA'
+                            style     = cl_gui_alv_grid=>mc_style_enabled )
+                 INTO TABLE ls_main-t_styl .
+            INSERT VALUE #( fieldname = 'ENDDA'
+                            style     = cl_gui_alv_grid=>mc_style_enabled )
+                 INTO TABLE ls_main-t_styl .
+            INSERT VALUE #( fieldname = 'FPBEG'
+                            style     = cl_gui_alv_grid=>mc_style_enabled )
+                 INTO TABLE ls_main-t_styl .
+            INSERT VALUE #( fieldname = 'FPEND'
+                            style     = cl_gui_alv_grid=>mc_style_enabled )
+                 INTO TABLE ls_main-t_styl .
+
+            go_alv->record_check = 'C'." DEğişiklik kontrolü için
+            ls_main-oprtn = 'N'.
+            APPEND ls_main TO go_alv->gt_main.
+
+            " Personel verileri de kopyalansın
+            IF pv_pers EQ '1'.
+               SELECT * FROM /dsl/hr80_t004 INTO TABLE go_alv->gt_t004
+                 WHERE molga EQ ps_main-molga
+                   AND grpid EQ ps_main-grpid
+                   AND vrsid EQ ps_main-vrsid.
+               CLEAR ls_t004.ls_t004-vrsid = ls_main-vrsid.
+               MODIFY  go_alv->gt_t004 FROM ls_t004 TRANSPORTING vrsid
+                   WHERE vrsid EQ ps_main-vrsid.
+
+               SELECT * FROM /dsl/hr80_t005 INTO TABLE go_alv->gt_t005
+                 WHERE molga EQ ps_main-molga
+                   AND grpid EQ ps_main-grpid
+                   AND vrsid EQ ps_main-vrsid.
+               CLEAR ls_t005.ls_t005-vrsid = ls_main-vrsid.
+               MODIFY  go_alv->gt_t005 FROM ls_t005 TRANSPORTING vrsid
+                   WHERE vrsid EQ ps_main-vrsid.
+
+               SELECT * FROM /dsl/hr80_t010 INTO TABLE go_alv->gt_t010
+                 WHERE molga EQ ps_main-molga
+                   AND grpid EQ ps_main-grpid
+                   AND vrsid EQ ps_main-vrsid.
+               CLEAR ls_t010.ls_t010-vrsid = ls_main-vrsid.
+               ls_t010-gjahr = ls_main-gjahr.
+               MODIFY  go_alv->gt_t010 FROM ls_t010 TRANSPORTING vrsid gjahr
+                   WHERE vrsid EQ ps_main-vrsid.
+            ENDIF.
+
+
+            EXIT.
+          ENDIF.
+        ELSE.
+          EXIT.
+        ENDIF.
+      ELSE.
+        CLEAR go_alv->record_check. " DEğişiklik kontrolü için
+        CLEAR ls_main.
+        EXIT.
+      ENDIF.
+    ENDDO.
+
+ENDFORM.

@@ -23,14 +23,15 @@ CLASS lcl_report IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
-*    p_schema = '=R00'." geçici eklendi
+    p_schema = '=R00'." geçici eklendi
     REFRESH s_statu.
     APPEND VALUE #( sign = 'I' option = 'EQ'  low = '2' ) TO s_statu.
-    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '3' ) TO s_statu.
+*    APPEND VALUE #( sign = 'I' option = 'EQ'  low = '3' ) TO s_statu.
 
     chlogvar = '@0Z@'.
-    py_job = '@M4@' && 'Artalanda çalıştır'.
-    chnge = '@0Z@ Versiyon statüsü'.
+    py_job = '@M4@' && 'Artalanda Çalıştır'.
+    chnge = '@0Z@ Versiyon Durumu'.
+    job_log = '@6T@ Artalan Log Raporu'.
 
   ENDMETHOD.
 
@@ -329,9 +330,9 @@ CLASS lcl_alv IMPLEMENTATION.
 
 
       insert_value :
-        'STATU'   icon_set_state           text-bt1 ,
-        'CALC'    icon_cashing_up          text-bt2  ,
-        'MODFIY'  icon_system_save         text-bt3 .
+        'STATU'   icon_set_state           TEXT-bt1 ,
+        'CALC'    icon_cashing_up          TEXT-bt2  ,
+        'MODFIY'  icon_system_save         TEXT-bt3 .
 
   ENDMETHOD.
 

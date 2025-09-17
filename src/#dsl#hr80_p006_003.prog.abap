@@ -82,6 +82,19 @@ FORM at_selection_screen .
 
 
   CASE sscrfields-ucomm.
+      WHEN 'PJL'.
+        IF s_grpid[] IS INITIAL .
+          MESSAGE i001 DISPLAY LIKE 'E'.
+        ENDIF.
+
+        IF s_vrsid[] IS INITIAL .
+          MESSAGE i003 DISPLAY LIKE 'E'.
+          EXIT.
+        ENDIF.
+
+        PERFORM log_report .
+
+
       WHEN 'CHNG'.
         IF s_grpid[] IS INITIAL .
           MESSAGE i001 DISPLAY LIKE 'E'.
@@ -174,6 +187,7 @@ FORM at_selection_screen .
           MESSAGE e049 DISPLAY LIKE 'I'.
         ENDIF.
       ELSE.
+        EXIT.
       ENDIF.
 
   ENDCASE.
@@ -1042,4 +1056,85 @@ FORM payroll_simu_job .
      WHEN OTHERS .
       go_main->save_main( ).
    ENDCASE.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form LOG_REPORT
+*&---------------------------------------------------------------------*
+FORM log_report .
+  DATA: fieldcat      TYPE slis_t_fieldcat_alv WITH HEADER LINE.
+  DATA: selfield      TYPE slis_selfield.
+  DATA: exit.
+
+  DEFINE add_fcat.
+
+    fieldcat-tabname = 'LT_LOGT'.
+    fieldcat-fieldname = &1.
+    fieldcat-seltext_l = &2.
+    fieldcat-seltext_m = &2.
+    fieldcat-seltext_s = &2.
+    fieldcat-outputlen = &3.
+    APPEND fieldcat.
+  END-OF-DEFINITION.
+
+
+  add_fcat : 'PERNR'  'Personel numarası' '10',
+             'ENAME'  'Adı Soyadı'        '40',
+             'SPMON'  'Dönem'             '8',
+             'MSGTY'  'Mesaj tipi'        '6',
+             'MESSG'  'Mesaj '            '100',
+             'UNAME'  'Kullanıcı'         '15',
+             'DATUM'  'tarih'             '10',
+             'UZEIT'  'Saat'              '10'.
+
+
+  SELECT t1~pernr,     " /dsl/hr80_t012-pernr
+         t2~ename,     " /dsl/hr80_t010-ename
+         t1~spmon,     " /dsl/hr80_t012-spmon
+         t1~msgty,     " /dsl/hr80_t012-msgty
+         t1~messg,     " /dsl/hr80_t012-messg
+         t1~uname,     " /dsl/hr80_t012-uname
+         t1~datum,     " /dsl/hr80_t012-datum
+         t1~uzeit     " /dsl/hr80_t012-uzeit
+
+            FROM /dsl/hr80_t012 AS t1
+      INNER JOIN /dsl/hr80_t010 AS t2
+                  ON    t2~molga EQ t1~molga
+                   AND  t2~grpid EQ t1~grpid
+                   AND  t2~pernr EQ t1~pernr
+                   AND  t2~vrsid EQ t1~vrsid
+     INTO TABLE @DATA(lt_logt)
+        WHERE t1~molga EQ @p_molga
+          AND t1~grpid IN @s_grpid[]
+          AND t1~vrsid IN @s_vrsid[]
+*          AND t1~datum GE ( SELECT MAX( datum ) FROM /dsl/hr80_t012
+*                              WHERE molga eq t1~molga
+*                                AND grpid eq t1~grpid
+*                                AND vrsid eq t1~vrsid )
+                                .
+   CHECK sy-subrc EQ 0 .
+   SORT lt_logt ASCENDING .
+   DELETE ADJACENT DUPLICATES FROM lt_logt.
+
+  CALL FUNCTION 'REUSE_ALV_POPUP_TO_SELECT'
+    EXPORTING
+      i_title                       = TEXT-tit
+      i_selection                     = ''
+*      i_structure_name              = 'LT_LOGT'
+      i_tabname              = 'LT_LOGT'
+      it_fieldcat                   = fieldcat[]
+      i_screen_start_column         = 5
+      i_screen_start_line           = 5
+      i_screen_end_column           = 200
+      i_screen_end_line             = 25
+      i_callback_program            = sy-repid
+      i_zebra                       = 'X'
+
+    IMPORTING
+      es_selfield                   = selfield
+      e_exit                        = exit
+    TABLES
+      t_outtab                      = lt_logt[]
+    EXCEPTIONS
+      program_error                 = 1
+      OTHERS                        = 2.
 ENDFORM.

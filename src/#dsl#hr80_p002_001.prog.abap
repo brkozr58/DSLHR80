@@ -24,7 +24,7 @@ CLASS lcl_report DEFINITION   .
                         IMPORTING scrfname  TYPE scrfname
                                   screen    TYPE sydynnr,
           create_grpid,
-          create_vrsid,
+          create_vrsid ,
           check_grpid
                         IMPORTING   s_t001 TYPE /dsl/hr80_t001
                                     s_t002 TYPE /dsl/hr80_t002
@@ -44,6 +44,7 @@ CLASS lcl_report DEFINITION   .
                                     no_fpend
                                     big_fpbeg
                                     ne_year,
+          copy_vrsid,
           save_main,
           number_simul
                         IMPORTING nrnr TYPE nrnr
@@ -75,6 +76,11 @@ CLASS lcl_alv DEFINITION   .
   PUBLIC SECTION.
     DATA : gt_main TYPE /dsl/hr80_tt003 .
     DATA : gt_delete TYPE /dsl/hr80_tt003 .
+
+    " versiyon kopyalamada kullanılacak.
+    DATA : gt_t004 TYPE TABLE OF /dsl/hr80_t004 .
+    DATA : gt_t005 TYPE TABLE OF /dsl/hr80_t005 .
+    DATA : gt_t010 TYPE TABLE OF /dsl/hr80_t010 .
 
     DATA : record_check.
 

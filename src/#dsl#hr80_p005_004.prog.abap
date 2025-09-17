@@ -467,3 +467,55 @@ FORM template_lgart_file .
   ENDIF.
 
 ENDFORM.
+*&---------------------------------------------------------------------*
+*&      Module  F4_HELP_ORGEH  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE f4_help_orgeh INPUT.
+
+  CALL FUNCTION 'F4IF_FIELD_VALUE_REQUEST'
+    EXPORTING
+     tabname     = '/DSL/HR80_S005'
+     fieldname   = 'ORGEH'
+     dynpprog    = sy-repid
+     dynpnr      = sy-dynnr
+     VALUE      = space
+     dynprofield = 'ORGEH'.
+
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  F4_HELP_PLANS  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE f4_help_plans INPUT.
+
+  CALL FUNCTION 'F4IF_FIELD_VALUE_REQUEST'
+    EXPORTING
+     tabname     = '/DSL/HR80_S005'
+     fieldname   = 'PLANS'
+     dynpprog    = sy-repid
+     dynpnr      = sy-dynnr
+     dynprofield = 'PLANS'.
+
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  F4_HELP_PLANS  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE f4_help_stell INPUT.
+
+  CALL FUNCTION 'F4IF_FIELD_VALUE_REQUEST'
+    EXPORTING
+     tabname     = '/DSL/HR80_S005'
+     fieldname   = 'STELL'
+     dynpprog    = sy-repid
+     dynpnr      = sy-dynnr
+     dynprofield = 'STELL'.
+
+
+ENDMODULE.

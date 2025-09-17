@@ -58,6 +58,7 @@ CLASS lcl_report IMPLEMENTATION.
 
     chlogvar = '@JL@ 14/15/2001/2010 oluştur'.
     chnge = '@0Z@ Versiyon statüsü'.
+    templt = '@J2@ Şablon İndir'.
 
     REFRESH s_statu.
     APPEND VALUE #( sign = 'I' option = 'EQ'  low = '0' ) TO s_statu.
@@ -69,6 +70,14 @@ CLASS lcl_report IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD at_selection_screen.
+
+*    CASE 'X'.
+*      WHEN r_rd1 . " Rapor
+*        sscrfields-functxt_01 = ''.
+*      WHEN r_rd2 . " Toplu aktarım
+*        sscrfields-functxt_01 = '@J2@ Şablon İndir'.
+*      WHEN OTHERS.
+*    ENDCASE.
 
     LOOP AT SCREEN.
       IF screen-name CP '*S_STATU*'.
@@ -82,14 +91,6 @@ CLASS lcl_report IMPLEMENTATION.
     ENDLOOP.
 
     go_alv->create_fcat( ).
-    CASE 'X'.
-      WHEN r_rd1 . " Rapor
-        sscrfields-functxt_01 = ''.
-
-      WHEN r_rd2 . " Toplu aktarım
-        sscrfields-functxt_01 = '@J2@Şablon İndir'.
-      WHEN OTHERS.
-    ENDCASE.
 
     CASE sscrfields-ucomm.
       WHEN 'RD' OR space .
@@ -105,7 +106,8 @@ CLASS lcl_report IMPLEMENTATION.
           MODIFY SCREEN.
         ENDLOOP.
 
-      WHEN 'FC01'.
+*      WHEN 'FC01'.
+      WHEN 'TMP'.
         go_main->template_file( ).
 
       WHEN 'CHNG'.

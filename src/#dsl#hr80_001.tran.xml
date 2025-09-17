@@ -17,7 +17,7 @@
    <TSTCT>
     <SPRSL>T</SPRSL>
     <TCODE>/DSL/HR80_001</TCODE>
-    <TTEXT>Bütçe Yönetimi</TTEXT>
+    <TTEXT>Yönetim Programı</TTEXT>
    </TSTCT>
   </asx:values>
  </asx:abap>

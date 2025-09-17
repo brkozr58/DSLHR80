@@ -41,8 +41,13 @@ PARAMETERS : r_rd1 RADIOBUTTON GROUP rd DEFAULT 'X' USER-COMMAND rd,
              r_rd2 RADIOBUTTON GROUP rd .
 PARAMETERS :p_file TYPE rlgrap-filename MODIF ID rd2.
 
-
 SELECTION-SCREEN END OF BLOCK bl3.
+
+
+SELECTION-SCREEN BEGIN OF BLOCK bl5 WITH FRAME .
+SELECTION-SCREEN PUSHBUTTON 1(42) templt
+                USER-COMMAND tmp MODIF ID rd2.
+SELECTION-SCREEN END OF BLOCK bl5.
 
 *----------------------------------------------------------------------*
 *       CLASS lcl_report DEFINITION

@@ -69,6 +69,17 @@ ENDFORM.
 FORM at_selection_screen .
   go_alv->create_fcat( ).
 
+  LOOP AT SCREEN.
+    IF screen-name CP '*S_STATU*'.
+      screen-input = 0 .
+      screen-output = 1 .
+    ENDIF.
+    IF screen-name CP '*S_GJAHR*'.
+      screen-active = 0 .
+    ENDIF.
+    MODIFY SCREEN.
+  ENDLOOP.
+
   CASE 'X'.
     WHEN r_rd1 . " Rapor
       sscrfields-functxt_01 = ''.

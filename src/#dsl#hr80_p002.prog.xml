@@ -202,6 +202,12 @@
     </item>
     <item>
      <ID>I</ID>
+     <KEY>CPS</KEY>
+     <ENTRY>Seçilen versiyon için oluşturulan personel verileride alınsın mı?</ENTRY>
+     <LENGTH>130</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>CPY</KEY>
      <ENTRY>Versiyon kopyala</ENTRY>
      <LENGTH>26</LENGTH>
@@ -274,8 +280,8 @@
     </item>
     <item>
      <ID>R</ID>
-     <ENTRY>Bütçe grubu ve plan varyantı oluşturma programı</ENTRY>
-     <LENGTH>47</LENGTH>
+     <ENTRY>Bütçe Grubu ve Versiyonu Programı</ENTRY>
+     <LENGTH>33</LENGTH>
     </item>
     <item>
      <ID>S</ID>
