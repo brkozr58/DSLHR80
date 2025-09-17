@@ -877,6 +877,8 @@ CLASS lcl_alv IMPLEMENTATION.
     DATA :  lt_rows	TYPE lvc_t_row,
             lt_rown	TYPE lvc_t_roid.
     DATA : answer.
+    DATA : lt_delete TYPE /dsl/hr80_tt003.
+
 
     CASE e_ucomm.
       WHEN 'COPY'.
@@ -917,8 +919,11 @@ CLASS lcl_alv IMPLEMENTATION.
               go_alv->gt_main[ <ls_rown>-row_id ]-mark = abap_true.
             ENDLOOP.
 
-            go_alv->gt_delete = VALUE #( FOR ls IN  go_alv->gt_main
+            lt_delete = VALUE #( FOR ls IN  go_alv->gt_main
                   WHERE ( mark = 'X' )  ( ls ) ).
+            APPEND LINES OF lt_delete TO go_alv->gt_delete .
+*            go_alv->gt_delete = VALUE #( FOR ls IN  go_alv->gt_main
+*                  WHERE ( mark = 'X' )  ( ls ) ).
             DELETE go_alv->gt_main WHERE mark = abap_true.
           ENDIF.
         ELSE.

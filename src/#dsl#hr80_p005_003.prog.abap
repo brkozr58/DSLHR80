@@ -127,7 +127,7 @@ FORM row_record  USING mode TYPE char1
       /dsl/hr80_s005-grpid = s_grpid-low.
       /dsl/hr80_s005-vrsid = s_vrsid-low.
       /dsl/hr80_s005-molga = p_molga.
-      CONCATENATE /dsl/hr80_s005-gjahr 'Bütçe Personeli'
+      CONCATENATE /dsl/hr80_s005-gjahr TEXT-enm
           INTO /dsl/hr80_s005-ename SEPARATED BY '_'.
 
     WHEN 'C' ."OR 'I'.

@@ -784,28 +784,28 @@ CLASS lcl_alv IMPLEMENTATION.
     DATA : lt_rows TYPE lvc_t_row.
 
     CASE e_ucomm.
-      WHEN 'LEAVW'  .
+      WHEN 'LEAVW'  . " İşten çıkış kaydı ekle
         PERFORM leaving_work.
 
-      WHEN 'COPY'.
+      WHEN 'COPY'. " DUMMY Personel oluştur
         PERFORM row_record USING 'N' lt_rows .
 
-      WHEN 'INSERT'.
+      WHEN 'INSERT'. " REEL personel ekle
         PERFORM change_record USING 'I' .
 
-      WHEN 'CHANGE'.
+      WHEN 'CHANGE'. " REEL/DUMMY personel değiştir
         PERFORM change_record USING 'C' .
 
-      WHEN 'MODFIY'.
+      WHEN 'MODFIY'. " Kaydet
         PERFORM modify_record .
 
-      WHEN 'DELETE'.
+      WHEN 'DELETE'. " SAtır sil
         PERFORM delete_record .
 
-      WHEN 'STATU'.
+      WHEN 'STATU'. " Versiyon durumu değiştir
         PERFORM change_statu .
 
-      WHEN 'ADD_LGART'.
+      WHEN 'ADD_LGART'. " REEL VE DUMMY personeller için 14/15/2001/2010
         PERFORM add_lgart.
 
       WHEN OTHERS.

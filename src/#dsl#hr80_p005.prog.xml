@@ -1083,22 +1083,6 @@
       <RPY_DYFLOW>
        <LINE> MODULE user_command_2000     .</LINE>
       </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*PROCESS ON VALUE-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*FIELD /dsl/hr80_s005-orgeh MODULE f4_help_orgeh .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*FIELD /dsl/hr80_s005-plans MODULE f4_help_plans .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*FIELD /dsl/hr80_s005-stell MODULE f4_help_stell .</LINE>
-      </RPY_DYFLOW>
      </FLOW_LOGIC>
     </item>
    </DYNPROS>
@@ -3204,6 +3188,12 @@
     </item>
     <item>
      <ID>I</ID>
+     <KEY>ENM</KEY>
+     <ENTRY>Bütçe Personeli</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>FPB</KEY>
      <ENTRY>Bordro başlangıç tarihi</ENTRY>
      <LENGTH>132</LENGTH>
@@ -3295,7 +3285,7 @@
     <item>
      <ID>R</ID>
      <ENTRY>Personel Verileri İşlemleri</ENTRY>
-     <LENGTH>33</LENGTH>
+     <LENGTH>27</LENGTH>
     </item>
     <item>
      <ID>S</ID>

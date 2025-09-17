@@ -240,9 +240,7 @@ ENDMODULE.
 *& Module OBJID_TEXT_2000 OUTPUT
 *&---------------------------------------------------------------------*
 MODULE objid_text_2000 OUTPUT.
-
   PERFORM read_objid_text .
-
 ENDMODULE.
 *&---------------------------------------------------------------------*
 *& Form READ_OBJID_TEXT
@@ -337,8 +335,6 @@ FORM input_rfper_read .
         AND molga     EQ /dsl/hr80_s005-molga
         AND pa1_endda GE sy-datum.
 
-
-
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form POPUP_USER_COMMAND
@@ -348,36 +344,33 @@ FORM popup_user_command  TABLES pt_table STRUCTURE /dsl/hr80_s009
   DATA : lt_t005 TYPE TABLE OF /dsl/hr80_t005   .
 
   CASE pe_ucomm.
-      WHEN 'CANC'.
-        EXIT.
-      WHEN 'TEMP'.
-        PERFORM template_lgart_file .
-      WHEN 'SFILE'.
-        PERFORM get_excel_payment TABLES pt_table  .
-        EXIT.
-      WHEN 'BATCH'.
-        IF pt_table[] IS NOT INITIAL .
-          lt_t005 = VALUE #( FOR ls_table IN pt_table
-                      ( molga       = go_alv->gs_t003-molga
-                        grpid       = go_alv->gs_t003-grpid
-                        vrsid       = go_alv->gs_t003-vrsid
-                        pernr       = ls_table-pernr
-                        lgart       = ls_table-lgart
-                        begda       = ls_table-begda
-                        endda       = ls_table-endda
-                        anzhl       = ls_table-anzhl
-                        betrg       = ls_table-betrg
-                        )
-                    ).
-          MODIFY /dsl/hr80_t005 FROM TABLE lt_t005[].
-          MESSAGE s020   .
-        ELSE.
-          MESSAGE s047   .
-        ENDIF.
-
-    ENDCASE.
-
-
+    WHEN 'CANC'.
+      EXIT.
+    WHEN 'TEMP'.
+      PERFORM template_lgart_file .
+    WHEN 'SFILE'.
+      PERFORM get_excel_payment TABLES pt_table  .
+      EXIT.
+    WHEN 'BATCH'.
+      IF pt_table[] IS NOT INITIAL .
+        lt_t005 = VALUE #( FOR ls_table IN pt_table
+                    ( molga       = go_alv->gs_t003-molga
+                      grpid       = go_alv->gs_t003-grpid
+                      vrsid       = go_alv->gs_t003-vrsid
+                      pernr       = ls_table-pernr
+                      lgart       = ls_table-lgart
+                      begda       = ls_table-begda
+                      endda       = ls_table-endda
+                      anzhl       = ls_table-anzhl
+                      betrg       = ls_table-betrg
+                      )
+                  ).
+        MODIFY /dsl/hr80_t005 FROM TABLE lt_t005[].
+        MESSAGE s020   .
+      ELSE.
+        MESSAGE s047   .
+      ENDIF.
+  ENDCASE.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form TEMPLATE_LGART_FILE
@@ -396,6 +389,7 @@ FORM template_lgart_file .
 
   DATA : ls_data TYPE /dsl/hr80_s009 .
   DATA : lt_data TYPE TABLE OF /dsl/hr80_s009 .
+  DATA : lt_fcat      TYPE lvc_t_fcat.
 
 
   DEFINE add_head.
@@ -420,7 +414,6 @@ FORM template_lgart_file .
   IF sy-subrc <> 0.
     MESSAGE i000 DISPLAY LIKE 'E' WITH 'Dizin seçilemedi' .
   ELSE.
-    DATA : lt_fcat      TYPE lvc_t_fcat.
 
     CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
       EXPORTING
@@ -467,55 +460,3 @@ FORM template_lgart_file .
   ENDIF.
 
 ENDFORM.
-*&---------------------------------------------------------------------*
-*&      Module  F4_HELP_ORGEH  INPUT
-*&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
-MODULE f4_help_orgeh INPUT.
-
-  CALL FUNCTION 'F4IF_FIELD_VALUE_REQUEST'
-    EXPORTING
-     tabname     = '/DSL/HR80_S005'
-     fieldname   = 'ORGEH'
-     dynpprog    = sy-repid
-     dynpnr      = sy-dynnr
-     VALUE      = space
-     dynprofield = 'ORGEH'.
-
-
-ENDMODULE.
-*&---------------------------------------------------------------------*
-*&      Module  F4_HELP_PLANS  INPUT
-*&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
-MODULE f4_help_plans INPUT.
-
-  CALL FUNCTION 'F4IF_FIELD_VALUE_REQUEST'
-    EXPORTING
-     tabname     = '/DSL/HR80_S005'
-     fieldname   = 'PLANS'
-     dynpprog    = sy-repid
-     dynpnr      = sy-dynnr
-     dynprofield = 'PLANS'.
-
-
-ENDMODULE.
-*&---------------------------------------------------------------------*
-*&      Module  F4_HELP_PLANS  INPUT
-*&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
-MODULE f4_help_stell INPUT.
-
-  CALL FUNCTION 'F4IF_FIELD_VALUE_REQUEST'
-    EXPORTING
-     tabname     = '/DSL/HR80_S005'
-     fieldname   = 'STELL'
-     dynpprog    = sy-repid
-     dynpnr      = sy-dynnr
-     dynprofield = 'STELL'.
-
-
-ENDMODULE.
