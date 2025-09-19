@@ -219,9 +219,9 @@ CLASS lcl_report IMPLEMENTATION.
       RAISE ne_year.RETURN.
     ENDIF.
 
-    IF lgart IS INITIAL.
-      RAISE no_lgart.RETURN.
-    ENDIF.
+*    IF lgart IS INITIAL.
+*      RAISE no_lgart.RETURN.
+*    ENDIF.
 
 *    IF bukrs IS INITIAL .
 *      RAISE no_bukrs.RETURN.
@@ -247,19 +247,19 @@ CLASS lcl_report IMPLEMENTATION.
 *    ENDIF.
 
 
-
-    MOVE : bukrs TO ps_s004-bukrs,
-           kostl TO ps_s004-kostl,
-           ansvh TO ps_s004-ansvh,
-           werks TO ps_s004-werks,
-           btrtl TO ps_s004-btrtl,
-           persg TO ps_s004-persg,
-           persk TO ps_s004-persk,
-           orgeh TO ps_s004-orgeh,
-           stell TO ps_s004-stell,
-           abkrs TO ps_s004-abkrs,
-           pernr TO ps_s004-pernr,
-           lgart TO ps_s004-lgart.
+*
+*    MOVE : bukrs TO ps_s004-bukrs,
+*           kostl TO ps_s004-kostl,
+*           ansvh TO ps_s004-ansvh,
+*           werks TO ps_s004-werks,
+*           btrtl TO ps_s004-btrtl,
+*           persg TO ps_s004-persg,
+*           persk TO ps_s004-persk,
+*           orgeh TO ps_s004-orgeh,
+*           stell TO ps_s004-stell,
+*           abkrs TO ps_s004-abkrs,
+*           pernr TO ps_s004-pernr,
+*           lgart TO ps_s004-lgart.
 
     lv_year = begda+4(2).
 
@@ -492,9 +492,9 @@ CLASS lcl_alv IMPLEMENTATION.
         IF lines( lt_rows ) IS INITIAL.
           MESSAGE s026 DISPLAY LIKE 'E'.
           RETURN.
-        ELSEIF lines( lt_rows ) GT 1 .
-          MESSAGE s030 DISPLAY LIKE 'E'.
-          RETURN.
+*        ELSEIF lines( lt_rows ) GT 1 .
+*          MESSAGE s030 DISPLAY LIKE 'E'.
+*          RETURN.
         ENDIF.
         go_main->row_record( mode = 'C' pt_rows = lt_rows ).
 

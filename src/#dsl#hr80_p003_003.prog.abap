@@ -462,9 +462,9 @@ FORM row_record  USING mode TYPE char1
       CLEAR : lv_attr.
     WHEN 'C'.
       lv_attr = '03'.
-      READ TABLE pt_rows INTO DATA(ls_rows) INDEX 1 .
-      READ TABLE go_alv->gt_main INTO DATA(ls_main) INDEX ls_rows-index.
-      MOVE-CORRESPONDING ls_main TO ls_data .
+*      READ TABLE pt_rows INTO DATA(ls_rows) INDEX 1 .
+*      READ TABLE go_alv->gt_main INTO DATA(ls_main) INDEX ls_rows-index.
+*      MOVE-CORRESPONDING ls_main TO ls_data .
     WHEN OTHERS.
   ENDCASE.
 
@@ -472,18 +472,18 @@ FORM row_record  USING mode TYPE char1
   ls_data-begda = ls_t003-gjahr && '0101'.
   ls_data-endda = ls_t003-gjahr && '1231'.
 
-  add_vals: '/DSL/HR80_S003' 'BUKRS' lv_attr  ls_data-bukrs abap_false space.
-  add_vals: '/DSL/HR80_S003' 'KOSTL' lv_attr  ls_data-kostl abap_false space.
-  add_vals: '/DSL/HR80_S003' 'ANSVH' lv_attr  ls_data-ansvh abap_false space.
-  add_vals: '/DSL/HR80_S003' 'WERKS' lv_attr  ls_data-werks abap_false space.
-  add_vals: '/DSL/HR80_S003' 'BTRTL' lv_attr  ls_data-btrtl abap_false space.
-  add_vals: '/DSL/HR80_S003' 'PERSG' lv_attr  ls_data-persg abap_false space.
-  add_vals: '/DSL/HR80_S003' 'PERSK' lv_attr  ls_data-persk abap_false space.
-  add_vals: '/DSL/HR80_S003' 'ORGEH' lv_attr  ls_data-orgeh abap_false space.
-  add_vals: '/DSL/HR80_S003' 'STELL' lv_attr  ls_data-stell abap_false space.
-  add_vals: '/DSL/HR80_S003' 'ABKRS' lv_attr  ls_data-abkrs abap_false space.
-  add_vals: '/DSL/HR80_S003' 'PERNR' lv_attr  ls_data-pernr abap_false space.
-  add_vals: '/DSL/HR80_S003' 'LGART' lv_attr  ls_data-lgart abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'BUKRS' lv_attr  ls_data-bukrs abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'KOSTL' lv_attr  ls_data-kostl abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'ANSVH' lv_attr  ls_data-ansvh abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'WERKS' lv_attr  ls_data-werks abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'BTRTL' lv_attr  ls_data-btrtl abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'PERSG' lv_attr  ls_data-persg abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'PERSK' lv_attr  ls_data-persk abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'ORGEH' lv_attr  ls_data-orgeh abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'STELL' lv_attr  ls_data-stell abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'ABKRS' lv_attr  ls_data-abkrs abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'PERNR' lv_attr  ls_data-pernr abap_false space.
+*  add_vals: '/DSL/HR80_S003' 'LGART' lv_attr  ls_data-lgart abap_false space.
   add_vals: '/DSL/HR80_S003' 'BEGDA' space  ls_data-begda abap_false space.
   add_vals: '/DSL/HR80_S003' 'ENDDA' space  ls_data-endda abap_false space.
   add_vals: '/DSL/HR80_S003' 'RAT01' space  space         abap_false space.
@@ -528,76 +528,88 @@ FORM row_record  USING mode TYPE char1
         <fs_f> = xvals-value.
       ENDLOOP.
 
-      CASE mode.
-        WHEN 'C'.
-          MOVE-CORRESPONDING ls_main TO ls_s004 .
-        WHEN OTHERS.
-      ENDCASE.
+      LOOP AT pt_rows INTO DATA(ls_rows).
+        READ TABLE go_alv->gt_main INTO DATA(ls_main) INDEX ls_rows-index.
 
-      go_main->param_move_field(
-         EXPORTING
-            bukrs           = ls_data-bukrs
-            kostl           = ls_data-kostl
-            ansvh           = ls_data-ansvh
-            werks           = ls_data-werks
-            btrtl           = ls_data-btrtl
-            persg           = ls_data-persg
-            persk           = ls_data-persk
-            orgeh           = ls_data-orgeh
-            stell           = ls_data-stell
-            abkrs           = ls_data-abkrs
-            pernr           = ls_data-pernr
-            lgart           = ls_data-lgart
-            begda           = ls_data-begda
-            endda           = ls_data-endda
-            ratxx           = ls_data-rat01
-            anzxx           = ls_data-anz01
-            betxx           = ls_data-bet01
-            gjahr           = ls_t003-gjahr
-        IMPORTING
-            ps_s004         = ls_s004
-        EXCEPTIONS
-          big_begda         = 010
-          ne_year           = 023
-          no_bukrs          = 024
-          no_date           = 025
-          record_available  = 1
-          no_lgart          = 045   ).
-
-      IF ls_s004 IS NOT INITIAL AND sy-subrc EQ 0.
-
-        ls_s004-vrsid = ls_t003-vrsid.
-        ls_s004-grpid = ls_t003-grpid.
-        ls_s004-gjahr = ls_t003-gjahr.
-        ls_s004-molga = p_molga.
-        ls_s004-waers = ls_data-waers.
-
-        MOVE-CORRESPONDING ls_s004 TO ls_stm.
-        go_alv->record_check = 'C'." DEğişiklik kontrolü için
-        ls_stm-t_styl = lt_styl[].
         CASE mode.
-          WHEN 'I'.
-            ls_stm-oprtn = 'N'.
-            APPEND ls_stm TO go_alv->gt_main.
           WHEN 'C'.
-            ls_stm-oprtn = 'C'.
-*            ls_stm-color = 'C310'.
-            MODIFY go_alv->gt_main FROM ls_stm INDEX ls_rows-index.
-        ENDCASE.
-        EXIT.
-      ELSE.
-        CASE sy-subrc.
-          WHEN 1.  MESSAGE i028 DISPLAY LIKE 'E'.
-          WHEN 010.MESSAGE i010 DISPLAY LIKE 'E'.
-          WHEN 023.MESSAGE i023 DISPLAY LIKE 'E'.
-          WHEN 024.MESSAGE i024 DISPLAY LIKE 'E'.
-          WHEN 025.MESSAGE i025 DISPLAY LIKE 'E'.
-          WHEN 045.MESSAGE i045 DISPLAY LIKE 'E'.
+            MOVE-CORRESPONDING ls_main TO ls_s004 .
           WHEN OTHERS.
         ENDCASE.
-      ENDIF.
+
+        go_main->param_move_field(
+           EXPORTING
+              bukrs             = ls_data-bukrs
+              kostl             = ls_data-kostl
+              ansvh             = ls_data-ansvh
+              werks             = ls_data-werks
+              btrtl             = ls_data-btrtl
+              persg             = ls_data-persg
+              persk             = ls_data-persk
+              orgeh             = ls_data-orgeh
+              stell             = ls_data-stell
+              abkrs             = ls_data-abkrs
+              pernr             = ls_data-pernr
+              lgart             = ls_data-lgart
+              begda             = ls_data-begda
+              endda             = ls_data-endda
+              ratxx             = ls_data-rat01
+              anzxx             = ls_data-anz01
+              betxx             = ls_data-bet01
+              gjahr             = ls_t003-gjahr
+          IMPORTING
+              ps_s004           = ls_s004
+          EXCEPTIONS
+              big_begda         = 010
+              ne_year           = 023
+              no_bukrs          = 024
+              no_date           = 025
+              record_available  = 1
+              no_lgart          = 045   ).
+
+        IF ls_s004 IS NOT INITIAL AND sy-subrc EQ 0.
+
+          ls_s004-vrsid = ls_t003-vrsid.
+          ls_s004-grpid = ls_t003-grpid.
+          ls_s004-gjahr = ls_t003-gjahr.
+          ls_s004-molga = p_molga.
+          ls_s004-waers = ls_data-waers.
+
+          MOVE-CORRESPONDING ls_s004 TO ls_stm.
+          go_alv->record_check = 'C'." DEğişiklik kontrolü için
+          ls_stm-t_styl = lt_styl[].
+          CASE mode.
+            WHEN 'I'.
+              ls_stm-oprtn = 'N'.
+              APPEND ls_stm TO go_alv->gt_main.
+            WHEN 'C'.
+              ls_stm-oprtn = 'C'.
+*              ls_stm-color = 'C310'.
+              MODIFY go_alv->gt_main FROM ls_stm INDEX ls_rows-index.
+          ENDCASE.
+*          EXIT.
+        ELSE.
+          CASE sy-subrc.
+            WHEN 1.  MESSAGE i028 DISPLAY LIKE 'E'.
+            WHEN 010.MESSAGE i010 DISPLAY LIKE 'E'.
+            WHEN 023.MESSAGE i023 DISPLAY LIKE 'E'.
+            WHEN 024.MESSAGE i024 DISPLAY LIKE 'E'.
+            WHEN 025.MESSAGE i025 DISPLAY LIKE 'E'.
+            WHEN 045.MESSAGE i045 DISPLAY LIKE 'E'.
+            WHEN OTHERS.
+          ENDCASE.
+
+          EXIT.
+        ENDIF.
+      ENDLOOP.
+
+        EXIT.
+
     ELSE.
       EXIT.
     ENDIF.
+
   ENDDO.
+
+
 ENDFORM.
