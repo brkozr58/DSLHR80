@@ -684,7 +684,7 @@ END-OF-DEFINITION.
           payroll_area         = lr_abkrs-low
           payroll_period       = go_alv->gs_t003-endda+4(2)
           payroll_year         = go_alv->gs_t003-gjahr
-*          selection_variant    = p_vari
+          selection_variant    = p_vari
           program_name         = 'HTRCALC0'
           log_mem_key          = ls_key
           sel_all_areas        = 'X'
@@ -827,7 +827,7 @@ END-OF-DEFINITION.
           payroll_area         = lr_abkrs-low
           payroll_period       = go_alv->gs_t003-endda+4(2)
           payroll_year         = go_alv->gs_t003-gjahr
-*          selection_variant    = p_vari
+          selection_variant    = p_vari
           program_name         = 'HTRCALC0'
           log_mem_key          = ls_key
 *          sel_all_areas        = 'X'

@@ -28,6 +28,7 @@ FUNCTION /dsl/hr80_fg002_02.
 *"     VALUE(I_STATU) TYPE  /DSL/HR80_T003-STATU OPTIONAL
 *"     VALUE(I_PERNR) TYPE  /DSL/HR80_T010-PERNR OPTIONAL
 *"     VALUE(I_RFPER) TYPE  /DSL/HR80_T010-RFPER OPTIONAL
+*"     VALUE(SELECTION_VARIANT) TYPE  VARIANT OPTIONAL
 *"  TABLES
 *"      EMPLOYEE_NUMBERS TYPE  PAY99_T_PAY_SIM_PERNR
 *"      ADVANCE_PERIODS OPTIONAL
@@ -434,32 +435,63 @@ FUNCTION /dsl/hr80_fg002_02.
   ENDIF.
 
 * Start the payroll driver.
-  SUBMIT (lv_calcname) EXPORTING LIST TO MEMORY
-                      AND RETURN
-                      WITH SELECTION-TABLE lt_params
-                      WITH pnpindex IN lt_lrange_db_index
-                      WITH pnpxabkr EQ payroll_area
-                      WITH pnppabrp EQ payroll_period
-                      WITH pnppabrj EQ payroll_year
-                      WITH pnpabkrs IN lt_lrange_pay_area
-                      WITH tst_on EQ tst_on           "XAIAHRK038127
-                      WITH pa03_off EQ pa03_off
-                      WITH payty EQ payroll_type
-                      WITH payid EQ payroll_id
-                      WITH bondt EQ payroll_date
-                      WITH ocrsn EQ payroll_ocrsn          "XAI
-                      WITH exp_buff EQ 'X'           "XUJAHRK002341
-                      WITH imp_buff EQ imp_buff
-                      WITH set_nib EQ 'X'
-                      WITH set_odc EQ off_cycle
-                      WITH upd_ps EQ ' '
-                      WITH brk_on EQ ' '
-                      WITH brk_sc EQ ' '
-                      WITH brk_off EQ 'X'
-                      WITH ecalled EQ 'X'
-                      WITH costplan EQ costplanning  "WOGL9CK040779
-                      WITH plgmemky EQ log_mem_key   "XDOAHRK003361
-                      WITH advance = advance_periods[]."XAIAHRK011846
+  IF selection_variant IS NOT INITIAL .
+    SUBMIT (lv_calcname) EXPORTING LIST TO MEMORY
+                  AND RETURN
+                    USING SELECTION-SET selection_variant
+            WITH SELECTION-TABLE lt_params
+          WITH pnpxabkr   EQ payroll_area
+          WITH pnppabrp   EQ payroll_period
+          WITH pnppabrj   EQ payroll_year
+          WITH pnpabkrs   IN lt_lrange_pay_area
+          WITH tst_on     EQ tst_on
+          WITH pa03_off   EQ pa03_off
+          WITH payty      EQ payroll_type
+          WITH payid      EQ payroll_id
+          WITH bondt      EQ payroll_date
+          WITH ocrsn      EQ payroll_ocrsn
+          WITH exp_buff   EQ 'X'
+          WITH imp_buff   EQ imp_buff
+          WITH set_nib    EQ 'X'
+          WITH set_odc    EQ off_cycle
+          WITH upd_ps     EQ ' '
+          WITH brk_on     EQ ' '
+          WITH brk_sc     EQ ' '
+          WITH brk_off    EQ 'X'
+          WITH ecalled    EQ 'X'
+          WITH costplan   EQ costplanning
+          WITH plgmemky   EQ log_mem_key
+          WITH advance    EQ advance_periods[].
+  ELSE.
+    SUBMIT (lv_calcname) EXPORTING LIST TO MEMORY
+                AND RETURN
+          WITH SELECTION-TABLE lt_params
+          WITH pnpindex   IN lt_lrange_db_index
+          WITH pnpxabkr   EQ payroll_area
+          WITH pnppabrp   EQ payroll_period
+          WITH pnppabrj   EQ payroll_year
+          WITH pnpabkrs   IN lt_lrange_pay_area
+          WITH tst_on     EQ tst_on
+          WITH pa03_off   EQ pa03_off
+          WITH payty      EQ payroll_type
+          WITH payid      EQ payroll_id
+          WITH bondt      EQ payroll_date
+          WITH ocrsn      EQ payroll_ocrsn
+          WITH exp_buff   EQ 'X'
+          WITH imp_buff   EQ imp_buff
+          WITH set_nib    EQ 'X'
+          WITH set_odc    EQ off_cycle
+          WITH upd_ps     EQ ' '
+          WITH brk_on     EQ ' '
+          WITH brk_sc     EQ ' '
+          WITH brk_off    EQ 'X'
+          WITH ecalled    EQ 'X'
+          WITH costplan   EQ costplanning
+          WITH plgmemky   EQ log_mem_key
+          WITH advance    EQ advance_periods[].
+
+  ENDIF.
+
 
 * Import the data from the payroll run (see include RPCHRT09)
   IMPORT sim_pernr        TO lt_sim_pernr

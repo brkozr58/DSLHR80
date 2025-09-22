@@ -8,6 +8,7 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
+
 define view /DSL/HR80_CDS002
   as select from    /dsl/hr80_t003 as t003
     inner join      /dsl/hr80_t001 as t001  on  t001.grpid = t003.grpid
@@ -158,6 +159,12 @@ define view /DSL/HR80_CDS002
       t8.trfst,
       t8.lga01,
       t8.bet01    as salry,
+
+//       pa dan verileri alırken eski ücreti yeni ücret alanına al
+      t8.lga01    as lga01_new,
+      t8.bet01    as salry_new,
+      
+      
       t8.waers,
       //
       t2.massn,

@@ -7,10 +7,13 @@ TABLES :  /dsl/hr80_t001,"Bütçe - Grup tanımı
           /dsl/hr80_t003,"Bütçe - Versiyon yönetimi
           /dsl/hr80_t004,"Bütçe - Parametre tanımlamaları
           /dsl/hr80_t005,"Bütçe - Ek ödeme ücretleri
-          /dsl/hr80_t007,"Bütçe - Ücret skalası grupları
+          /dsl/hr80_t007,"Bütçe - Ücret skalası grupları (T510)
           /dsl/hr80_t010,"Bütçe - Personel anaverileri
           /dsl/hr80_t011,"Bütçe - Bordro sonuçları
-          /dsl/hr80_t012."Bütçe - Bordro çalışma günlüğü
+          /dsl/hr80_t012,"Bütçe - Bordro çalışma günlüğü
+          /dsl/hr80_t013,"Bordro ücret türleri kaydı (T52EL)
+          /dsl/hr80_t014."Standart hesap tablosu (T030)
+
 *
 *
 SELECTION-SCREEN BEGIN OF BLOCK bl1 WITH FRAME TITLE TEXT-000  .

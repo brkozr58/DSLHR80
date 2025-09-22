@@ -1,6 +1,6 @@
 *---------------------------------------------------------------------*
 *    view related data declarations
-*   generation date: 25.08.2025 at 14:06:59
+*   generation date: 22.09.2025 at 16:51:49
 *   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 *...processing: /DSL/HR80_V001..................................*
@@ -111,6 +111,42 @@ INCLUDE STRUCTURE /DSL/HR80_V007.
           INCLUDE STRUCTURE VIMFLAGTAB.
 DATA: END OF /DSL/HR80_V007_TOTAL.
 
+*...processing: /DSL/HR80_V013..................................*
+TABLES: /DSL/HR80_V013, */DSL/HR80_V013. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V013
+TYPE TABLEVIEW USING SCREEN '0006'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V013. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V013.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V013_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V013.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V013_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V013_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V013.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V013_TOTAL.
+
+*...processing: /DSL/HR80_V014..................................*
+TABLES: /DSL/HR80_V014, */DSL/HR80_V014. "view work areas
+CONTROLS: TCTRL_/DSL/HR80_V014
+TYPE TABLEVIEW USING SCREEN '0008'.
+DATA: BEGIN OF STATUS_/DSL/HR80_V014. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_/DSL/HR80_V014.
+* Table for entries selected to show on screen
+DATA: BEGIN OF /DSL/HR80_V014_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V014.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V014_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF /DSL/HR80_V014_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE /DSL/HR80_V014.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF /DSL/HR80_V014_TOTAL.
+
 *...processing: /DSL/HR80_VAGRP.................................*
 TABLES: /DSL/HR80_VAGRP, */DSL/HR80_VAGRP. "view work areas
 CONTROLS: TCTRL_/DSL/HR80_VAGRP
@@ -190,6 +226,8 @@ TABLES: /DSL/HR80_T003                 .
 TABLES: /DSL/HR80_T004                 .
 TABLES: /DSL/HR80_T005                 .
 TABLES: /DSL/HR80_T007                 .
+TABLES: /DSL/HR80_T013                 .
+TABLES: /DSL/HR80_T014                 .
 TABLES: /DSL/HR80_TAGRP                .
 TABLES: /DSL/HR80_TGRP                 .
 TABLES: /DSL/HR80_TVERGD               .
@@ -199,6 +237,7 @@ TABLES: CSKT                           .
 TABLES: ICON                           .
 TABLES: T001                           .
 TABLES: T001P                          .
+TABLES: T500L                          .
 TABLES: T500P                          .
 TABLES: T501                           .
 TABLES: T501T                          .

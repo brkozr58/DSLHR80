@@ -30,6 +30,15 @@ REPORT /dsl/hr80_p004 MESSAGE-ID /dsl/hr80.
 
   DATA : gv_error     TYPE flag .
   DATA : gs_t003      TYPE /dsl/hr80_t003.
+  DATA : BEGIN OF gt_t002  OCCURS 0 ,
+            bukrs    TYPE /dsl/hr80_t002-bukrs,
+            werks    TYPE /dsl/hr80_t002-werks,
+            btrtl    TYPE /dsl/hr80_t002-btrtl,
+            abkrs    TYPE /dsl/hr80_t002-abkrs,
+            ktopl    TYPE t001-ktopl,
+         END OF gt_t002.
+
+
   DATA : gt_t510      TYPE TABLE OF t510 WITH HEADER LINE .
   DATA : gt_t007      TYPE TABLE OF /dsl/hr80_t007 WITH HEADER LINE .
   DATA : gt_t7trt01   TYPE TABLE OF t7trt01 WITH HEADER LINE .
@@ -37,6 +46,10 @@ REPORT /dsl/hr80_p004 MESSAGE-ID /dsl/hr80.
   DATA : gt_t7trt02   TYPE TABLE OF t7trt02 WITH HEADER LINE .
   DATA : gt_tvergi    TYPE TABLE OF /dsl/hr80_tvergi WITH HEADER LINE .
 
+  DATA : gt_t52el     TYPE TABLE OF t52el WITH HEADER LINE ,
+         gt_t013      TYPE TABLE OF /dsl/hr80_t013 WITH HEADER LINE ,
+         gt_t030      TYPE TABLE OF t030 WITH HEADER LINE ,
+         gt_t014      TYPE TABLE OF /dsl/hr80_t014 WITH HEADER LINE .
 
 
 
@@ -112,6 +125,19 @@ ENDFORM.
 *&---------------------------------------------------------------------*
 FORM get_table_data .
 
+  SELECT t1~bukrs   " TYPE /dsl/hr80_t002-bukrs,*
+         werks      " TYPE /dsl/hr80_t002-werks,
+         btrtl      " TYPE /dsl/hr80_t002-btrtl,
+         abkrs      " TYPE /dsl/hr80_t002-abkrs,
+         ktopl      " TYPE t001-ktopl,
+              FROM /dsl/hr80_t002 AS t1
+        INNER JOIN t001
+              ON   t001~bukrs = t1~bukrs
+       INTO CORRESPONDING FIELDS OF TABLE gt_t002
+      WHERE grpid EQ gs_t003-grpid
+        AND molga EQ gs_t003-molga
+    .
+
 
   SELECT * FROM t510 INTO TABLE gt_t510
       WHERE molga EQ p_molga
@@ -128,6 +154,19 @@ FORM get_table_data .
       WHERE begda LE gs_t003-endda
         AND endda GE gs_t003-begda
     .
+
+
+  SELECT * FROM t52el INTO TABLE gt_t52el
+      WHERE molga EQ gs_t003-molga
+        AND endda GE gs_t003-endda .
+
+  SELECT * FROM t030 INTO TABLE gt_t030
+    FOR ALL ENTRIES IN gt_t002
+      WHERE ktopl = gt_t002-ktopl
+        AND ( ( ktosl = 'HRC' AND
+                bklas = '')
+        OR ktosl = 'HRF' )
+        .
 
     gt_t007[] = VALUE #( FOR ls IN gt_t510
           (
@@ -180,14 +219,49 @@ FORM get_table_data .
              )
            ) .
 
-    MODIFY /dsl/hr80_t007   FROM TABLE gt_t007[].
+    gt_t013[] = VALUE #( FOR ls_el IN gt_t52el
+          (
+            molga = gs_t003-molga
+            grpid = gs_t003-grpid
+            vrsid = gs_t003-vrsid
+            lgart = ls_el-lgart
+            seqno = ls_el-seqno
+            endda = ls_el-endda
+            sign  = ls_el-sign
+            symko = ls_el-symko
+            spprc = ls_el-spprc
+            c1ign = ls_el-c1ign
+            auart = ls_el-auart
+             )
+           ) .
+
+    gt_t014[] = VALUE #( FOR ls_030 IN gt_t030
+          (
+            molga = gs_t003-molga
+            grpid = gs_t003-grpid
+            vrsid = gs_t003-vrsid
+            ktopl = ls_030-ktopl
+            ktosl = ls_030-ktosl
+            bwmod = ls_030-bwmod
+            komok = ls_030-komok
+            bklas = ls_030-bklas
+            konts = ls_030-konts
+            konth = ls_030-konth
+             )
+           ) .
+
+    MODIFY /dsl/hr80_t007   FROM TABLE gt_t007[]  .
     MODIFY /dsl/hr80_tvergd FROM TABLE gt_tvergd[].
     MODIFY /dsl/hr80_tvergi FROM TABLE gt_tvergi[].
+    MODIFY /dsl/hr80_t013   FROM TABLE gt_t013[]  .
+    MODIFY /dsl/hr80_t014   FROM TABLE gt_t014[]  .
 
 
   IF gt_t007[]   IS NOT INITIAL OR
      gt_tvergd[] IS NOT INITIAL OR
-     gt_tvergi[] IS NOT INITIAL .
+     gt_tvergi[] IS NOT INITIAL OR
+     gt_t013[]   IS NOT INITIAL OR
+     gt_t014[]   IS NOT INITIAL .
       MESSAGE i020 .
       COMMIT WORK AND WAIT .
   ENDIF.

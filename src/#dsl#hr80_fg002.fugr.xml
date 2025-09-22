@@ -236,6 +236,11 @@
        <OPTIONAL>X</OPTIONAL>
        <TYP>/DSL/HR80_T010-RFPER</TYP>
       </RSIMP>
+      <RSIMP>
+       <PARAMETER>SELECTION_VARIANT</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>VARIANT</TYP>
+      </RSIMP>
      </IMPORT>
      <TABLES>
       <RSTBL>
@@ -402,6 +407,11 @@
        <PARAMETER>I_RFPER</PARAMETER>
        <KIND>P</KIND>
        <STEXT>Referans personel numarası</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>SELECTION_VARIANT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ABAP: Varyant adı (program adı olmadan)</STEXT>
       </RSFDO>
       <RSFDO>
        <PARAMETER>EMPLOYEE_NUMBERS</PARAMETER>
