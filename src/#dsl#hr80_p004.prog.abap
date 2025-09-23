@@ -31,6 +31,7 @@ REPORT /dsl/hr80_p004 MESSAGE-ID /dsl/hr80.
   DATA : gv_error     TYPE flag .
   DATA : gs_t003      TYPE /dsl/hr80_t003.
   DATA : BEGIN OF gt_t002  OCCURS 0 ,
+            molga    TYPE /dsl/hr80_t002-molga,
             bukrs    TYPE /dsl/hr80_t002-bukrs,
             werks    TYPE /dsl/hr80_t002-werks,
             btrtl    TYPE /dsl/hr80_t002-btrtl,
@@ -124,8 +125,10 @@ ENDFORM.
 *& Form GET_TABLE_DATA
 *&---------------------------------------------------------------------*
 FORM get_table_data .
+  DATA : lt_t013      TYPE TABLE OF /dsl/hr80_t013 WITH HEADER LINE .
 
   SELECT t1~bukrs   " TYPE /dsl/hr80_t002-bukrs,*
+         t1~molga   " TYPE /dsl/hr80_t002-molga,*
          werks      " TYPE /dsl/hr80_t002-werks,
          btrtl      " TYPE /dsl/hr80_t002-btrtl,
          abkrs      " TYPE /dsl/hr80_t002-abkrs,
@@ -218,22 +221,25 @@ FORM get_table_data .
             waers = ls2-waers
              )
            ) .
-
-    gt_t013[] = VALUE #( FOR ls_el IN gt_t52el
-          (
-            molga = gs_t003-molga
-            grpid = gs_t003-grpid
-            vrsid = gs_t003-vrsid
-            lgart = ls_el-lgart
-            seqno = ls_el-seqno
-            endda = ls_el-endda
-            sign  = ls_el-sign
-            symko = ls_el-symko
-            spprc = ls_el-spprc
-            c1ign = ls_el-c1ign
-            auart = ls_el-auart
-             )
-           ) .
+    LOOP AT gt_t002 INTO DATA(ls_t002).
+      lt_t013[] = VALUE #( FOR ls_el IN gt_t52el
+            (
+              molga = gs_t003-molga
+              grpid = gs_t003-grpid
+              vrsid = gs_t003-vrsid
+              bukrs = ls_t002-bukrs
+              lgart = ls_el-lgart
+              seqno = ls_el-seqno
+              endda = ls_el-endda
+              sign  = ls_el-sign
+              symko = ls_el-symko
+              spprc = ls_el-spprc
+              c1ign = ls_el-c1ign
+              auart = ls_el-auart
+               )
+             ) .
+      APPEND LINES OF lt_t013[] TO gt_t013[] .
+    ENDLOOP.
 
     gt_t014[] = VALUE #( FOR ls_030 IN gt_t030
           (
@@ -249,6 +255,18 @@ FORM get_table_data .
             konth = ls_030-konth
              )
            ) .
+
+    SORT gt_t007    ASCENDING .
+    SORT gt_tvergd  ASCENDING .
+    SORT gt_tvergi  ASCENDING .
+    SORT gt_t013    ASCENDING .
+    SORT gt_t014    ASCENDING .
+
+    DELETE ADJACENT DUPLICATES FROM gt_t007  .
+    DELETE ADJACENT DUPLICATES FROM gt_tvergd.
+    DELETE ADJACENT DUPLICATES FROM gt_tvergi.
+    DELETE ADJACENT DUPLICATES FROM gt_t013  .
+    DELETE ADJACENT DUPLICATES FROM gt_t014  .
 
     MODIFY /dsl/hr80_t007   FROM TABLE gt_t007[]  .
     MODIFY /dsl/hr80_tvergd FROM TABLE gt_tvergd[].

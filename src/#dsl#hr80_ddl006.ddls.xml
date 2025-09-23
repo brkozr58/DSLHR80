@@ -5,7 +5,7 @@
    <DDLS>
     <DDLNAME>/DSL/HR80_DDL006</DDLNAME>
     <DDLANGUAGE>T</DDLANGUAGE>
-    <DDTEXT>Bütçe Özet Anaveri</DDTEXT>
+    <DDTEXT>Bütçe - Hesap tayinleri listesi</DDTEXT>
     <SOURCE_TYPE>V</SOURCE_TYPE>
    </DDLS>
   </asx:values>

@@ -7878,7 +7878,7 @@
        <TC_SEL_LNS>MULTIPLE</TC_SEL_LNS>
        <TC_SEL_CLS>NONE</TC_SEL_CLS>
        <TC_LSEL_CL>X</TC_LSEL_CL>
-       <TC_FIXCOL>003</TC_FIXCOL>
+       <TC_FIXCOL>004</TC_FIXCOL>
       </RPY_DYCATT>
      </CONTAINERS>
      <FIELDS>
@@ -7909,7 +7909,7 @@
        <LINE>001</LINE>
        <COLUMN>022</COLUMN>
        <LENGTH>002</LENGTH>
-       <VISLENGTH>035</VISLENGTH>
+       <VISLENGTH>026</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <FROM_DICT>X</FROM_DICT>
@@ -8092,10 +8092,27 @@
        <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
+       <NAME>*/DSL/HR80_V013-BUKRS</NAME>
+       <TEXT>ŞK______________________________________</TEXT>
+       <LINE>001</LINE>
+       <COLUMN>001</COLUMN>
+       <LENGTH>040</LENGTH>
+       <VISLENGTH>004</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <FORMAT>CHAR</FORMAT>
+       <FROM_DICT>X</FROM_DICT>
+       <MODIFIC>4</MODIFIC>
+       <REQU_ENTRY>N</REQU_ENTRY>
+       <TC_HEADING>X</TC_HEADING>
+      </RPY_DYFATC>
+      <RPY_DYFATC>
+       <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
+       <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
+       <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-LGART</NAME>
        <TEXT>Ücr.türü________________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>001</COLUMN>
+       <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8112,7 +8129,7 @@
        <NAME>*/DSL/HR80_V013-SEQNO</NAME>
        <TEXT>No______________________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>002</COLUMN>
+       <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>002</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8129,7 +8146,7 @@
        <NAME>*/DSL/HR80_V013-ENDDA</NAME>
        <TEXT>Geçerlilik_sonu_________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>003</COLUMN>
+       <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8146,7 +8163,7 @@
        <NAME>*/DSL/HR80_V013-SIGN</NAME>
        <TEXT>+/-işareti______________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>004</COLUMN>
+       <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>030</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8163,7 +8180,7 @@
        <NAME>*/DSL/HR80_V013-SYMKO</NAME>
        <TEXT>Sembolik_hsp.___________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>005</COLUMN>
+       <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>013</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8180,7 +8197,7 @@
        <NAME>*/DSL/HR80_V013-SPPRC</NAME>
        <TEXT>Özİ_____________________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>006</COLUMN>
+       <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>030</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8197,7 +8214,7 @@
        <NAME>*/DSL/HR80_V013-C1IGN</NAME>
        <TEXT>MTYok___________________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>007</COLUMN>
+       <COLUMN>008</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>005</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8214,7 +8231,7 @@
        <NAME>*/DSL/HR80_V013-AUART</NAME>
        <TEXT>Giderler________________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>008</COLUMN>
+       <COLUMN>009</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8231,7 +8248,7 @@
        <NAME>*/DSL/HR80_V013-LGTXT</NAME>
        <TEXT>Ücret_türü_uzun_mtn.____________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>009</COLUMN>
+       <COLUMN>010</COLUMN>
        <LENGTH>040</LENGTH>
        <VISLENGTH>025</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8259,10 +8276,29 @@
        <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
-       <NAME>/DSL/HR80_V013-LGART</NAME>
+       <NAME>/DSL/HR80_V013-BUKRS</NAME>
        <TEXT>____</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
+       <LENGTH>004</LENGTH>
+       <VISLENGTH>004</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <GROUP1>KEY</GROUP1>
+       <FORMAT>CHAR</FORMAT>
+       <FROM_DICT>X</FROM_DICT>
+       <MODIFIC>X</MODIFIC>
+       <PARAM_ID>BUK</PARAM_ID>
+       <OUTPUT_FLD>X</OUTPUT_FLD>
+       <REQU_ENTRY>N</REQU_ENTRY>
+      </RPY_DYFATC>
+      <RPY_DYFATC>
+       <CONT_TYPE>TABLE_CTRL</CONT_TYPE>
+       <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
+       <TYPE>TEMPLATE</TYPE>
+       <NAME>/DSL/HR80_V013-LGART</NAME>
+       <TEXT>____</TEXT>
+       <LINE>001</LINE>
+       <COLUMN>002</COLUMN>
        <LENGTH>004</LENGTH>
        <VISLENGTH>009</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8282,7 +8318,7 @@
        <NAME>/DSL/HR80_V013-SEQNO</NAME>
        <TEXT>__</TEXT>
        <LINE>001</LINE>
-       <COLUMN>002</COLUMN>
+       <COLUMN>003</COLUMN>
        <LENGTH>002</LENGTH>
        <VISLENGTH>002</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8300,7 +8336,7 @@
        <NAME>/DSL/HR80_V013-ENDDA</NAME>
        <TEXT>__________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>003</COLUMN>
+       <COLUMN>004</COLUMN>
        <LENGTH>010</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8319,7 +8355,7 @@
        <TEXT>_</TEXT>
        <DROPDOWN>L</DROPDOWN>
        <LINE>001</LINE>
-       <COLUMN>004</COLUMN>
+       <COLUMN>005</COLUMN>
        <LENGTH>001</LENGTH>
        <VISLENGTH>030</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8337,7 +8373,7 @@
        <NAME>/DSL/HR80_V013-SYMKO</NAME>
        <TEXT>____</TEXT>
        <LINE>001</LINE>
-       <COLUMN>005</COLUMN>
+       <COLUMN>006</COLUMN>
        <LENGTH>004</LENGTH>
        <VISLENGTH>013</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8355,7 +8391,7 @@
        <TEXT>_</TEXT>
        <DROPDOWN>L</DROPDOWN>
        <LINE>001</LINE>
-       <COLUMN>006</COLUMN>
+       <COLUMN>007</COLUMN>
        <LENGTH>001</LENGTH>
        <VISLENGTH>030</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8373,7 +8409,7 @@
        <NAME>/DSL/HR80_V013-C1IGN</NAME>
        <TEXT>_</TEXT>
        <LINE>001</LINE>
-       <COLUMN>007</COLUMN>
+       <COLUMN>008</COLUMN>
        <LENGTH>001</LENGTH>
        <VISLENGTH>005</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8390,7 +8426,7 @@
        <NAME>/DSL/HR80_V013-AUART</NAME>
        <TEXT>____</TEXT>
        <LINE>001</LINE>
-       <COLUMN>008</COLUMN>
+       <COLUMN>009</COLUMN>
        <LENGTH>004</LENGTH>
        <VISLENGTH>010</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8407,7 +8443,7 @@
        <NAME>/DSL/HR80_V013-LGTXT</NAME>
        <TEXT>_________________________</TEXT>
        <LINE>001</LINE>
-       <COLUMN>009</COLUMN>
+       <COLUMN>010</COLUMN>
        <LENGTH>025</LENGTH>
        <VISLENGTH>025</VISLENGTH>
        <HEIGHT>001</HEIGHT>
@@ -8424,22 +8460,22 @@
        <LINE>PROCESS BEFORE OUTPUT.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_initialisieren.</LINE>
+       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> LOOP AT extract WITH CONTROL</LINE>
+       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>  tctrl_/dsl/hr80_v013 CURSOR nextline.</LINE>
+       <LINE>  TCTRL_/DSL/HR80_V013 CURSOR NEXTLINE.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>   MODULE liste_show_liste.</LINE>
+       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE> ENDLOOP.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE fill_substflds.</LINE>
+       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>*</LINE>
@@ -8448,73 +8484,79 @@
        <LINE>PROCESS AFTER INPUT.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_exit_command AT EXIT-COMMAND.</LINE>
+       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_before_loop.</LINE>
+       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> LOOP AT extract.</LINE>
+       <LINE> LOOP AT EXTRACT.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>   MODULE liste_init_workarea.</LINE>
+       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   CHAIN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-lgart .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-BUKRS .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-seqno .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-LGART .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-endda .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-SEQNO .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-sign .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-ENDDA .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-symko .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-SIGN .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-spprc .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-SYMKO .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-c1ign .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-SPPRC .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-auart .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-C1IGN .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-lgtxt .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-AUART .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    MODULE set_update_flag ON CHAIN-REQUEST.</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-LGTXT .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    MODULE complete_/dsl/hr80_v013 ON CHAIN-REQUEST.</LINE>
+       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>    MODULE COMPLETE_/DSL/HR80_V013 ON CHAIN-REQUEST.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   ENDCHAIN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>   FIELD vim_marked MODULE liste_mark_checkbox.</LINE>
+       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   CHAIN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-lgart .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-BUKRS .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-seqno .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-LGART .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v013-endda .</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-SEQNO .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    MODULE liste_update_liste.</LINE>
+       <LINE>    FIELD /DSL/HR80_V013-ENDDA .</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   ENDCHAIN.</LINE>
@@ -8523,7 +8565,7 @@
        <LINE> ENDLOOP.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_after_loop.</LINE>
+       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
       </RPY_DYFLOW>
      </FLOW_LOGIC>
     </item>
