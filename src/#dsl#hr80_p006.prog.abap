@@ -103,8 +103,10 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
     CASE 'X'.
       WHEN p_simu.
         PERFORM payroll_simu_job .
+
       WHEN OTHERS.
         CALL SCREEN 0100.
+
     ENDCASE.
 
 

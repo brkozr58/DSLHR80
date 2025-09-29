@@ -123,8 +123,10 @@ CLASS lcl_alv DEFINITION   .
            gt_main            LIKE TABLE OF gs_main.
     DATA : gt_t011            TYPE TABLE OF /dsl/hr80_t011 .
     DATA : gt_t012            TYPE TABLE OF /dsl/hr80_t012 .
+    DATA : gt_tlog            TYPE TABLE OF /dsl/hr80_tlog .
     DATA : gt_delete            TYPE TABLE OF /dsl/hr80_t011 .
 
+    DATA : gt_t013            TYPE TABLE OF /dsl/hr80_t013.
     DATA : gs_t003            TYPE /dsl/hr80_t003.
     DATA : gmc_de             TYPE raw4 .
 

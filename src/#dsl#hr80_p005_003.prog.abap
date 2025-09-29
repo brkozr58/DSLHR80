@@ -855,7 +855,7 @@ FORM get_rfper_values  USING pv_pernr
       plans_t   persk_t      salry
       stell     persk_new    lga01_new
       stell_t   persk_new_t  salry_new
-      kokrs     ssgrp        komok
+      kokrs     ssgrp
       kokrs_t   kanun        mgart
       kostl     prozt        massn
       kostl_t   trfar        massn_t

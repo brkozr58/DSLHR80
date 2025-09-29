@@ -230,6 +230,7 @@ ENDFORM.
 FORM change_person_data .
   DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
   DATA : lr_pernr TYPE RANGE OF /dsl/hr80_t010-pernr WITH HEADER LINE.
+  DATA   lr_lgart TYPE RANGE OF lgart WITH HEADER LINE .
 
   DEFINE change_value .
     IF &1 IS NOT INITIAL .
@@ -347,6 +348,80 @@ FORM change_person_data .
 *    ENDLOOP.
 *  ENDLOOP.
 
+
+*  LOOP AT wpbp.
+    SELECT 'I' AS option , 'EQ' AS sing , lgart AS low
+        FROM t512z INTO TABLE @lr_lgart
+                           WHERE infty EQ '0008'
+                             AND molga EQ @p_molga
+                             AND begda LE @aper-endda
+                             AND endda GE @aper-endda.
+
+    LOOP AT p0008 ASSIGNING FIELD-SYMBOL(<p0008>)
+      WHERE begda LE aper-endda.
+      LOOP AT gt_t010 INTO ls_t010
+              WHERE pernr IN lr_pernr[].
+        change_value : ls_t010-trfar_new <p0008>-trfar,
+                       ls_t010-trfgb_new <p0008>-trfgb,
+                       ls_t010-trfgr_new <p0008>-trfgr,
+                       ls_t010-trfst_new <p0008>-trfst.
+        IF ls_t010-lga01_new IS NOT INITIAL AND
+           ls_t010-salry_new IS NOT INITIAL .
+          change_value : ls_t010-salry_new <p0008>-bet01,
+                         ls_t010-lga01_new <p0008>-lga01 .
+        ELSE.
+          IF ls_t010-lga01_new IS NOT INITIAL .
+            LOOP AT gt_t007 INTO DATA(ls_t007)
+                    WHERE molga EQ p_molga
+                      AND ( ( trfar EQ ls_t010-trfar AND
+                              trfgb EQ ls_t010-trfgb AND
+*                              trfkz EQ ls_t010-abart AND
+                              trfgr EQ ls_t010-trfgr AND
+                              trfst EQ ls_t010-trfst )
+                        OR
+                          ( trfar EQ ls_t010-trfar_new AND
+                            trfgb EQ ls_t010-trfgb_new     AND
+*                            trfkz EQ ls_t010-abart     AND
+                            trfgr EQ ls_t010-trfgr_new     AND
+                            trfst EQ ls_t010-trfst_new )
+                        )
+                      AND lgart EQ ls_t010-lga01_new
+                      AND begda LE aper-endda
+                      AND endda GE aper-begda.
+            ENDLOOP.
+            IF sy-subrc EQ 0 AND ls_t007-betrg IS INITIAL .
+              change_value : ls_t010-salry_new <p0008>-bet01,
+                             ls_t007-betrg     <p0008>-lga01 .
+            ENDIF.
+          ELSE.
+            LOOP AT gt_t007 INTO ls_t007
+                    WHERE molga EQ p_molga
+                      AND ( ( trfar EQ ls_t010-trfar AND
+                              trfgb EQ ls_t010-trfgb AND
+*                              trfkz EQ ls_t010-abart AND
+                              trfgr EQ ls_t010-trfgr AND
+                              trfst EQ ls_t010-trfst )
+                        OR
+                          ( trfar EQ ls_t010-trfar_new AND
+                            trfgb EQ ls_t010-trfgb_new     AND
+*                            trfkz EQ ls_t010-abart     AND
+                            trfgr EQ ls_t010-trfgr_new     AND
+                            trfst EQ ls_t010-trfst_new )
+                        )
+                      AND lgart EQ ls_t010-lga01
+                      AND begda LE aper-endda
+                      AND endda GE aper-begda.
+            ENDLOOP.
+            IF sy-subrc EQ 0 AND ls_t007-betrg IS INITIAL .
+              change_value : ls_t010-lga01     <p0008>-bet01,
+                             ls_t007-betrg     <p0008>-lga01 .
+            ENDIF.
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+    ENDLOOP.
+*  ENDLOOP.
+
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form BASIC_ADDITIONAL_TIME_DATA
@@ -389,169 +464,112 @@ FORM basic_additional_time_data.
 
   DELETE gt_t005 WHERE NOT ( begda LE aper-endda AND
                              endda GE aper-begda ).
-  CHECK gt_t005[] IS NOT INITIAL .
+  IF gt_t005[] IS NOT INITIAL .
 
-" DUMMY personellerde PA daki sicil gönderilmeli
-*p_rfper
-  " Ek ödemeleri bilgi tiplerine aktar.
-  REFRESH lr_lgart.
-  lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
-              WHERE ( infty EQ '0014' )
-                    ( sign    = 'I'
-                      option  = 'EQ'
-                      low     = ls_tsub-lgart
-                      high    = ls_tsub-lgart ) ).
-  IF lr_lgart[] IS NOT INITIAL .
-    lt_p0014[] = VALUE #( FOR ls_t5 IN gt_t005
-                WHERE ( pernr IN lr_pernr[] AND
-                        lgart IN lr_lgart[] )
-                      ( pernr = lv_pernr
-                        infty = '0014'
-                        subty = ls_t5-lgart
-                        lgart = ls_t5-lgart
-                        begda = ls_t5-begda
-                        endda = ls_t5-endda
-                        betrg = ls_t5-betrg
-                        anzhl = ls_t5-anzhl
-                        waers = p0008-waers
-                         )  ) .
-    APPEND LINES OF lt_p0014[] TO p0014.
-    REFRESH lt_p0014.
+  " DUMMY personellerde PA daki sicil gönderilmeli
+*  p_rfper
+    " Ek ödemeleri bilgi tiplerine aktar.
+    REFRESH lr_lgart.
+    lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
+                WHERE ( infty EQ '0014' )
+                      ( sign    = 'I'
+                        option  = 'EQ'
+                        low     = ls_tsub-lgart
+                        high    = ls_tsub-lgart ) ).
+    IF lr_lgart[] IS NOT INITIAL .
+      lt_p0014[] = VALUE #( FOR ls_t5 IN gt_t005
+                  WHERE ( pernr IN lr_pernr[] AND
+                          lgart IN lr_lgart[] )
+                        ( pernr = lv_pernr
+                          infty = '0014'
+                          subty = ls_t5-lgart
+                          lgart = ls_t5-lgart
+                          begda = ls_t5-begda
+                          endda = ls_t5-endda
+                          betrg = ls_t5-betrg
+                          anzhl = ls_t5-anzhl
+                          waers = p0008-waers
+                           )  ) .
+      APPEND LINES OF lt_p0014[] TO p0014.
+      REFRESH lt_p0014.
+    ENDIF.
+
+    REFRESH lr_lgart.
+    lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
+                WHERE ( infty EQ '0015' )
+                      ( sign    = 'I'
+                        option  = 'EQ'
+                        low     = ls_tsub-lgart
+                        high    = ls_tsub-lgart ) ).
+    IF lr_lgart[] IS NOT INITIAL .
+      lt_p0015[] = VALUE #( FOR ls_t5 IN gt_t005
+                  WHERE ( pernr IN lr_pernr[] AND
+                          lgart IN lr_lgart[] )
+                        ( pernr = lv_pernr
+                          infty = '0015'
+                          subty = ls_t5-lgart
+                          lgart = ls_t5-lgart
+                          begda = ls_t5-begda
+                          endda = ls_t5-endda
+                          betrg = ls_t5-betrg
+                          anzhl = ls_t5-anzhl
+                          waers = p0008-waers
+                           )  ) .
+      APPEND LINES OF lt_p0015[] TO p0015.
+      REFRESH lt_p0015.
+    ENDIF.
+
+    REFRESH lr_lgart.
+    lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
+                WHERE ( infty EQ '2001' )
+                      ( sign    = 'I'
+                        option  = 'EQ'
+                        low     = ls_tsub-lgart
+                        high    = ls_tsub-lgart ) ).
+    IF lr_lgart[] IS NOT INITIAL .
+      lt_p2001[] = VALUE #( FOR ls_t5 IN gt_t005
+                  WHERE ( pernr IN lr_pernr[] AND
+                          lgart IN lr_lgart[] )
+                        ( pernr = lv_pernr
+                          infty = '2001'
+                          subty = ls_t5-lgart
+                          awart = ls_t5-lgart
+                          begda = ls_t5-begda
+                          endda = ls_t5-endda
+                          kaltg = ls_t5-anzhl
+                           )  ) .
+      APPEND LINES OF lt_p2001[] TO p2001.
+      REFRESH lt_p2001.
+    ENDIF.
+
+
+    REFRESH lr_lgart.
+    lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
+                WHERE ( infty EQ '2010' )
+                      ( sign    = 'I'
+                        option  = 'EQ'
+                        low     = ls_tsub-lgart
+                        high    = ls_tsub-lgart ) ).
+    IF lr_lgart[] IS NOT INITIAL .
+      lt_p2010[] = VALUE #( FOR ls_t5 IN gt_t005
+                  WHERE ( pernr IN lr_pernr[] AND
+                          lgart IN lr_lgart[] )
+                        ( pernr = lv_pernr
+                          infty = '2010'
+                          subty = ls_t5-lgart
+                          lgart = ls_t5-lgart
+                          begda = ls_t5-begda
+                          endda = ls_t5-endda
+                          betrg = ls_t5-betrg
+                          anzhl = ls_t5-anzhl
+                          waers = p0008-waers
+                           )  ) .
+      APPEND LINES OF lt_p2010[] TO p2010.
+      REFRESH lt_p2010.
+    ENDIF.
   ENDIF.
 
-  REFRESH lr_lgart.
-  lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
-              WHERE ( infty EQ '0015' )
-                    ( sign    = 'I'
-                      option  = 'EQ'
-                      low     = ls_tsub-lgart
-                      high    = ls_tsub-lgart ) ).
-  IF lr_lgart[] IS NOT INITIAL .
-    lt_p0015[] = VALUE #( FOR ls_t5 IN gt_t005
-                WHERE ( pernr IN lr_pernr[] AND
-                        lgart IN lr_lgart[] )
-                      ( pernr = lv_pernr
-                        infty = '0015'
-                        subty = ls_t5-lgart
-                        lgart = ls_t5-lgart
-                        begda = ls_t5-begda
-                        endda = ls_t5-endda
-                        betrg = ls_t5-betrg
-                        anzhl = ls_t5-anzhl
-                        waers = p0008-waers
-                         )  ) .
-    APPEND LINES OF lt_p0015[] TO p0015.
-    REFRESH lt_p0015.
-  ENDIF.
 
-  REFRESH lr_lgart.
-  lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
-              WHERE ( infty EQ '2001' )
-                    ( sign    = 'I'
-                      option  = 'EQ'
-                      low     = ls_tsub-lgart
-                      high    = ls_tsub-lgart ) ).
-  IF lr_lgart[] IS NOT INITIAL .
-    lt_p2001[] = VALUE #( FOR ls_t5 IN gt_t005
-                WHERE ( pernr IN lr_pernr[] AND
-                        lgart IN lr_lgart[] )
-                      ( pernr = lv_pernr
-                        infty = '2001'
-                        subty = ls_t5-lgart
-                        awart = ls_t5-lgart
-                        begda = ls_t5-begda
-                        endda = ls_t5-endda
-                        kaltg = ls_t5-anzhl
-                         )  ) .
-    APPEND LINES OF lt_p2001[] TO p2001.
-    REFRESH lt_p2001.
-  ENDIF.
-
-
-  REFRESH lr_lgart.
-  lr_lgart[] = VALUE #( FOR ls_tsub IN gt_t005_subty
-              WHERE ( infty EQ '2010' )
-                    ( sign    = 'I'
-                      option  = 'EQ'
-                      low     = ls_tsub-lgart
-                      high    = ls_tsub-lgart ) ).
-  IF lr_lgart[] IS NOT INITIAL .
-    lt_p2010[] = VALUE #( FOR ls_t5 IN gt_t005
-                WHERE ( pernr IN lr_pernr[] AND
-                        lgart IN lr_lgart[] )
-                      ( pernr = lv_pernr
-                        infty = '2010'
-                        subty = ls_t5-lgart
-                        lgart = ls_t5-lgart
-                        begda = ls_t5-begda
-                        endda = ls_t5-endda
-                        betrg = ls_t5-betrg
-                        anzhl = ls_t5-anzhl
-                        waers = p0008-waers
-                         )  ) .
-    APPEND LINES OF lt_p2010[] TO p2010.
-    REFRESH lt_p2010.
-  ENDIF.
-
-
-  LOOP AT wpbp.
-    SELECT 'I' AS option , 'EQ' AS sing , lgart AS low
-        FROM t512z INTO TABLE @lr_lgart
-                           WHERE infty EQ '0008'
-                             AND molga EQ @p_molga
-                             AND begda LE @wpbp-endda
-                             AND endda GE @wpbp-begda.
-
-    LOOP AT p0008 ASSIGNING FIELD-SYMBOL(<p0008>)
-      WHERE begda LE aper-endda.
-      LOOP AT gt_t010 INTO DATA(ls_t010)
-              WHERE pernr IN lr_pernr[].
-        change_value : ls_t010-trfar_new <p0008>-trfar,
-                       ls_t010-trfgb_new <p0008>-trfgb,
-                       ls_t010-trfgr_new <p0008>-trfgr,
-                       ls_t010-trfst_new <p0008>-trfst.
-        IF ls_t010-lga01_new IS NOT INITIAL AND
-           ls_t010-salry_new IS NOT INITIAL .
-          change_value : ls_t010-salry_new <p0008>-bet01,
-                         ls_t010-lga01_new <p0008>-lga01 .
-        ELSE.
-          IF ls_t010-lga01_new IS NOT INITIAL .
-            LOOP AT gt_t007 INTO DATA(ls_t007)
-                    WHERE molga EQ p_molga
-                      AND trfar EQ wpbp-trfar
-                      AND trfgb EQ wpbp-trfgb
-                      AND trfkz EQ wpbp-abart
-                      AND trfgr EQ wpbp-trfgr
-                      AND trfst EQ wpbp-trfst
-                      AND lgart EQ ls_t010-lga01_new
-                      AND begda LE aper-endda
-                      AND endda GE aper-begda.
-            ENDLOOP.
-            IF sy-subrc EQ 0 AND ls_t007-betrg IS INITIAL .
-              change_value : ls_t010-salry_new <p0008>-bet01,
-                             ls_t007-betrg     <p0008>-lga01 .
-            ENDIF.
-          ELSE.
-            LOOP AT gt_t007 INTO ls_t007
-                    WHERE molga EQ p_molga
-                      AND trfar EQ wpbp-trfar
-                      AND trfgb EQ wpbp-trfgb
-                      AND trfkz EQ wpbp-abart
-                      AND trfgr EQ wpbp-trfgr
-                      AND trfst EQ wpbp-trfst
-                      AND lgart EQ ls_t010-lga01
-                      AND begda LE aper-endda
-                      AND endda GE aper-begda.
-            ENDLOOP.
-            IF sy-subrc EQ 0 AND ls_t007-betrg IS INITIAL .
-              change_value : ls_t010-lga01     <p0008>-bet01,
-                             ls_t007-betrg     <p0008>-lga01 .
-            ENDIF.
-          ENDIF.
-        ENDIF.
-      ENDLOOP.
-    ENDLOOP.
-  ENDLOOP.
 
 
 ENDFORM.

@@ -13,10 +13,13 @@
 FORM import_results USING relid seqnr
                  CHANGING cs_result TYPE paytr_result.
   DATA pack TYPE p.
+  DATA : lv_db(30).
 
   pack = seqnr.
   UNPACK pack TO rx-key-seqno.
   CLEAR: cs_result  .
+
+  CONCATENATE 'PCL2(' relid ')' INTO lv_db.
 
   IMPORT
       versc

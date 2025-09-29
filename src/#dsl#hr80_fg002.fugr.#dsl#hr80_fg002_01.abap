@@ -1,4 +1,4 @@
-FUNCTION /DSL/HR80_FG002_01.
+FUNCTION /dsl/hr80_fg002_01.
 *"----------------------------------------------------------------------
 *"*"Local Interface:
 *"  IMPORTING

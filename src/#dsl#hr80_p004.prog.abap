@@ -140,25 +140,19 @@ FORM get_table_data .
       WHERE grpid EQ gs_t003-grpid
         AND molga EQ gs_t003-molga
     .
-
-
   SELECT * FROM t510 INTO TABLE gt_t510
       WHERE molga EQ p_molga
         AND begda LE gs_t003-endda
         AND endda GE gs_t003-begda
     .
-
   SELECT * FROM t7trt01 INTO TABLE gt_t7trt01
       WHERE begda LE gs_t003-endda
         AND endda GE gs_t003-begda
     .
-
   SELECT * FROM t7trt02 INTO TABLE gt_t7trt02
       WHERE begda LE gs_t003-endda
         AND endda GE gs_t003-begda
     .
-
-
   SELECT * FROM t52el INTO TABLE gt_t52el
       WHERE molga EQ gs_t003-molga
         AND endda GE gs_t003-endda .
@@ -168,6 +162,7 @@ FORM get_table_data .
       WHERE ktopl = gt_t002-ktopl
         AND ( ( ktosl = 'HRC' AND
                 bklas = '')
+        OR ktosl = 'HRA'
         OR ktosl = 'HRF' )
         .
 
@@ -268,12 +263,36 @@ FORM get_table_data .
     DELETE ADJACENT DUPLICATES FROM gt_t013  .
     DELETE ADJACENT DUPLICATES FROM gt_t014  .
 
+    DELETE FROM /dsl/hr80_t007
+        WHERE molga = gs_t003-molga
+          AND grpid = gs_t003-grpid
+          AND vrsid = gs_t003-vrsid .
+
+    DELETE FROM /dsl/hr80_tvergd
+        WHERE molga = gs_t003-molga
+          AND grpid = gs_t003-grpid
+          AND vrsid = gs_t003-vrsid.
+
+    DELETE FROM /dsl/hr80_tvergi
+        WHERE molga = gs_t003-molga
+          AND grpid = gs_t003-grpid
+          AND vrsid = gs_t003-vrsid.
+
+    DELETE FROM /dsl/hr80_t013
+        WHERE molga = gs_t003-molga
+          AND grpid = gs_t003-grpid
+          AND vrsid = gs_t003-vrsid  .
+
+    DELETE FROM /dsl/hr80_t014
+        WHERE molga = gs_t003-molga
+          AND grpid = gs_t003-grpid
+          AND vrsid = gs_t003-vrsid  .
+
     MODIFY /dsl/hr80_t007   FROM TABLE gt_t007[]  .
     MODIFY /dsl/hr80_tvergd FROM TABLE gt_tvergd[].
     MODIFY /dsl/hr80_tvergi FROM TABLE gt_tvergi[].
     MODIFY /dsl/hr80_t013   FROM TABLE gt_t013[]  .
     MODIFY /dsl/hr80_t014   FROM TABLE gt_t014[]  .
-
 
   IF gt_t007[]   IS NOT INITIAL OR
      gt_tvergd[] IS NOT INITIAL OR
@@ -283,6 +302,5 @@ FORM get_table_data .
       MESSAGE i020 .
       COMMIT WORK AND WAIT .
   ENDIF.
-
 
 ENDFORM.

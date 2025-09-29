@@ -10,9 +10,10 @@ TABLES :  /dsl/hr80_t001,"Bütçe - Grup tanımı
           /dsl/hr80_t007,"Bütçe - Ücret skalası grupları (T510)
           /dsl/hr80_t010,"Bütçe - Personel anaverileri
           /dsl/hr80_t011,"Bütçe - Bordro sonuçları
-          /dsl/hr80_t012,"Bütçe - Bordro çalışma günlüğü
+          /dsl/hr80_t012,"Bütçe - Bordro dönemleri bilgileri
           /dsl/hr80_t013,"Bordro ücret türleri kaydı (T52EL)
-          /dsl/hr80_t014."Standart hesap tablosu (T030)
+          /dsl/hr80_t014,"Standart hesap tablosu (T030)
+          /dsl/hr80_tlog."Bütçe - Bordro çalışma günlüğü
 
 *
 *

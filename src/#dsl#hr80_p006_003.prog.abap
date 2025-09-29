@@ -54,6 +54,11 @@ FORM check_paramaters  CHANGING cv_check.
 *  ENDIF.
 
 
+  SELECT * FROM /dsl/hr80_t013 INTO TABLE go_alv->gt_t013
+        WHERE molga   =  go_alv->gs_t003-molga
+          AND grpid   =  go_alv->gs_t003-grpid
+          AND vrsid   =  go_alv->gs_t003-vrsid.
+
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form AT_SELECTION_SCREEN
@@ -322,6 +327,10 @@ FORM save_main .
   lt_t011[] = VALUE #( FOR ls_11 IN go_alv->gt_t011
                        WHERE ( pernr IN lr_pernr[] )
                       ( ls_11 ) ).
+
+  IF go_alv->gt_tlog[] IS NOT INITIAL .
+    MODIFY /dsl/hr80_tlog FROM TABLE go_alv->gt_tlog[].
+  ENDIF.
   IF go_alv->gt_t012[] IS NOT INITIAL .
     MODIFY /dsl/hr80_t012 FROM TABLE go_alv->gt_t012[].
   ENDIF.
@@ -342,6 +351,7 @@ FORM save_main .
 
     REFRESH : go_alv->gt_t012[].
     REFRESH : go_alv->gt_t011[].
+    REFRESH : go_alv->gt_tlog[].
   ENDIF.
 ENDFORM.
 *&---------------------------------------------------------------------*
@@ -621,17 +631,17 @@ FORM calc_simu .
             datum   TYPE sy-datum,
          END OF ls_key.
 
-  DATA : ls_t012 TYPE /dsl/hr80_t012 .
+  DATA : ls_tlog TYPE /dsl/hr80_tlog .
   DEFINE add_message .
-    MOVE-CORRESPONDING go_alv->gs_t003 TO ls_t012.
-    ls_t012-pernr = &1.
-    ls_t012-spmon = &2.
-    ls_t012-msgty = &3.
-    ls_t012-messg = &4.
-    ls_t012-uname = sy-uname.
-    ls_t012-datum = sy-datum.
-    ls_t012-uzeit = sy-uzeit.
-    COLLECT ls_t012 INTO go_alv->gt_t012.
+    MOVE-CORRESPONDING go_alv->gs_t003 TO ls_tlog.
+    ls_tlog-pernr = &1.
+    ls_tlog-spmon = &2.
+    ls_tlog-msgty = &3.
+    ls_tlog-messg = &4.
+    ls_tlog-uname = sy-uname.
+    ls_tlog-datum = sy-datum.
+    ls_tlog-uzeit = sy-uzeit.
+    COLLECT ls_tlog INTO go_alv->gt_tlog.
 END-OF-DEFINITION.
 
 
@@ -958,13 +968,17 @@ FORM read_result  USING    ps_buffer TYPE  hrpay_buffer
   FIELD-SYMBOLS <fs> TYPE any .
   DATA : ls_ret TYPE /dsl/hr80_s008   .
   DATA : ls_t011 TYPE /dsl/hr80_t011   .
+  DATA : ls_t012 TYPE /dsl/hr80_t012   .
+  DATA : lt_t013 TYPE TABLE OF /dsl/hr80_t013   .
+  DATA : ls_t013 TYPE /dsl/hr80_t013   .
+  DATA : lr_spprc	TYPE RANGE OF p_specprc WITH HEADER LINE .
+
   DATA : molga TYPE molga   .
-  DATA : t500l_wa TYPE t500l .
   DATA : rt.
   DATA : crt.
   DATA : grt.
 
-  DEFINE read_payment.
+  DEFINE  read_payment.
     LOOP AT ls_ret-paytr_result-inter-&1 INTO DATA(ls_&1).
       ls_t011-ztabl = &2.
       ls_t011-lgart = ls_&1-lgart.
@@ -979,6 +993,16 @@ FORM read_result  USING    ps_buffer TYPE  hrpay_buffer
           ls_t011-betpe   =  <fs>.
           ls_t011-anzhl   =  ls_&1-anzhl.
           ls_t011-betrg   =  ls_&1-betrg.
+          IF &2 EQ 'RT'.
+            LOOP AT go_alv->gt_t013 INTO ls_t013
+                  WHERE lgart EQ ls_t011-lgart
+                    AND spprc IN lr_spprc[]
+                    AND endda GE ls_ret-rgdir-fpbeg
+                    AND endda LE ls_ret-rgdir-fpend.
+
+              ls_t011-komok = ls_t013-symko.
+            ENDLOOP.
+          ENDIF.
         WHEN 'CRT'.
           ls_t011-anzhl   =  ls_&1-anzhl.
           ls_t011-betrg   =  ls_&1-betrg.
@@ -986,6 +1010,7 @@ FORM read_result  USING    ps_buffer TYPE  hrpay_buffer
       APPEND ls_t011 TO go_alv->gt_t011.
     ENDLOOP.
   END-OF-DEFINITION.
+
 
   CALL FUNCTION '/DSL/HR80_FG002_01'
     EXPORTING
@@ -1003,6 +1028,25 @@ FORM read_result  USING    ps_buffer TYPE  hrpay_buffer
   CHECK paytr_result IS NOT INITIAL .
 
   LOOP AT paytr_result INTO ls_ret.
+    LOOP AT ls_ret-paytr_result-inter-wpbp INTO DATA(ls_wpbp).
+      ls_t012-molga   =  go_alv->gs_t003-molga.
+      ls_t012-grpid   =  go_alv->gs_t003-grpid.
+      ls_t012-vrsid   =  go_alv->gs_t003-vrsid.
+      ls_t012-rfper   =  ps_main-rfper.
+      ls_t012-pernr   =  ps_main-pernr.
+      ls_t012-spmon   =  ls_ret-rgdir-fpper.
+      ls_t012-apznr   =  ls_wpbp-apznr.
+      CALL FUNCTION 'HR_FEATURE_BACKFIELD'
+        EXPORTING
+          feature       = 'PPMOD'
+          struc_content = ls_wpbp
+        IMPORTING
+          back          = ls_t012-momag
+        EXCEPTIONS
+          OTHERS        = 1.
+
+      COLLECT ls_t012 INTO go_alv->gt_t012.
+    ENDLOOP.
 
     ls_t011-molga   =  go_alv->gs_t003-molga.
     ls_t011-grpid   =  go_alv->gs_t003-grpid.
@@ -1010,6 +1054,17 @@ FORM read_result  USING    ps_buffer TYPE  hrpay_buffer
     ls_t011-pernr   =  ps_main-pernr.
     ls_t011-spmon   =  ls_ret-rgdir-fpper.
     ls_t011-waers   =  ps_main-waers.
+
+    IF lines( ls_ret-paytr_result-inter-accr ) > 0 .
+      REFRESH lr_spprc.
+      ls_t011-sw_accr   =  'A'.
+      lr_spprc = 'IEQ'.lr_spprc-low = ls_t011-sw_accr.COLLECT lr_spprc.
+    ELSE.
+      REFRESH lr_spprc.
+      lr_spprc = 'INE'.lr_spprc-low = ls_t011-sw_accr.COLLECT lr_spprc.
+      CLEAR ls_t011-sw_accr.
+    ENDIF.
+
     ls_t011-uname   =  sy-uname.
     ls_t011-datum   =  sy-datum.
     ls_t011-uzeit   =  sy-uzeit.
@@ -1087,16 +1142,16 @@ FORM log_report .
              'UZEIT'  'Saat'              '10'.
 
 
-  SELECT t1~pernr,     " /dsl/hr80_t012-pernr
+  SELECT t1~pernr,     " /dsl/hr80_tlog-pernr
          t2~ename,     " /dsl/hr80_t010-ename
-         t1~spmon,     " /dsl/hr80_t012-spmon
-         t1~msgty,     " /dsl/hr80_t012-msgty
-         t1~messg,     " /dsl/hr80_t012-messg
-         t1~uname,     " /dsl/hr80_t012-uname
-         t1~datum,     " /dsl/hr80_t012-datum
-         t1~uzeit     " /dsl/hr80_t012-uzeit
+         t1~spmon,     " /dsl/hr80_tlog-spmon
+         t1~msgty,     " /dsl/hr80_tlog-msgty
+         t1~messg,     " /dsl/hr80_tlog-messg
+         t1~uname,     " /dsl/hr80_tlog-uname
+         t1~datum,     " /dsl/hr80_tlog-datum
+         t1~uzeit     " /dsl/hr80_tlog-uzeit
 
-            FROM /dsl/hr80_t012 AS t1
+            FROM /dsl/hr80_tlog AS t1
       INNER JOIN /dsl/hr80_t010 AS t2
                   ON    t2~molga EQ t1~molga
                    AND  t2~grpid EQ t1~grpid

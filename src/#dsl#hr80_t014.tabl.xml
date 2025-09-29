@@ -7,7 +7,7 @@
     <DDLANGUAGE>T</DDLANGUAGE>
     <TABCLASS>TRANSP</TABCLASS>
     <CLIDEP>X</CLIDEP>
-    <DDTEXT>Standart hesap tablosu (T030)</DDTEXT>
+    <DDTEXT>Bütçe - Hesap tablosu (T030)</DDTEXT>
     <MAINFLAG>X</MAINFLAG>
     <CONTFLAG>A</CONTFLAG>
     <EXCLASS>3</EXCLASS>
