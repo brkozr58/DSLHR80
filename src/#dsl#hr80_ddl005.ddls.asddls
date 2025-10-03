@@ -14,7 +14,12 @@ define view /DSL/HR80_CDS005
   key pernr,
   key ztabl,
   key lgart,
+  key ktosl,
+  key konts,
+      //
       lgtxt,
+      momag,
+      //
       sum( betrg01 ) as bet01,
       sum( betrg02 ) as bet02,
       sum( betrg03 ) as bet03,
@@ -27,7 +32,7 @@ define view /DSL/HR80_CDS005
       sum( betrg10 ) as bet10,
       sum( betrg11 ) as bet11,
       sum( betrg12 ) as bet12,
-      
+      //
       sum( anzhl01 ) as ANZ01,
       sum( anzhl02 ) as ANZ02,
       sum( anzhl03 ) as ANZ03,
@@ -40,7 +45,7 @@ define view /DSL/HR80_CDS005
       sum( anzhl10 ) as ANZ10,
       sum( anzhl11 ) as ANZ11,
       sum( anzhl12 ) as ANZ12,
-      
+      //
       sum( betpe01 ) as btp01,
       sum( betpe02 ) as btp02,
       sum( betpe03 ) as btp03,
@@ -53,7 +58,7 @@ define view /DSL/HR80_CDS005
       sum( betpe10 ) as btp10,
       sum( betpe11 ) as btp11,
       sum( betpe12 ) as btp12
-
+      //
 }
 group by
   molga,
@@ -63,4 +68,7 @@ group by
   pernr,
   ztabl,
   lgart,
+  ktosl,
+  konts,
+  momag,
   lgtxt

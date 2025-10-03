@@ -8,24 +8,29 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define view /DSL/HR80_CDS003
+define view /DSL/HR80_CDS003 
   as select from /dsl/hr80_t007 as t1
-    inner join   t511 on  t511.lgart =  t1.lgart
-                      
-                      and t511.endda >= t1.begda
-                      and t511.begda <= t1.endda
+    inner join   t512z on  t512z.molga =  t1.molga
+                       and t512z.lgart =  t1.lgart 
+                       and t512z.endda >= t1.begda
+                       and t512z.begda <= t1.endda
+    inner join   t511  on  t511.lgart =  t1.lgart
+
+                       and t511.endda >= t1.begda
+                       and t511.begda <= t1.endda
 
 {
-   
+
   t1.molga,
   t1.grpid,
   t1.vrsid,
-  
+    
   t1.trfar,
   t1.trfgb,
   t1.trfkz,
   t1.trfgr,
   t1.trfst,
+  t512z.infty,
   t1.lgart,
   t1.endda,
   t1.begda,
@@ -51,4 +56,4 @@ define view /DSL/HR80_CDS003
   t511.anmax
 
 
-}
+} 

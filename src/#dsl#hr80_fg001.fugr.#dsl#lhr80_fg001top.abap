@@ -1,4 +1,4 @@
-* regenerated at 29.09.2025 14:16:00
+* regenerated at 30.09.2025 13:23:46
 FUNCTION-POOL /DSL/HR80_FG001            MESSAGE-ID SV.
 
 * INCLUDE /DSL/LHR80_FG001D...               " Local class definition

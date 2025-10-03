@@ -88,6 +88,7 @@ FORM get_budget_datas .
   ELSE.
     lr_pernr = 'IEQ'.lr_pernr-low = pernr-pernr.APPEND lr_pernr.
   ENDIF.
+*  lr_pernr = 'IEQ'.lr_pernr-low = space.APPEND lr_pernr.
 
 " DUMMY personellerde PA daki sicil gönderilmeli
   IF p_rfper IS NOT INITIAL .
@@ -142,7 +143,14 @@ FORM get_budget_datas .
   SELECT * FROM /dsl/hr80_t004   INTO TABLE gt_t004
         WHERE molga EQ p_molga
           AND grpid EQ p_grpid
-          AND vrsid EQ p_vrsid.
+          AND vrsid EQ p_vrsid
+          AND pernr IN lr_pernr[].
+  IF sy-subrc NE 0. " sicil bazlı yoksa genel tanımlama varsa onu al
+    SELECT * FROM /dsl/hr80_t004   INTO TABLE gt_t004
+          WHERE molga EQ p_molga
+            AND grpid EQ p_grpid
+            AND vrsid EQ p_vrsid.
+  ENDIF.
   IF sy-subrc NE 0  .
     MESSAGE ID '/DSL/HR80' TYPE 'E' NUMBER '044'
         INTO mtext
@@ -156,6 +164,13 @@ FORM get_budget_datas .
           AND grpid EQ p_grpid
           AND vrsid EQ p_vrsid
           AND pernr IN lr_pernr[].
+  IF sy-subrc NE 0. " sicil bazlı yoksa genel tanımlama varsa onu al
+    SELECT * FROM /dsl/hr80_t005   INTO TABLE gt_t005
+          WHERE molga EQ p_molga
+            AND grpid EQ p_grpid
+            AND vrsid EQ p_vrsid
+            AND pernr EQ space .
+  ENDIF.
 
   SELECT * FROM /dsl/hr80_t007   INTO TABLE gt_t007
         WHERE molga EQ p_molga
@@ -223,6 +238,13 @@ FORM get_budget_datas .
         WHERE molga EQ p_molga
           AND grpid EQ p_grpid
           AND vrsid EQ p_vrsid.
+
+  SELECT * FROM /dsl/hr80_ddl003 INTO TABLE gt_ddl03
+        WHERE molga EQ p_molga
+          AND grpid EQ p_grpid
+          AND vrsid EQ p_vrsid
+          AND infty IN ( '0014' , '0015' ).
+
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form CHANGE_PERSON_DATA
@@ -231,6 +253,8 @@ FORM change_person_data .
   DATA : lr_rfper TYPE RANGE OF /dsl/hr80_t010-rfper WITH HEADER LINE.
   DATA : lr_pernr TYPE RANGE OF /dsl/hr80_t010-pernr WITH HEADER LINE.
   DATA   lr_lgart TYPE RANGE OF lgart WITH HEADER LINE .
+  DATA : lt_p0000 TYPE TABLE OF p0000 WITH HEADER LINE .
+  DATA : lt_p0001 TYPE TABLE OF p0001 WITH HEADER LINE .
 
   DEFINE change_value .
     IF &1 IS NOT INITIAL .
@@ -253,8 +277,6 @@ FORM change_person_data .
 
 *  REFRESH : p0000,p0001.
   CLEAR : p0000,p0001.
-  DATA : lt_p0000 TYPE TABLE OF p0000 WITH HEADER LINE .
-  DATA : lt_p0001 TYPE TABLE OF p0001 WITH HEADER LINE .
   SORT gt_t010 ASCENDING BY begda endda.
   LOOP AT p0000.
     LOOP AT gt_t010 INTO DATA(ls_t010)
@@ -447,6 +469,7 @@ FORM basic_additional_time_data.
     lr_pernr = 'IEQ'.lr_pernr-low = pernr-pernr.APPEND lr_pernr.
     lv_pernr = pernr-pernr.
   ENDIF.
+  lr_pernr = 'IEQ'.lr_pernr-low = space.APPEND lr_pernr.
 
 " DUMMY personellerde PA daki sicil gönderilmeli
   IF p_rfper IS NOT INITIAL .
@@ -569,9 +592,6 @@ FORM basic_additional_time_data.
     ENDIF.
   ENDIF.
 
-
-
-
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form CHANGE_RATIO
@@ -603,31 +623,58 @@ FORM change_ratio .
 
 
   DEFINE calc_ratio .
-    lv_field = &1 && aper-begda+4(2).
-    ASSIGN COMPONENT lv_field OF STRUCTURE ls_param TO <lfs>.
-    IF <lfs> IS ASSIGNED .
-      IF <lfs> IS NOT INITIAL .
-        IF &3-&2 IS NOT INITIAL.
-          &3-&2 = &3-&2 + ( ( &3-&2 * <lfs> ) / 100 ).
+    CLEAR gt_ddl03.
+    LOOP AT gt_ddl03 WHERE lgart = &6
+                       AND ( ( mod03 = 'D'        AND
+                               trfar = wpbp-trfar AND
+                               trfgb = wpbp-trfgb AND
+                               trfgr = space      AND
+                               trfst = space )
+                          OR ( mod03 = 'C'        AND
+                               trfar = wpbp-trfar AND
+                               trfgb = wpbp-trfgb AND
+                               trfgr = wpbp-trfgr AND
+                               trfst = space )
+                          OR ( mod03 = 'B'        AND
+                               trfar = wpbp-trfar AND
+                               trfgb = wpbp-trfgb AND
+                               trfgr = wpbp-trfgr AND
+                               trfst = wpbp-trfst )
+                       AND betrg GT 0  ).
+    ENDLOOP.
+    IF sy-subrc EQ 0 .
+      &3-&2 = gt_ddl03-betrg.
+      IF gt_ddl03-opken = 'A'.
+        &3-&2 = &3-&2 * -1.
+      ENDIF.
+  "<<--------log------>>
+      lv_oran =  '0'  .
+      SHIFT lv_oran LEFT DELETING LEADING space.
+      lv_mtext+30(10) = &4. lv_mtext+30(10) = '%' && lv_oran.
+      WRITE &5 TO lv_mtext+35(21). WRITE &3-&2 TO lv_mtext+58(21).
+      PERFORM log_budget  TABLES ptext USING '1' '90' '0' 0 lv_mtext .
+  "<<-------- ------>>
 
-"<<--------log------>>
-          WRITE <lfs> TO lv_oran .
-          SHIFT lv_oran LEFT DELETING LEADING space.
-*          lv_mtext+30(10) = &4 && ' %' && lv_oran.
-          lv_mtext+30(10) = &4.
-          lv_mtext+30(10) = '%' && lv_oran.
-          WRITE &5 TO lv_mtext+35(21).
-*          SHIFT lv_mtext+35(21) LEFT DELETING LEADING space.
-          WRITE &3-&2 TO lv_mtext+58(21).
-*          SHIFT lv_mtext+58(21) LEFT DELETING LEADING space.
-          PERFORM log_budget  TABLES ptext USING '1' '90' '0' 0 lv_mtext .
-"<<-------- ------>>
-
-
+    ELSE.  " Oran artışı yap
+      lv_field = &1 && aper-begda+4(2).
+      ASSIGN COMPONENT lv_field OF STRUCTURE ls_param TO <lfs>.
+      IF <lfs> IS ASSIGNED .
+        IF <lfs> IS NOT INITIAL .
+          IF &3-&2 IS NOT INITIAL.
+            &3-&2 = &3-&2 + ( ( &3-&2 * <lfs> ) / 100 ).
+  "<<--------log------>>
+            WRITE <lfs> TO lv_oran .
+            SHIFT lv_oran LEFT DELETING LEADING space.
+            lv_mtext+30(10) = &4. lv_mtext+30(10) = '%' && lv_oran.
+            WRITE &5 TO lv_mtext+35(21). WRITE &3-&2 TO lv_mtext+58(21).
+            PERFORM log_budget  TABLES ptext USING '1' '90' '0' 0 lv_mtext .
+  "<<-------- ------>>
+          ENDIF.
         ENDIF.
       ENDIF.
+      UNASSIGN <lfs>.
     ENDIF.
-    UNASSIGN <lfs>.
+
   END-OF-DEFINITION.
 
   SELECT * FROM t512t INTO TABLE lt_t512t
@@ -712,15 +759,27 @@ FORM change_ratio .
           AND pernr IN lr_pernr[].
       READ TABLE it ASSIGNING FIELD-SYMBOL(<it>)
             WITH KEY lgart = ls_param-lgart
-                     apznr = wpbp-apznr.
+*                     apznr = wpbp-apznr
+                     .
       IF sy-subrc EQ 0 .
         MOVE-CORRESPONDING <it> TO ls_temp. " işleme için gerekli
         READ TABLE lt_t512t WITH KEY lgart = <it>-lgart.
         CLEAR lv_mtext.
         lv_mtext = <it>-lgart && '-' && lt_t512t-lgtxt.
-        calc_ratio : 'RAT' betpe <it> 'BETPE' ls_temp-betpe,
-                     'ANZ' anzhl <it> 'ANZHL' ls_temp-anzhl,
-                     'BET' betrg <it> 'BETRG' ls_temp-betrg.
+        calc_ratio : 'RAT' betpe <it> 'BETPE' ls_temp-betpe <it>-lgart,
+                     'ANZ' anzhl <it> 'ANZHL' ls_temp-anzhl <it>-lgart,
+                     'BET' betrg <it> 'BETRG' ls_temp-betrg <it>-lgart.
+      ELSE.
+        " IT de olmayan ücretleri /DSL/HR80_T007 tablosunda tanımlı ise oradan al.
+        CLEAR it.
+        it-lgart = ls_param-lgart .
+        READ TABLE lt_t512t WITH KEY lgart = it-lgart.
+        CLEAR lv_mtext.
+        lv_mtext = it-lgart && '-' && lt_t512t-lgtxt.
+        calc_ratio : 'RAT' betpe it 'BETPE' ls_temp-betpe it-lgart,
+                     'ANZ' anzhl it 'ANZHL' ls_temp-anzhl it-lgart,
+                     'BET' betrg it 'BETRG' ls_temp-betrg it-lgart.
+        COLLECT it. CLEAR it.
       ENDIF.
     ENDLOOP.
   ENDLOOP.

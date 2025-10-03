@@ -7334,7 +7334,7 @@
        <LINE>001</LINE>
        <COLUMN>022</COLUMN>
        <LENGTH>002</LENGTH>
-       <VISLENGTH>039</VISLENGTH>
+       <VISLENGTH>022</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <FROM_DICT>X</FROM_DICT>
@@ -7505,7 +7505,7 @@
        <TEXT>____________________________________________________________</TEXT>
        <LINE>001</LINE>
        <LENGTH>060</LENGTH>
-       <VISLENGTH>060</VISLENGTH>
+       <VISLENGTH>255</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <UP_LOWER>X</UP_LOWER>
@@ -7747,22 +7747,22 @@
        <LINE>PROCESS BEFORE OUTPUT.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_initialisieren.</LINE>
+       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> LOOP AT extract WITH CONTROL</LINE>
+       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>  tctrl_/dsl/hr80_v005 CURSOR nextline.</LINE>
+       <LINE>  TCTRL_/DSL/HR80_V005 CURSOR NEXTLINE.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>   MODULE liste_show_liste.</LINE>
+       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE> ENDLOOP.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE fill_substflds.</LINE>
+       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>*</LINE>
@@ -7771,64 +7771,64 @@
        <LINE>PROCESS AFTER INPUT.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_exit_command AT EXIT-COMMAND.</LINE>
+       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_before_loop.</LINE>
+       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> LOOP AT extract.</LINE>
+       <LINE> LOOP AT EXTRACT.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>   MODULE liste_init_workarea.</LINE>
+       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   CHAIN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-pernr .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-PERNR .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-lgart .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-LGART .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-begda .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-BEGDA .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-endda .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-ENDDA .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-anzhl .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-ANZHL .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-betrg .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-BETRG .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    MODULE set_update_flag ON CHAIN-REQUEST.</LINE>
+       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   ENDCHAIN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>   FIELD vim_marked MODULE liste_mark_checkbox.</LINE>
+       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   CHAIN.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-pernr .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-PERNR .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-lgart .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-LGART .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-begda .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-BEGDA .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v005-endda .</LINE>
+       <LINE>    FIELD /DSL/HR80_V005-ENDDA .</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE>    MODULE liste_update_liste.</LINE>
+       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
        <LINE>   ENDCHAIN.</LINE>
@@ -7837,7 +7837,7 @@
        <LINE> ENDLOOP.</LINE>
       </RPY_DYFLOW>
       <RPY_DYFLOW>
-       <LINE> MODULE liste_after_loop.</LINE>
+       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
       </RPY_DYFLOW>
      </FLOW_LOGIC>
     </item>

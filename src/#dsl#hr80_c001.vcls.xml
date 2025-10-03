@@ -47,7 +47,7 @@
     <V_VCLSTRUC>
      <VCLNAME>/DSL/HR80_C001</VCLNAME>
      <OBJECT>/DSL/HR80_V005</OBJECT>
-     <OBJECTTEXT>Ek ödeme ücretleri</OBJECTTEXT>
+     <OBJECTTEXT>Ek-Yenilenen-Devamsızlık-Ödeme belgeleri girdileri</OBJECTTEXT>
      <PREDOBJECT>/DSL/HR80_V003</PREDOBJECT>
      <DEPENDENCY>S</DEPENDENCY>
      <OBJPOS>05</OBJPOS>

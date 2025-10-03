@@ -44,6 +44,8 @@ SELECTION-SCREEN END OF BLOCK bdgt2.
           gt_tvergd TYPE TABLE OF /dsl/hr80_tvergd  WITH HEADER LINE, "Bütçe - Vergi dilimleri (T7TRT01)
           gt_tvergi TYPE TABLE OF /dsl/hr80_tvergi  WITH HEADER LINE. "Bütçe - Vergi indirimleri (T7TRT02)
 
+  DATA :  gt_ddl03 TYPE TABLE OF /dsl/hr80_ddl003 WITH HEADER LINE .
+
   DATA: BEGIN OF gt_t005_subty OCCURS 0,
           molga       TYPE molga    ,
           sprsl       TYPE spras  ,

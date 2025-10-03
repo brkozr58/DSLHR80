@@ -8,7 +8,7 @@
     <DDLANGUAGE>T</DDLANGUAGE>
     <AGGTYPE>V</AGGTYPE>
     <ROOTTAB>/DSL/HR80_T005</ROOTTAB>
-    <DDTEXT>Ek ödeme ücretleri</DDTEXT>
+    <DDTEXT>Ek-Yenilenen-Devamsızlık-Ödeme belgeleri girdileri</DDTEXT>
     <VIEWCLASS>C</VIEWCLASS>
     <CUSTOMAUTH>A</CUSTOMAUTH>
     <GLOBALFLAG>X</GLOBALFLAG>

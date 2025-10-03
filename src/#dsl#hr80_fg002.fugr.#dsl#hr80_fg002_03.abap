@@ -31,6 +31,7 @@ FUNCTION /dsl/hr80_fg002_03.
            lr_begda       FOR t554s-begda   ,
            lr_endda       FOR t554s-endda   .
   DATA : lv_spras TYPE spras .
+  DATA : lv_molga TYPE molga .
 
   lv_spras = CONV spras( sy-langu ) .
 
@@ -90,6 +91,10 @@ FUNCTION /dsl/hr80_fg002_03.
                       option  = 'EQ'
                       low     = selopt-low
                       high    = selopt-high ) ).
+    IF lr_molga[] IS NOT INITIAL .
+      READ TABLE lr_molga INDEX 1 .
+      lv_molga = lr_molga-low .
+    ENDIF.
 
     SELECT * FROM t001p INTO TABLE lt_t001p WHERE molga IN lr_molga[].
 
@@ -161,6 +166,10 @@ FUNCTION /dsl/hr80_fg002_03.
         APPENDING CORRESPONDING FIELDS OF TABLE @gt_data.
 
     SORT gt_data ASCENDING BY infty lgart .
+    CLEAR gt_data .
+    gt_data-molga = lv_molga.
+    MODIFY gt_data TRANSPORTING molga WHERE molga = space.
+
     DELETE ADJACENT DUPLICATES FROM gt_data COMPARING infty lgart.
     DELETE gt_data WHERE sprsl NE lv_spras .
 

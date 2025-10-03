@@ -1,6 +1,6 @@
 *---------------------------------------------------------------------*
 *    program for:   VIEWPROC_/DSL/HR80_V005
-*   generation date: 16.07.2025 at 14:40:07
+*   generation date: 30.09.2025 at 13:23:45
 *   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 FUNCTION VIEWPROC_/DSL/HR80_V005       .
