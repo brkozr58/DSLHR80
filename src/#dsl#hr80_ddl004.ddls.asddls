@@ -2,7 +2,7 @@
 @AbapCatalog.compiler.compareFilter: true
 @AbapCatalog.preserveKey: true
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Bütçe - Personel yıllık bordro sonuçları'
+@EndUserText.label: 'Bütçe - Personel Yıllık Bordro Sonuçları'
 @Metadata.ignorePropagatedAnnotations: true
 define view /DSL/HR80_CDS004
   as select from    /dsl/hr80_t003   as t003

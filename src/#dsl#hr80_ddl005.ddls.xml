@@ -5,7 +5,7 @@
    <DDLS>
     <DDLNAME>/DSL/HR80_DDL005</DDLNAME>
     <DDLANGUAGE>T</DDLANGUAGE>
-    <DDTEXT>Bütçe - Personel yıllık bordro sonuçları (SON)</DDTEXT>
+    <DDTEXT>Bütçe - Personel Yıllık Bordro Sonuçları (SON)</DDTEXT>
     <SOURCE_TYPE>V</SOURCE_TYPE>
    </DDLS>
   </asx:values>
