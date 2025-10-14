@@ -541,6 +541,8 @@ FORM generate_first_display .
           ls_fcat-no_out = 'X' .
         ELSEIF ls_fcat-fieldname EQ 'ZDESC'.
           ls_fcat-outputlen = 70.
+        ELSEIF ls_fcat-fieldname EQ 'ALGTX'.
+          ls_fcat-hotspot = 'X'.
         ELSE.
           ls_fcat-outputlen = 30.
         ENDIF.
