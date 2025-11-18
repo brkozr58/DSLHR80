@@ -292,17 +292,27 @@ CLASS lcl_tree_event_receiver IMPLEMENTATION.
     DATA: lt_events TYPE cntl_simple_events,
           l_event   TYPE cntl_simple_event ,
           l_event_receiver TYPE REF TO lcl_tree_event_receiver.
+
+
     CLEAR l_event.
     l_event-eventid = cl_gui_column_tree=>eventid_node_double_click.
+
     l_event-appl_event = 'X'.
     APPEND l_event TO lt_events.
+
     l_event-eventid = cl_gui_column_tree=>eventid_expand_no_children.
     APPEND l_event TO lt_events.
+
     l_event-eventid = cl_gui_column_tree=>eventid_header_context_men_req.
     APPEND l_event TO lt_events.
+
     l_event-eventid = cl_gui_column_tree=>eventid_node_context_menu_req.
     APPEND l_event TO lt_events.
+
     l_event-eventid = cl_gui_column_tree=>eventid_header_click.
+    APPEND l_event TO lt_events.
+
+    l_event-eventid = cl_gui_column_tree=>eventid_link_click.
     APPEND l_event TO lt_events.
 
     CALL METHOD gr_alv_tree->set_registered_events
@@ -373,10 +383,18 @@ CLASS lcl_tree_event_receiver IMPLEMENTATION.
   ENDMETHOD.                    "handle_node_double_click
 
   METHOD handle_link_click.
+    CHECK NOT node_key IS INITIAL.
 
+    READ TABLE gt_out INTO gs_out INDEX node_key .
+    CHECK sy-subrc EQ 0 .
+    CALL TRANSACTION gs_out-trnsc .
   ENDMETHOD.
 
   METHOD handle_item_double_click.
+    CHECK NOT node_key IS INITIAL.
+    CASE fieldname .
+      WHEN 'TRNSC'.
+    ENDCASE.
 
   ENDMETHOD.                    "handle_item_double_click
 
@@ -545,6 +563,7 @@ FORM generate_first_display .
           ls_fcat-hotspot = 'X'.
         ELSE.
           ls_fcat-outputlen = 30.
+          ls_fcat-hotspot = 'X'.
         ENDIF.
 *        ls_fcat-col_opt = 'X' .
 
