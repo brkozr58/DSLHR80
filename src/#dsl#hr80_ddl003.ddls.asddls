@@ -1,7 +1,7 @@
 @AbapCatalog.sqlViewName: '/DSL/HR80_DDL003'
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Bütçe - Ücret skalası grupları'
+@EndUserText.label: 'Bütçe - Ücret Skalası Grupları'
 @Metadata.ignorePropagatedAnnotations: true
 @ObjectModel.usageType:{
     serviceQuality: #X,

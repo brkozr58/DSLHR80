@@ -75,9 +75,9 @@ define view /DSL/HR80_CDS006
        case when t013.sign = '-' then payroll.bet10 * -1 else payroll.bet10 end as bet10,
        case when t013.sign = '-' then payroll.bet11 * -1 else payroll.bet11 end as bet11,
        case when t013.sign = '-' then payroll.bet12 * -1 else payroll.bet12 end as bet12,
-
-
        //
+       
+       
        pa1_begda,
        pa1_endda,
        payroll.bukrs,
@@ -162,6 +162,14 @@ define view /DSL/HR80_CDS006
        case when t013.sign = '-' then payroll.btp12 * -1 else payroll.btp12 end as btp12
        //
 } 
+
+
+
+
+
+
+
+
 
 
 //

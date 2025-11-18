@@ -1,7 +1,7 @@
 @AbapCatalog.sqlViewName: '/DSL/HR80_DDL001'
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Bütçe - Personel anaverileri'
+@EndUserText.label: 'Bütçe - Personel Anaverileri'
 @Metadata.ignorePropagatedAnnotations: true
 @ObjectModel.usageType:{
     serviceQuality: #X,
@@ -158,3 +158,12 @@ define view /DSL/HR80_CDS001
           t1.waers
 
 }
+
+
+
+
+
+
+
+
+//
