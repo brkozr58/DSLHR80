@@ -6,8 +6,8 @@
    <INCLUDES>
     <SOBJ_NAME>/DSL/LHR80_FG001F00</SOBJ_NAME>
     <SOBJ_NAME>/DSL/LHR80_FG001I00</SOBJ_NAME>
-    <SOBJ_NAME>/DSL/LHR80_FG001TOP</SOBJ_NAME>
     <SOBJ_NAME>/DSL/LHR80_FG001T00</SOBJ_NAME>
+    <SOBJ_NAME>/DSL/LHR80_FG001TOP</SOBJ_NAME>
     <SOBJ_NAME>/DSL/SAPLHR80_FG001</SOBJ_NAME>
    </INCLUDES>
    <FUNCTIONS>
@@ -3311,7 +3311,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V001-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -3413,7 +3412,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V001</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V001-GRPID</NAME>
-       <TEXT>Grup_id_________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3430,7 +3428,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V001</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V001-GRPID_T</NAME>
-       <TEXT>Tanım___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3493,83 +3490,6 @@
        <OUTPUT_FLD>X</OUTPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_V001 CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V001-GRPID .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V001-GRPID_T .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V001-GRPID .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -3617,7 +3537,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V002-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -3655,7 +3574,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V002-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -3770,7 +3688,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-BUKRS</NAME>
-       <TEXT>ŞK______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3787,7 +3704,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-BUTXT</NAME>
-       <TEXT>Şirket_adı______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3804,7 +3720,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-WERKS</NAME>
-       <TEXT>PAln____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3821,7 +3736,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-NAME1</NAME>
-       <TEXT>Personel_alanı_metni____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3838,7 +3752,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-BTRTL</NAME>
-       <TEXT>Alt_alan________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3855,7 +3768,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-BTEXT</NAME>
-       <TEXT>Pers.alt_alan_metni_____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3872,7 +3784,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-ABKRS</NAME>
-       <TEXT>BABrm___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
@@ -3889,7 +3800,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V002</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V002-ATEXT</NAME>
-       <TEXT>Bordro_alt_brm.mtn._____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4072,113 +3982,6 @@
        <REQU_ENTRY>N</REQU_ENTRY>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_V002 CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-BUKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-BUTXT .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-WERKS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-NAME1 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-BTRTL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-BTEXT .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-ABKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-ATEXT .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE COMPLETE_/DSL/HR80_V002 ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-BUKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-WERKS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-BTRTL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V002-ABKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -4226,7 +4029,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V003-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -4264,7 +4066,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V003-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -4379,7 +4180,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V003</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V003-GJAHR</NAME>
-       <TEXT>Yıl_____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4396,7 +4196,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V003</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V003-VRSID</NAME>
-       <TEXT>Versiyonid______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4413,7 +4212,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V003</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V003-VRSID_T</NAME>
-       <TEXT>Tanım___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4430,7 +4228,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V003</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V003-STATU</NAME>
-       <TEXT>Versiyon_durumu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4447,7 +4244,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V003</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V003-BEGDA</NAME>
-       <TEXT>Geçerlilik_bşl._________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4464,7 +4260,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V003</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V003-ENDDA</NAME>
-       <TEXT>Geçerlilik_sonu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4600,98 +4395,6 @@
        <OUTPUT_FLD>X</OUTPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_initialisieren.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT extract WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  tctrl_/dsl/hr80_v003 CURSOR nextline.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE liste_show_liste.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE fill_substflds.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_exit_command AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_before_loop.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT extract.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE liste_init_workarea.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-gjahr .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-vrsid .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-vrsid_t .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-statu .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-begda .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-endda .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE set_update_flag ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD vim_marked MODULE liste_mark_checkbox.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-gjahr .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v003-vrsid .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE liste_update_liste.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_after_loop.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -4739,7 +4442,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V004-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -4776,7 +4478,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V004-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -4811,7 +4512,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V004-VRSID</NAME>
-       <TEXT>Versiyon_numarası</TEXT>
        <LINE>003</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>017</LENGTH>
@@ -4846,7 +4546,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V004-GRPID_T</NAME>
-       <TEXT>Tanım_______________</TEXT>
        <LINE>004</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>020</LENGTH>
@@ -4881,7 +4580,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V004-VRSID_T</NAME>
-       <TEXT>Tanım_______________</TEXT>
        <LINE>005</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>020</LENGTH>
@@ -4978,7 +4676,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-BUKRS</NAME>
-       <TEXT>ŞK______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -4995,7 +4692,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-KOSTL</NAME>
-       <TEXT>Masraf_yeri_____________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5012,7 +4708,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-LTEXT</NAME>
-       <TEXT>Tanım___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5029,7 +4724,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-ANSVH</NAME>
-       <TEXT>İstKş___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5046,7 +4740,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-ATX</NAME>
-       <TEXT>İstihdam_kşl.metni______________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5063,7 +4756,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-WERKS</NAME>
-       <TEXT>PAln____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5080,7 +4772,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-WERKS_T</NAME>
-       <TEXT>Personel_alanı_metni____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5097,7 +4788,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-BTRTL</NAME>
-       <TEXT>Alt_alan________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5114,7 +4804,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-BTRTL_T</NAME>
-       <TEXT>Pers.alt_alan_metni_____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>009</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5131,7 +4820,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-PERSG</NAME>
-       <TEXT>ÇlşGr___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>010</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5148,7 +4836,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-PERSG_T</NAME>
-       <TEXT>Çalışan_grubu_tanımı____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>011</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5165,7 +4852,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-PERSK</NAME>
-       <TEXT>ÇAGr____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>012</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5182,7 +4868,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-PERSK_T</NAME>
-       <TEXT>Çalışan_alt_gr.tnm._____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>013</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5199,7 +4884,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-ORGEH</NAME>
-       <TEXT>Org.brm.________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>014</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5216,7 +4900,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-STELL</NAME>
-       <TEXT>İş______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>015</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5233,7 +4916,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-ABKRS</NAME>
-       <TEXT>BABrm___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>016</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5250,7 +4932,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-ATEXT</NAME>
-       <TEXT>Bordro_alt_brm.mtn._____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>017</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5267,7 +4948,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-PERNR</NAME>
-       <TEXT>Pers.no.________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>018</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5284,7 +4964,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-LGART</NAME>
-       <TEXT>Ücr.türü________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>019</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5913,7 +5592,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V004-WAERS</NAME>
-       <TEXT>PB______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>056</COLUMN>
        <LENGTH>040</LENGTH>
@@ -5986,7 +5664,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V004</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_V004-LTEXT</NAME>
-       <TEXT>________________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -6990,281 +6667,6 @@
        <DICT_I_FKY>X</DICT_I_FKY>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_V004 CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BUKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-KOSTL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-LTEXT .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANSVH .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ATX .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-WERKS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-WERKS_T .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BTRTL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BTRTL_T .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERSG .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERSG_T .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERSK .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERSK_T .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ORGEH .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-STELL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ABKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ATEXT .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERNR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT01 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ01 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET01 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT02 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ02 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET02 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT03 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ03 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET03 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT04 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ04 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET04 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT05 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ05 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET05 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT06 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ06 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET06 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT07 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ07 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET07 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT08 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ08 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET08 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT09 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ09 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET09 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT10 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ10 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET10 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT11 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ11 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET11 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-RAT12 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANZ12 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BET12 .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-WAERS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE COMPLETE_/DSL/HR80_V004 ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BUKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-KOSTL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ANSVH .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-WERKS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-BTRTL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERSG .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERSK .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ORGEH .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-STELL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-ABKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-PERNR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V004-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -7312,7 +6714,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V005-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -7350,7 +6751,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V005-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -7403,7 +6803,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V005-VRSID</NAME>
-       <TEXT>Versiyon_numarası</TEXT>
        <LINE>003</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>017</LENGTH>
@@ -7518,7 +6917,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V005</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V005-PERNR</NAME>
-       <TEXT>Pers.no.________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -7535,7 +6933,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V005</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V005-LGART</NAME>
-       <TEXT>Ücr.türü________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -7552,7 +6949,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V005</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V005-BEGDA</NAME>
-       <TEXT>Geçerlilik_bşl._________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -7569,7 +6965,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V005</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V005-ENDDA</NAME>
-       <TEXT>Geçerlilik_sonu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -7586,7 +6981,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V005</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V005-ANZHL</NAME>
-       <TEXT>Sayı____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -7603,7 +6997,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V005</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V005-BETRG</NAME>
-       <TEXT>Tutar___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -7742,104 +7135,6 @@
        <DICT_I_SGN>X</DICT_I_SGN>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_V005 CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-PERNR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-BEGDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-ANZHL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-BETRG .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-PERNR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-BEGDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V005-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -7887,7 +7182,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V013-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -7925,7 +7219,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V013-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -7978,7 +7271,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V013-VRSID</NAME>
-       <TEXT>Versiyon_numarası</TEXT>
        <LINE>003</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>017</LENGTH>
@@ -8093,7 +7385,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-BUKRS</NAME>
-       <TEXT>ŞK______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8110,7 +7401,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-LGART</NAME>
-       <TEXT>Ücr.türü________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8127,7 +7417,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-SEQNO</NAME>
-       <TEXT>No______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8144,7 +7433,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-ENDDA</NAME>
-       <TEXT>Geçerlilik_sonu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8161,7 +7449,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-SIGN</NAME>
-       <TEXT>+/-işareti______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8178,7 +7465,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-SYMKO</NAME>
-       <TEXT>Sembolik_hsp.___________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8195,7 +7481,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-SPPRC</NAME>
-       <TEXT>Özİ_____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8212,7 +7497,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-C1IGN</NAME>
-       <TEXT>MTYok___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8229,7 +7513,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-AUART</NAME>
-       <TEXT>Giderler________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>009</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8246,7 +7529,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V013</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V013-LGTXT</NAME>
-       <TEXT>Ücret_türü_uzun_mtn.____________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>010</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8455,119 +7737,6 @@
        <REQU_ENTRY>N</REQU_ENTRY>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_V013 CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-BUKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-SEQNO .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-SIGN .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-SYMKO .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-SPPRC .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-C1IGN .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-AUART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-LGTXT .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE COMPLETE_/DSL/HR80_V013 ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-BUKRS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-SEQNO .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V013-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -8615,7 +7784,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V007-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -8653,7 +7821,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V007-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -8705,7 +7872,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V007-VRSID</NAME>
-       <TEXT>Versiyon_numarası</TEXT>
        <LINE>003</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>017</LENGTH>
@@ -8820,7 +7986,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-TRFAR</NAME>
-       <TEXT>Tür_____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8837,7 +8002,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-TRFGB</NAME>
-       <TEXT>Aln_____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8854,7 +8018,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-TRFKZ</NAME>
-       <TEXT>Grpl.___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8871,7 +8034,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-TRFGR</NAME>
-       <TEXT>Üc.sk.gr________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8888,7 +8050,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-TRFST</NAME>
-       <TEXT>Dz______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8905,7 +8066,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-LGART</NAME>
-       <TEXT>Ücr.türü________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8922,7 +8082,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-ENDDA</NAME>
-       <TEXT>Geçerlilik_sonu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8939,7 +8098,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-BEGDA</NAME>
-       <TEXT>Geçerlilik_bşl._________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
        <LENGTH>040</LENGTH>
@@ -8956,7 +8114,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V007</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V007-BETRG</NAME>
-       <TEXT>Tutar___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>009</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9157,140 +8314,6 @@
        <DICT_I_SGN>X</DICT_I_SGN>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_V007 CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_DEACTIVATE.                         &quot;P03-20250618-141843</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFAR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFGB .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFKZ .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFGR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFST .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-BEGDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-BETRG .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.                                           &quot;P03-20250618-141843</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-BEGDA.                     &quot;P03-20250618-141843</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-ENDDA.                     &quot;P03-20250618-141843</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE TEMP_DELIMITATION ON CHAIN-REQUEST.      &quot;P03-20250618-141843</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.                                        &quot;P03-20250618-141843</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFAR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFGB .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFKZ .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFGR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-TRFST .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-LGART .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_V007-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -9338,7 +8361,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V014-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -9378,7 +8400,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V014-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -9431,7 +8452,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_V014-VRSID</NAME>
-       <TEXT>Versiyon_numarası</TEXT>
        <LINE>003</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>017</LENGTH>
@@ -9546,7 +8566,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V014</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V014-KTOPL</NAME>
-       <TEXT>HsPl____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9563,7 +8582,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V014</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V014-KTOSL</NAME>
-       <TEXT>İşl_____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9580,7 +8598,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V014</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V014-BWMOD</NAME>
-       <TEXT>DGkd____________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9597,7 +8614,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V014</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V014-KOMOK</NAME>
-       <TEXT>Hesap_değişikliği_______________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9614,7 +8630,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V014</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V014-BKLAS</NAME>
-       <TEXT>DğrSn___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9631,7 +8646,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V014</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V014-KONTS</NAME>
-       <TEXT>Ana_hesap_______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9648,7 +8662,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_V014</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_V014-KONTH</NAME>
-       <TEXT>Ana_hesap_______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
@@ -9804,110 +8817,6 @@
        <OUTPUT_FLD>X</OUTPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_initialisieren.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT extract WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  tctrl_/dsl/hr80_v014 CURSOR nextline.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE liste_show_liste.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE fill_substflds.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_exit_command AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_before_loop.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT extract.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE liste_init_workarea.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-ktopl .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-ktosl .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-bwmod .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-komok .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-bklas .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-konts .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-konth .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE set_update_flag ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD vim_marked MODULE liste_mark_checkbox.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-ktopl .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-ktosl .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-bwmod .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-komok .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_v014-bklas .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE liste_update_liste.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE liste_after_loop.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -9955,7 +8864,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_VAGRP-GRPID</NAME>
-       <TEXT>İşlem_grubu_________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>020</LENGTH>
@@ -10070,7 +8978,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VAGRP</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VAGRP-ALGRP</NAME>
-       <TEXT>İşlem_alt_grubu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -10087,7 +8994,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VAGRP</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VAGRP-ALGTX</NAME>
-       <TEXT>Tanım___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -10104,7 +9010,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VAGRP</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VAGRP-TRNSC</NAME>
-       <TEXT>İşlem_kodu______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -10151,7 +9056,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VAGRP</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VAGRP-ZDESC</NAME>
-       <TEXT>Açıklama________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -10288,98 +9192,6 @@
        <OUTPUT_FLD>X</OUTPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_VAGRP CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VAGRP-ALGRP .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VAGRP-ALGTX .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VAGRP-TRNSC .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VAGRP-ICON .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VAGRP-INTERNAL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VAGRP-ZDESC .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE COMPLETE_/DSL/HR80_VAGRP ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VAGRP-ALGRP .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -10489,7 +9301,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VGRP</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VGRP-GRPID</NAME>
-       <TEXT>İşlem_grubu_____________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -10506,7 +9317,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VGRP</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VGRP-GRPID_T</NAME>
-       <TEXT>Tanım___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -10553,7 +9363,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VGRP</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VGRP-ZDESC</NAME>
-       <TEXT>Açıklama________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -10672,92 +9481,6 @@
        <OUTPUT_FLD>X</OUTPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_VGRP CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VGRP-GRPID .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VGRP-GRPID_T .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VGRP-ICON .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VGRP-INTERNAL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VGRP-ZDESC .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE COMPLETE_/DSL/HR80_VGRP ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VGRP-GRPID .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -10805,7 +9528,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_VVERGD-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -10843,7 +9565,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_VVERGD-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -10896,7 +9617,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_VVERGD-VRSID</NAME>
-       <TEXT>Versiyon_numarası</TEXT>
        <LINE>003</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>017</LENGTH>
@@ -11011,7 +9731,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-GRTAX</NAME>
-       <TEXT>VergiGrpgr______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11028,7 +9747,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-DILIM</NAME>
-       <TEXT>Verg._dil.______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11045,7 +9763,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-ENDDA</NAME>
-       <TEXT>Geçerlilik_sonu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11062,7 +9779,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-BEGDA</NAME>
-       <TEXT>Geçerlilik_bşl._________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11079,7 +9795,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-ANBTR</NAME>
-       <TEXT>Vergi_dilimi_alt_sınırı_________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11096,7 +9811,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-ENBTR</NAME>
-       <TEXT>Vergi_dilimi_üst_sınırı_________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11113,7 +9827,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-WAERS</NAME>
-       <TEXT>PB______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11130,7 +9843,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGD</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGD-PRZNT</NAME>
-       <TEXT>Yüzde___________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11303,107 +10015,6 @@
        <OUTPUT_FLD>X</OUTPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_VVERGD CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-GRTAX .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-DILIM .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-BEGDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-ANBTR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-ENBTR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-WAERS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-PRZNT .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-GRTAX .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-DILIM .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGD-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -11451,7 +10062,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_VVERGI-MOLGA</NAME>
-       <TEXT>Ülke_gruplaması</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -11489,7 +10099,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_VVERGI-GRPID</NAME>
-       <TEXT>Grup_numarası__</TEXT>
        <LINE>002</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>015</LENGTH>
@@ -11542,7 +10151,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_VVERGI-VRSID</NAME>
-       <TEXT>Versiyon_numarası</TEXT>
        <LINE>003</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>017</LENGTH>
@@ -11657,7 +10265,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-GRTAX</NAME>
-       <TEXT>VergiGrpgr______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11674,7 +10281,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-SSKOD</NAME>
-       <TEXT>SGTipi__________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11691,7 +10297,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-SSGRP</NAME>
-       <TEXT>SGK_Grubu_______________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11708,7 +10313,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-ENDDA</NAME>
-       <TEXT>Geçerlilik_sonu_________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11725,7 +10329,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-BEGDA</NAME>
-       <TEXT>Geçerlilik_bşl._________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11742,7 +10345,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-OEZEL</NAME>
-       <TEXT>Özel_vergi_indirim______________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11759,7 +10361,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-COCUK</NAME>
-       <TEXT>Çocuk_indirimi__________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11776,7 +10377,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-IMBTR</NAME>
-       <TEXT>Göçmen__________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11793,7 +10393,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-AILE</NAME>
-       <TEXT>Aile_indirim____________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>009</COLUMN>
        <LENGTH>040</LENGTH>
@@ -11810,7 +10409,6 @@
        <CONT_NAME>TCTRL_/DSL/HR80_VVERGI</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*/DSL/HR80_VVERGI-WAERS</NAME>
-       <TEXT>PB______________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>010</COLUMN>
        <LENGTH>040</LENGTH>
@@ -12023,116 +10621,6 @@
        <OUTPUT_FLD>X</OUTPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_INITIALISIEREN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT WITH CONTROL</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  TCTRL_/DSL/HR80_VVERGI CURSOR NEXTLINE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_SHOW_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE FILL_SUBSTFLDS.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>*</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_EXIT_COMMAND AT EXIT-COMMAND.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_BEFORE_LOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> LOOP AT EXTRACT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   MODULE LISTE_INIT_WORKAREA.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-GRTAX .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-SSKOD .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-SSGRP .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-BEGDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-OEZEL .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-COCUK .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-IMBTR .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-AILE .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-WAERS .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE SET_UPDATE_FLAG ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   FIELD VIM_MARKED MODULE LISTE_MARK_CHECKBOX.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-GRTAX .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-SSKOD .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-SSGRP .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /DSL/HR80_VVERGI-ENDDA .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE LISTE_UPDATE_LISTE.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>   ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> ENDLOOP.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE LISTE_AFTER_LOOP.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
    </DYNPROS>
   </asx:values>

@@ -1,0 +1,6 @@
+PROCESS BEFORE OUTPUT.
+ MODULE status_0101.
+ MODULE set_image .
+*
+PROCESS AFTER INPUT.
+ MODULE user_command_0101.

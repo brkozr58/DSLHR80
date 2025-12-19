@@ -49,6 +49,12 @@
      <FIELDNAME>GRPID_T</FIELDNAME>
     </DD27P>
    </DD27P_TABLE>
+   <TABL_EXTRAS>
+    <TDDAT>
+     <TABNAME>/DSL/HR80_V001</TABNAME>
+     <CCLASS>&amp;NC&amp;</CCLASS>
+    </TDDAT>
+   </TABL_EXTRAS>
   </asx:values>
  </asx:abap>
 </abapGit>

@@ -1,7 +1,5 @@
 *---------------------------------------------------------------------*
 *    program for:   VIEWFRAME_/DSL/HR80_VVERGI
-*   generation date: 29.09.2025 at 14:14:46
-*   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 FUNCTION VIEWFRAME_/DSL/HR80_VVERGI    .
 

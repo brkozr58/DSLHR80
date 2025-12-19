@@ -62,22 +62,9 @@ define view /DSL/HR80_CDS006
        momag,
        payroll.ktopl,
 
-       //
-       case when t013.sign = '-' then payroll.bet01 * -1 else payroll.bet01 end as bet01,
-       case when t013.sign = '-' then payroll.bet02 * -1 else payroll.bet02 end as bet02,
-       case when t013.sign = '-' then payroll.bet03 * -1 else payroll.bet03 end as bet03,
-       case when t013.sign = '-' then payroll.bet04 * -1 else payroll.bet04 end as bet04,
-       case when t013.sign = '-' then payroll.bet05 * -1 else payroll.bet05 end as bet05,
-       case when t013.sign = '-' then payroll.bet06 * -1 else payroll.bet06 end as bet06,
-       case when t013.sign = '-' then payroll.bet07 * -1 else payroll.bet07 end as bet07,
-       case when t013.sign = '-' then payroll.bet08 * -1 else payroll.bet08 end as bet08,
-       case when t013.sign = '-' then payroll.bet09 * -1 else payroll.bet09 end as bet09,
-       case when t013.sign = '-' then payroll.bet10 * -1 else payroll.bet10 end as bet10,
-       case when t013.sign = '-' then payroll.bet11 * -1 else payroll.bet11 end as bet11,
-       case when t013.sign = '-' then payroll.bet12 * -1 else payroll.bet12 end as bet12,
-       //
-       
-       
+
+
+
        pa1_begda,
        pa1_endda,
        payroll.bukrs,
@@ -134,6 +121,21 @@ define view /DSL/HR80_CDS006
        ansvh,
        abkrs,
        waers,
+
+       //
+       case when t013.sign = '-' then payroll.bet01 * -1 else payroll.bet01 end as bet01,
+       case when t013.sign = '-' then payroll.bet02 * -1 else payroll.bet02 end as bet02,
+       case when t013.sign = '-' then payroll.bet03 * -1 else payroll.bet03 end as bet03,
+       case when t013.sign = '-' then payroll.bet04 * -1 else payroll.bet04 end as bet04,
+       case when t013.sign = '-' then payroll.bet05 * -1 else payroll.bet05 end as bet05,
+       case when t013.sign = '-' then payroll.bet06 * -1 else payroll.bet06 end as bet06,
+       case when t013.sign = '-' then payroll.bet07 * -1 else payroll.bet07 end as bet07,
+       case when t013.sign = '-' then payroll.bet08 * -1 else payroll.bet08 end as bet08,
+       case when t013.sign = '-' then payroll.bet09 * -1 else payroll.bet09 end as bet09,
+       case when t013.sign = '-' then payroll.bet10 * -1 else payroll.bet10 end as bet10,
+       case when t013.sign = '-' then payroll.bet11 * -1 else payroll.bet11 end as bet11,
+       case when t013.sign = '-' then payroll.bet12 * -1 else payroll.bet12 end as bet12,
+
        //
        case when t013.sign = '-' then payroll.anz01 * -1 else payroll.anz01 end as anz01,
        case when t013.sign = '-' then payroll.anz02 * -1 else payroll.anz02 end as anz02,
@@ -161,7 +163,7 @@ define view /DSL/HR80_CDS006
        case when t013.sign = '-' then payroll.btp11 * -1 else payroll.btp11 end as btp11,
        case when t013.sign = '-' then payroll.btp12 * -1 else payroll.btp12 end as btp12
        //
-} 
+}
 
 
 

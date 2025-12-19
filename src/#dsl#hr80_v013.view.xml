@@ -345,6 +345,12 @@
      <CONSTANTS>SY-LANGU</CONSTANTS>
     </DD28V>
    </DD28V_TABLE>
+   <TABL_EXTRAS>
+    <TDDAT>
+     <TABNAME>/DSL/HR80_V013</TABNAME>
+     <CCLASS>&amp;NC&amp;</CCLASS>
+    </TDDAT>
+   </TABL_EXTRAS>
   </asx:values>
  </asx:abap>
 </abapGit>

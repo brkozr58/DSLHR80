@@ -53,21 +53,6 @@
        <INPUT_FLD>X</INPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE status_0100.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE user_command_0100.</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
     <item>
      <HEADER>
@@ -106,7 +91,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-PERNR</NAME>
-       <TEXT>Personel_no.___</TEXT>
        <LINE>002</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>015</LENGTH>
@@ -124,7 +108,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-PERNR</NAME>
-       <TEXT>________</TEXT>
        <LINE>002</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>008</LENGTH>
@@ -142,7 +125,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-ENAME</NAME>
-       <TEXT>________________________________________</TEXT>
        <LINE>002</LINE>
        <COLUMN>043</COLUMN>
        <LENGTH>040</LENGTH>
@@ -160,7 +142,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-RFPER</NAME>
-       <TEXT>Referans_pers._no___</TEXT>
        <LINE>003</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>020</LENGTH>
@@ -178,7 +159,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-RFPER</NAME>
-       <TEXT>________</TEXT>
        <LINE>003</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>008</LENGTH>
@@ -195,7 +175,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-RFPER_E</NAME>
-       <TEXT>________________________________________</TEXT>
        <LINE>003</LINE>
        <COLUMN>043</COLUMN>
        <LENGTH>040</LENGTH>
@@ -233,7 +212,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-ORGEH</NAME>
-       <TEXT>________</TEXT>
        <LINE>004</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>008</LENGTH>
@@ -251,7 +229,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-ORGEH_T</NAME>
-       <TEXT>________________________________________</TEXT>
        <LINE>004</LINE>
        <COLUMN>043</COLUMN>
        <LENGTH>040</LENGTH>
@@ -288,7 +265,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-PLANS</NAME>
-       <TEXT>________</TEXT>
        <LINE>005</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>008</LENGTH>
@@ -306,7 +282,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-PLANS_T</NAME>
-       <TEXT>________________________________________</TEXT>
        <LINE>005</LINE>
        <COLUMN>043</COLUMN>
        <LENGTH>040</LENGTH>
@@ -343,7 +318,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-STELL</NAME>
-       <TEXT>________</TEXT>
        <LINE>006</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>008</LENGTH>
@@ -361,7 +335,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-STELL_T</NAME>
-       <TEXT>________________________________________</TEXT>
        <LINE>006</LINE>
        <COLUMN>043</COLUMN>
        <LENGTH>040</LENGTH>
@@ -379,7 +352,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-KOKRS</NAME>
-       <TEXT>Kontrol_kodu___</TEXT>
        <LINE>007</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>015</LENGTH>
@@ -398,7 +370,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-KOKRS</NAME>
-       <TEXT>____</TEXT>
        <LINE>007</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>004</LENGTH>
@@ -417,7 +388,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-KOKRS_T</NAME>
-       <TEXT>_________________________</TEXT>
        <LINE>007</LINE>
        <COLUMN>043</COLUMN>
        <LENGTH>025</LENGTH>
@@ -435,7 +405,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-KOSTL</NAME>
-       <TEXT>Masraf_yeri____</TEXT>
        <LINE>008</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>015</LENGTH>
@@ -454,7 +423,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-KOSTL</NAME>
-       <TEXT>__________</TEXT>
        <LINE>008</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>010</LENGTH>
@@ -474,7 +442,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-KOSTL_T</NAME>
-       <TEXT>________________________________________</TEXT>
        <LINE>008</LINE>
        <COLUMN>043</COLUMN>
        <LENGTH>040</LENGTH>
@@ -509,7 +476,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-BEGDA</NAME>
-       <TEXT>__________</TEXT>
        <LINE>009</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>010</LENGTH>
@@ -525,7 +491,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-ENDDA</NAME>
-       <TEXT>__________</TEXT>
        <LINE>009</LINE>
        <COLUMN>045</COLUMN>
        <LENGTH>010</LENGTH>
@@ -541,7 +506,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-WERKS_NEW</NAME>
-       <TEXT>Yeni_Personel_alanı_</TEXT>
        <LINE>010</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>020</LENGTH>
@@ -560,7 +524,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-WERKS_NEW</NAME>
-       <TEXT>____</TEXT>
        <LINE>010</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>004</LENGTH>
@@ -599,7 +562,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-BTRTL_NEW</NAME>
-       <TEXT>____</TEXT>
        <LINE>011</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>004</LENGTH>
@@ -619,7 +581,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-PERSG_NEW</NAME>
-       <TEXT>Yeni_Çalışan_Grubu__</TEXT>
        <LINE>012</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>020</LENGTH>
@@ -638,7 +599,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-PERSG_NEW</NAME>
-       <TEXT>_</TEXT>
        <DROPDOWN>K</DROPDOWN>
        <LINE>012</LINE>
        <COLUMN>032</COLUMN>
@@ -677,7 +637,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-PERSK_NEW</NAME>
-       <TEXT>__</TEXT>
        <DROPDOWN>K</DROPDOWN>
        <LINE>013</LINE>
        <COLUMN>032</COLUMN>
@@ -716,7 +675,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-TRFAR_NEW</NAME>
-       <TEXT>__</TEXT>
        <DROPDOWN>K</DROPDOWN>
        <LINE>014</LINE>
        <COLUMN>032</COLUMN>
@@ -755,7 +713,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-TRFGB_NEW</NAME>
-       <TEXT>__</TEXT>
        <DROPDOWN>K</DROPDOWN>
        <LINE>015</LINE>
        <COLUMN>032</COLUMN>
@@ -794,7 +751,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-TRFGR_NEW</NAME>
-       <TEXT>________</TEXT>
        <LINE>016</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>008</LENGTH>
@@ -832,7 +788,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-TRFST_NEW</NAME>
-       <TEXT>__</TEXT>
        <LINE>017</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>002</LENGTH>
@@ -851,7 +806,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-LGA01_NEW</NAME>
-       <TEXT>Yeni_Ücret_türü_____</TEXT>
        <LINE>018</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>020</LENGTH>
@@ -870,7 +824,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-LGA01_NEW</NAME>
-       <TEXT>____</TEXT>
        <LINE>018</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>004</LENGTH>
@@ -889,7 +842,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-SALRY_NEW</NAME>
-       <TEXT>Yeni_Tutar__________</TEXT>
        <LINE>019</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>020</LENGTH>
@@ -906,7 +858,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-SALRY_NEW</NAME>
-       <TEXT>_____________________</TEXT>
        <LINE>019</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>021</LENGTH>
@@ -924,7 +875,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-WAERS</NAME>
-       <TEXT>Para_birimi____</TEXT>
        <LINE>020</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>015</LENGTH>
@@ -941,7 +891,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-WAERS</NAME>
-       <TEXT>_____</TEXT>
        <LINE>020</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>005</LENGTH>
@@ -958,7 +907,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>/DSL/HR80_S005-ZCOUNT</NAME>
-       <TEXT>Kişi_Sayısı_________</TEXT>
        <LINE>021</LINE>
        <COLUMN>004</COLUMN>
        <LENGTH>020</LENGTH>
@@ -976,7 +924,6 @@
        <CONT_NAME>SCREEN</CONT_NAME>
        <TYPE>TEMPLATE</TYPE>
        <NAME>/DSL/HR80_S005-ZCOUNT</NAME>
-       <TEXT>__________V</TEXT>
        <LINE>021</LINE>
        <COLUMN>032</COLUMN>
        <LENGTH>011</LENGTH>
@@ -1001,89 +948,6 @@
        <INPUT_FLD>X</INPUT_FLD>
       </RPY_DYFATC>
      </FIELDS>
-     <FLOW_LOGIC>
-      <RPY_DYFLOW>
-       <LINE>PROCESS BEFORE OUTPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE status_2000.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE> MODULE objid_text_2000.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE>PROCESS AFTER INPUT.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE>  CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-begda.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-endda.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-zcount.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-rfper.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE input_check ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE>  CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-orgeh  .</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-plans.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-stell.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    MODULE objid_text ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE>  CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-pernr. MODULE input_pernr ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE>  CHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>    FIELD /dsl/hr80_s005-rfper. MODULE input_rfper ON CHAIN-REQUEST.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW>
-       <LINE>  ENDCHAIN.</LINE>
-      </RPY_DYFLOW>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW/>
-      <RPY_DYFLOW>
-       <LINE> MODULE user_command_2000     .</LINE>
-      </RPY_DYFLOW>
-     </FLOW_LOGIC>
     </item>
    </DYNPROS>
    <CUA>

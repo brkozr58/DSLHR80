@@ -1,7 +1,5 @@
 *---------------------------------------------------------------------*
 *    view related data declarations
-*   generation date: 30.09.2025 at 13:23:45
-*   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 *...processing: /DSL/HR80_V001..................................*
 TABLES: /DSL/HR80_V001, */DSL/HR80_V001. "view work areas
